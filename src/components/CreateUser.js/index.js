@@ -27,13 +27,27 @@ import {
   Input,
   Container,
   Row,
-  Col,
+  Col
 } from "reactstrap";
 // core components
 // import UserHeader from "components/Headers/UserHeader.js";
 import {useNavigate} from 'react-router-dom'
 
+import { useState } from "react";
+
 const CreateUser = () => {
+
+  const [nome, setNome] = useState('')
+  const [funcao, setFuncao] = useState('')
+  const [rg, setRg] = useState('')
+  const [unidade, setUnidade] = useState('')
+  const [postgrad, setPostgrad] = useState('')
+
+  function HandleCreateUser() {
+    
+  }
+
+
   const navigation = useNavigate()
   const back = (event) => {
     event.preventDefault()
@@ -84,10 +98,11 @@ const CreateUser = () => {
                           </label>
                           <Input
                             className="form-control-alternative"
-                            defaultValue="lucky.jesse"
                             id="input-username"
-                            placeholder="Username"
+                            placeholder="Nome"
                             type="text"
+                            value={nome}
+                            onChange={(e)=> setNome (e.target.value)}
                           />
                         </FormGroup>
                       </Col>
@@ -102,8 +117,10 @@ const CreateUser = () => {
                           <Input
                             className="form-control-alternative"
                             id="input-email"
-                            placeholder="jesse@example.com"
+                            placeholder="000000"
                             type="email"
+                            value={rg}
+                            onChange={(e)=> setRg (e.target.value)}
                           />
                         </FormGroup>
                       </Col>
@@ -117,10 +134,12 @@ const CreateUser = () => {
                           </label>
                           <Input
                             className="form-control-alternative"
-                            defaultValue="Lucky"
                             id="input-first-name"
-                            placeholder="First name"
+                            placeholder="Posto/Grad"
                             type="text"
+                            value={postgrad}
+                            onChange={(e)=> setPostgrad (e.target.value)}
+
                           />
                         </FormGroup>
                       </Col>
@@ -136,10 +155,11 @@ const CreateUser = () => {
                           </label>
                           <Input
                             className="form-control-alternative"
-                            defaultValue="Jesse"
                             id="input-last-name"
-                            placeholder="Last name"
+                            placeholder="Unidade"
                             type="text"
+                            value={unidade}
+                            onChange={(e)=> setUnidade (e.target.value)}
                           />
                         </FormGroup>
                       </Col>
@@ -153,10 +173,11 @@ const CreateUser = () => {
                           </label>
                           <Input
                             className="form-control-alternative"
-                            defaultValue="Jesse"
                             id="input-last-name"
-                            placeholder="Last name"
+                            placeholder="Função"
                             type="text"
+                            value={funcao}
+                            onChange={(e)=> setFuncao (e.target.value)}
                           />
                         </FormGroup>
                       </Col>
@@ -164,8 +185,8 @@ const CreateUser = () => {
                   </div>
                   <hr className="my-4" />
                   <div className="text-center">
-                <Button className="col-8" color="primary" type="button">
-                  Salvar
+                <Button onClick={HandleCreateUser} className="col-8" color="primary" type="button">
+                  Cadastrar
                 </Button>
               </div>
                   {/* Address */}
