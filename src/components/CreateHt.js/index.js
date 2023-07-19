@@ -40,6 +40,17 @@ const CreateHt = () => {
     event.preventDefault()
     navigation('/admin/dashboard')
   }
+
+  // AQUI SERÃO AS FUNÇÕES QUE IREI CRIAR  
+  // CADASTRAR HT
+
+  function Alarme(){
+    alert('oi')
+  }
+
+
+
+
   return (
     <>
       {/* <UserHeader /> */}
@@ -57,6 +68,7 @@ const CreateHt = () => {
                     <h3 className="mb-0 align-items-center">Cadastrar HT</h3>
                   </Col>
                   <Col className="text-right" xs="4">
+
                     <Button
                       color="primary"
                       // href="/admin/dashboard"
@@ -65,17 +77,21 @@ const CreateHt = () => {
                     >
                       Voltar
                     </Button>
+
                   </Col>
                 </Row>
               </CardHeader>
               <CardBody>
                 <Form>
+
                   <h6 className="heading-small text-muted mb-4">
                     Informações HT
                   </h6>
+
                   <div className="pl-lg-4">
                     <Row>
                       <Col lg="6">
+
                         <FormGroup>
                           <label
                             className="form-control-label"
@@ -92,6 +108,7 @@ const CreateHt = () => {
                           />
                         </FormGroup>
                       </Col>
+
                       <Col lg="6">
                         <FormGroup>
                           <label
@@ -108,6 +125,7 @@ const CreateHt = () => {
                           />
                         </FormGroup>
                       </Col>
+
                       <Col lg="6">
                         <FormGroup>
                           <label
@@ -125,14 +143,14 @@ const CreateHt = () => {
                           />
                         </FormGroup>
                       </Col>
+
                       <Col lg="6">
-                        <FormGroup check
-    inline>
-      <label
+                        <FormGroup check inline>
+                          <label
                             className="form-control-label"
                             htmlFor="input-first-name"
                           >
-                            Possui Base
+                            Possui Base ?
                           </label>
                           {/* <label
                             className="form-control-label"
@@ -144,29 +162,39 @@ const CreateHt = () => {
                         <div className="pl-lg-4">
                         <Row>
                           <Col lg="6">
-                          <Input style={{marginLeft: 5}} type="checkbox" />
-    <Label style={{marginLeft: 25}} check>
-      SIM
-    </Label>
-    </Col>
-    <Col lg="3">
-    <Input style={{marginLeft: 5}} type="checkbox" />
-    <Label style={{marginLeft: 25}} check>
-     NÃO
-    </Label>
-    </Col>
-    </Row>
-    </div>
+                          <Input style={{marginLeft: 8}} type="checkbox" />
+                            <Label style={{marginLeft: 30}} check>
+                              SIM
+                            </Label>
+                            </Col>
+                            <Col lg="3">
+                            <Input style={{marginLeft: 5}} type="checkbox" />
+                            <Label style={{marginLeft: 25}} check>
+                            NÃO
+                            </Label>
+                            </Col>
+                            </Row>
+                            </div>
                       </Col>
                     </Row>
                     <Row>
                     </Row>
                   </div>
+
+                  
+
+
+                      {/* Linha */}
                   <hr className="my-4" />
+
                   <div className="text-center">
-                <Button className="col-8" color="primary" type="button">
+                <Button className="col-8" color="primary" type="button" onClick={Alarme}>
                   Salvar
                 </Button>
+
+          
+                    
+
               </div>
                   {/* Address */}
                   

@@ -20,6 +20,8 @@
 // reactstrap components
 import { Container, Row, Col, Nav, NavItem, NavLink } from "reactstrap";
 
+// Aqui é a parte inferior da tela principal
+
 const Footer = () => {
   return (
     <footer className="footer">
@@ -29,11 +31,11 @@ const Footer = () => {
             © {new Date().getFullYear()}{" "}
             <a
               className="font-weight-bold ml-1"
-              href="https://www.creative-tim.com?ref=adr-admin-footer"
+              href="https://www.pm.pa.gov.br/r"
               rel="noopener noreferrer"
               target="_blank"
             >
-              Pocília Militar do Estado do Pará
+              Polícia Militar do Estado do Pará.
             </a>
           </div>
         </Col>
@@ -42,11 +44,11 @@ const Footer = () => {
           <Nav className="nav-footer justify-content-center justify-content-xl-end">
             <NavItem>
               <NavLink
-                href="https://www.creative-tim.com?ref=adr-admin-footer"
+                href="https://www.pm.pa.gov.br/"
                 rel="noopener noreferrer"
                 target="_blank"
               >
-                DITEL - Diretoria de Telemática
+                DITEL - Diretoria de Telemática.
               </NavLink>
             </NavItem>
 
