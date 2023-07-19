@@ -32,8 +32,20 @@ import {
 // core components
 // import UserHeader from "components/Headers/UserHeader.js";
 import {useNavigate} from 'react-router-dom'
+import { useState } from "react";
+
+
 
 const CreateChip = () => {
+
+  const [ndeserie, setNdeserie] = useState('')
+  const [linha, setLinha] = useState('')
+
+  function HandleChip() {
+    
+  }
+
+
   const navigation = useNavigate()
   const back = (event) => {
     event.preventDefault()
@@ -70,7 +82,7 @@ const CreateChip = () => {
               <CardBody>
                 <Form>
                   <h6 className="heading-small text-muted mb-4">
-                    Informações Pessoais
+                    Informações do Chip
                   </h6>
                   <div className="pl-lg-4">
                     <Row>
@@ -80,34 +92,42 @@ const CreateChip = () => {
                             className="form-control-label"
                             htmlFor="input-username"
                           >
-                            Nome
+                            Nª de serie
                           </label>
                           <Input
                             className="form-control-alternative"
-                            defaultValue="lucky.jesse"
                             id="input-username"
-                            placeholder="Username"
+                            placeholder="00000000"
                             type="text"
+                            value={ndeserie}
+                            onChange={(e)=> setNdeserie (e.target.value)}
                           />
                         </FormGroup>
                       </Col>
-                      <Col lg="6">
+                      <Col lg="12">
                         <FormGroup>
                           <label
                             className="form-control-label"
                             htmlFor="input-email"
                           >
-                            RG
+                            Linha
                           </label>
                           <Input
                             className="form-control-alternative"
                             id="input-email"
-                            placeholder="jesse@example.com"
-                            type="email"
+                            placeholder="Oi"
+                            type="text"
+                            value={linha}
+                            onChange={(e)=> setLinha (e.target.value)}
                           />
                         </FormGroup>
                       </Col>
-                      <Col lg="6">
+
+                      
+
+
+
+                      {/* <Col lg="6">
                         <FormGroup>
                           <label
                             className="form-control-label"
@@ -123,9 +143,12 @@ const CreateChip = () => {
                             type="text"
                           />
                         </FormGroup>
-                      </Col>
+                      </Col> */}
+
                     </Row>
-                    <Row>
+
+
+                    {/* <Row>
                       <Col lg="6">
                         <FormGroup>
                           <label
@@ -160,7 +183,9 @@ const CreateChip = () => {
                           />
                         </FormGroup>
                       </Col>
-                    </Row>
+                    </Row> */}
+
+
                   </div>
                   <hr className="my-4" />
                   <div className="text-center">
