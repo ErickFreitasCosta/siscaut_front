@@ -71,7 +71,7 @@ var routes = [
     component: <CreateChip />,
     layout: "/auth",
   },
-  {
+  /* {
     path: "/icons",
     name: "Icons",
     icon: "ni ni-planet text-blue",
@@ -92,13 +92,7 @@ var routes = [
     component: <Profile />,
     layout: "/admin",
   },
-  {
-    path: "/tables",
-    name: "Tables",
-    icon: "ni ni-bullet-list-67 text-red",
-    component: <Tables />,
-    layout: "/admin",
-  },
+  
   {
     path: "/login",
     name: "Login",
@@ -112,6 +106,13 @@ var routes = [
     icon: "ni ni-circle-08 text-pink",
     component: <Register />,
     layout: "/auth",
-  }
+  } */
+  {
+    path: "/tables",
+    name: "Tables",
+    icon: "ni ni-bullet-list-67 text-red",
+    component: <Tables />,
+    layout: "/admin",
+  },
 ];
 export default routes;
