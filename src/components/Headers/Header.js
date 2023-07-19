@@ -15,6 +15,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
+//                                    ITENS DO PAINEL INICIAL
 
 // reactstrap components
 import { Card, CardBody, CardTitle, Container, Row, Col } from "reactstrap";
@@ -170,7 +171,8 @@ const Header = () => {
                   </CardBody>
                 </Card>
               </Col>
-              <Col lg="6" xl="2">
+
+              {/* <Col lg="6" xl="2">
                 <Card className="card-stats mb-4 mb-xl-0">
                   <CardBody>
                     <Row>
@@ -190,15 +192,17 @@ const Header = () => {
                       </Col>
                       
                     </Row>
-                    {/* <p className="mt-3 mb-0 text-muted text-sm">
+                    <p className="mt-3 mb-0 text-muted text-sm">
                       <span className="text-success mr-2">
                         <i className="fas fa-arrow-up" /> 12%
                       </span>{" "}
                       <span className="text-nowrap">Since last month</span>
-                    </p> */}
+                    </p>
                   </CardBody>
                 </Card>
-              </Col>
+              </Col> */}
+
+              
             </Row>
           </div>
         </Container>

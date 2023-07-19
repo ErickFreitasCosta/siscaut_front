@@ -105,9 +105,9 @@ const MapWrapper = () => {
     <>
       <div
         style={{ height: `600px` }}
-        className="map-canvas"
-        id="map-canvas"
-        ref={mapRef}
+        // className="map-canvas"
+        // id="map-canvas"
+        // ref={mapRef}
       ></div>
     </>
   );
@@ -116,8 +116,8 @@ const MapWrapper = () => {
 const Maps = () => {
   return (
     <>
-      <Header />
-      {/* Page content */}
+      {/* <Header />
+      Page content
       <Container className="mt--7" fluid>
         <Row>
           <div className="col">
@@ -126,7 +126,7 @@ const Maps = () => {
             </Card>
           </div>
         </Row>
-      </Container>
+      </Container> */}
     </>
   );
 };
