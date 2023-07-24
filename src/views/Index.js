@@ -15,6 +15,8 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
+import {Link} from "react-router-dom";
+
 import { useState } from "react";
 // node.js library that concatenates classes (strings)
 import classnames from "classnames";
@@ -152,6 +154,26 @@ const Index = (props) => {
                   <div className="col">
                     <h3 className="mb-0">Usuários Cadastrados</h3>
                   </div>
+                  <div> <Link to="/auth/createUser">
+                  
+                  <Button
+                      color="success"
+                      // href="/admin/dashboard"
+                      size="sm"
+                    >
+                      Adicionar
+                    </Button>
+                  </Link>
+
+                    <Button
+                      color="danger"
+                      // href="/admin/dashboard"
+                      
+                      size="sm"
+                    >
+                      Imprimir
+                    </Button>
+                  </div>
                   {/* <div className="col text-right">
                     <Button
                       color="primary"
@@ -171,6 +193,7 @@ const Index = (props) => {
                     <th scope="col">Posto/Grad</th>
                     <th scope="col">Unidade</th>
                     <th scope="col">Contato</th>
+                    <th scope="col">Ações</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -180,6 +203,28 @@ const Index = (props) => {
                     <td>340</td>
                     <td>
                       <i className="fas fa-arrow-up text-success mr-3" /> 999999999
+                    </td>
+                    <td>
+                      <div> <Link to="/auth/createUser">
+                    
+                        <Button
+                            color="success"
+                            // href="/admin/dashboard"
+                            size="sm"
+                          >
+                            Editar
+                          </Button>
+                        </Link>
+
+                          <Button
+                            color="danger"
+                            // href="/admin/dashboard"
+                            
+                            size="sm"
+                          >
+                            Excluir
+                          </Button>
+                        </div>
                     </td>
                   </tr>
                   <tr>
