@@ -38,35 +38,35 @@ var routes = [
   },
   {
     path: "/createUser",
-    name: "Cadastrar Usuário",
+    name: "Usuário",
     icon: "ni ni-single-02 text-primary",
     component: <CreateUser />,
     layout: "/auth",
   },
   {
     path: "/createPhone",
-    name: "Cadastrar Aparelho",
+    name: "Aparelho",
     icon: "fas fa fa-mobile text-primary",
     component: <CreatePhone />,
     layout: "/auth",
   },
   {
     path: "/createHT",
-    name: "Cadastrar HT",
+    name: "HT",
     icon: "fas fa fa-walkie-talkie text-primary",
     component: <CreateHt />,
     layout: "/auth",
   },
   {
     path: "/createModem",
-    name: "Cadastrar Modem",
+    name: "Modem",
     icon: "fas fa fa-wifi text-primary",
     component: <CreateModem />,
     layout: "/auth",
   },
   {
     path: "/createChip",
-    name: "Cadastrar Chip",
+    name: "Chip",
     icon: "fas fa-sim-card text-primary",
     component: <CreateChip />,
     layout: "/auth",
@@ -114,5 +114,6 @@ var routes = [
     component: <Tables />,
     layout: "/admin",
   },
+  
 ];
 export default routes;
