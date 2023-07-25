@@ -81,6 +81,8 @@ const CreateUser = () => {
                   </Col>
                 </Row>
               </CardHeader>
+
+
               <CardBody>
                 <Form>
                   <h6 className="heading-small text-muted mb-4">
@@ -185,14 +187,18 @@ const CreateUser = () => {
                   </div>
                   <hr className="my-4" />
                   <div className="text-center">
-                <Button onClick={HandleCreateUser} className="col-8" color="primary" type="button">
+
+                <Button onClick={HandleCreateUser} className="col-" color="primary" type="button">
                   Cadastrar
                 </Button>
+
               </div>
                   {/* Address */}
                   
                 </Form>
               </CardBody>
+
+
             </Card>
           </Col>
         </Row>
