@@ -27,6 +27,7 @@ import CreateChip from "components/CreateChip.js";
 import CreatePhone from "components/CreatePhone.js";
 import CreateHt from "components/CreateHt.js";
 import CreateModem from "components/CreateModem.js";
+import Aparelho from "views/aparelho"
 
 var routes = [
   {
@@ -47,9 +48,11 @@ var routes = [
     path: "/createPhone",
     name: "Aparelho",
     icon: "fas fa fa-mobile text-primary",
-    component: <CreatePhone />,
-    layout: "/auth",
+    component: <Aparelho />,
+    layout: "/admin",
   },
+
+
   {
     path: "/createHT",
     name: "HT",
