@@ -49,6 +49,7 @@ import {
 } from "variables/charts.js";
 
 import Header from "components/Headers/Header.js";
+import Modall from "components/Modal/Modal";
 
 const Index = (props) => {
   const [activeNav, setActiveNav] = useState(1);
@@ -154,16 +155,9 @@ const Index = (props) => {
                   <div className="col">
                     <h3 className="mb-0">Usuários Cadastrados</h3>
                   </div>
-                  <div> <Link to="/auth/createUser">
-                  
-                  <Button
-                      color="success"
-                      // href="/admin/dashboard"
-                      size="sm"
-                    >
-                      Adicionar
-                    </Button>
-                  </Link>
+                  <div> 
+                    
+                    <Modall/>
 
                     <Button
                       color="danger"
