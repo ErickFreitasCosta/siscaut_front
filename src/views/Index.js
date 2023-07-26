@@ -49,7 +49,7 @@ import {
 } from "variables/charts.js";
 
 import Header from "components/Headers/Header.js";
-import Modall from "components/Modal/Modal";
+import Modall from "components/ModalAddUser/Modal";
 
 const Index = (props) => {
   const [activeNav, setActiveNav] = useState(1);
@@ -159,14 +159,6 @@ const Index = (props) => {
                     
                     <Modall/>
 
-                    <Button
-                      color="danger"
-                      // href="/admin/dashboard"
-                      
-                      size="sm"
-                    >
-                      Imprimir
-                    </Button>
                   </div>
                   {/* <div className="col text-right">
                     <Button

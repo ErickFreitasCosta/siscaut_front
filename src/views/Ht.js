@@ -49,7 +49,7 @@ import {
 } from "variables/charts.js";
 
 import Header from "components/Headers/Header.js";
-import Modall from "components/ModalAddAparelho/Modal";
+import Modall from "components/ModalAddHt/Modal";
 
 const Aparelho = (props) => {
   const [activeNav, setActiveNav] = useState(1);
@@ -175,10 +175,10 @@ const Aparelho = (props) => {
               <Table className="align-items-center table-flush" responsive>
                 <thead className="thead-light">
                   <tr>
-                    <th scope="col">Modelo</th>
+                    <th scope="col">Número de série </th>
                     <th scope="col">Marca</th>
-                    <th scope="col">1º IMEI</th>
-                    <th scope="col">2º IMEI</th>
+                    <th scope="col">Modelo</th>
+                    <th scope="col">Base</th>
                     <th scope="col">Ações</th>
                   </tr>
                 </thead>

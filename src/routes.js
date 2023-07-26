@@ -28,6 +28,7 @@ import CreatePhone from "components/CreatePhone.js";
 import CreateHt from "components/CreateHt.js";
 import CreateModem from "components/CreateModem.js";
 import Aparelho from "views/aparelho"
+import Ht from "views/Ht"
 
 var routes = [
   {
@@ -57,8 +58,8 @@ var routes = [
     path: "/createHT",
     name: "HT",
     icon: "fas fa fa-walkie-talkie text-primary",
-    component: <CreateHt />,
-    layout: "/auth",
+    component: <Ht />,
+    layout: "/admin",
   },
   {
     path: "/createModem",
