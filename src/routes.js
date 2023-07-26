@@ -29,6 +29,8 @@ import CreateHt from "components/CreateHt.js";
 import CreateModem from "components/CreateModem.js";
 import Aparelho from "views/aparelho"
 import Ht from "views/Ht"
+import Chip from "views/Chip"
+import Modem from "views/Modem"
 
 var routes = [
   {
@@ -38,13 +40,15 @@ var routes = [
     component: <Index />,
     layout: "/admin",
   },
+  
   {
     path: "/createUser",
     name: "Usuário",
     icon: "ni ni-single-02 text-primary",
-    component: <CreateUser />,
-    layout: "/auth",
+    component: <Index />,
+    layout: "/admin",
   },
+
   {
     path: "/createPhone",
     name: "Aparelho",
@@ -65,15 +69,15 @@ var routes = [
     path: "/createModem",
     name: "Modem",
     icon: "fas fa fa-wifi text-primary",
-    component: <CreateModem />,
-    layout: "/auth",
+    component: <Modem />,
+    layout: "/admin",
   },
   {
     path: "/createChip",
     name: "Chip",
     icon: "fas fa-sim-card text-primary",
-    component: <CreateChip />,
-    layout: "/auth",
+    component: <Chip/>,
+    layout: "/admin",
   },
   /* {
     path: "/icons",

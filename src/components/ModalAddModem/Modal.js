@@ -17,8 +17,7 @@ function Modall(args) {
 
   
 
-    const [nserie, setNserie] = useState('')
-    const [base, setbase] = useState('')
+    const [imei, setImei] = useState('')
     const [marca, setMarca] = useState('')
     const [modelo, setModelo] = useState('')
 
@@ -39,33 +38,34 @@ function Modall(args) {
                 <Form>
 
                   <h6 className="heading-small text-muted mb-4">
-                    Informações HT
+                    Informações Modem
                   </h6>
 
                   <div className="pl-lg-4">
                     <Row>
-                      <Col lg="6">
+                      <Col lg="11">
 
                         <FormGroup>
                           <label
                             className="form-control-label"
-                            htmlFor="input-NserieHT"
+                            htmlFor="input-imeiModem"
                           >
-                            Nº de Série
+                            IMEI
                           </label>
                           <Input
                             className="form-control-alternative"
                             /* defaultValue="lucky.jesse" */
-                            id="input-ModeloHt"
+                            id="input-imeiModem"
                             placeholder="Nº de serie"
                             type="text"
-                            value={nserie}
-                            onChange={(e)=> setNserie (e.target.value)}
+                            value={imei}
+                            onChange={(e)=> setImei (e.target.value)}
                           />
                         </FormGroup>
                       </Col>
-
-                      <Col lg="6">
+                      </Row>
+                      <Row>
+                      <Col lg="11">
                         <FormGroup>
                           <label
                             className="form-control-label"
@@ -83,13 +83,16 @@ function Modall(args) {
                           />
                         </FormGroup>
                       </Col>
+                      </Row>
 
-                      <Col lg="6">
+                      <Row>
+
+                      <Col lg="11">
                         <FormGroup>
                           <label
                             className="form-control-label"
                             htmlFor="input-first-name"
-                          >
+                            >
                             Modelo
                           </label>
                           <Input
@@ -100,45 +103,12 @@ function Modall(args) {
                             type="text"
                             value={modelo}
                             onChange={(e)=> setModelo (e.target.value)}
-                          />
+                            />
                         </FormGroup>
                       </Col>
-
-                      <Col lg="6">
-                        <FormGroup check inline>
-                          <label
-                            className="form-control-label"
-                            htmlFor="input-first-name"
-                          >
-                            Possui Base ?
-                          </label>
-                          {/* <label
-                            className="form-control-label"
-                            htmlFor="input-last-name"
-                          >
-                            Base de Carga
-                          </label> */}
-                        </FormGroup>
-                        <div className="pl-lg-4">
-                        <Row>
-                          <Col lg="6">
-                          <Input style={{marginLeft: 8}} type="checkbox" />
-                            <Label style={{marginLeft: 30}} check>
-                              SIM
-                            </Label>
-                            </Col>
-                            <Col lg="3">
-                            <Input style={{marginLeft: 5}} type="checkbox" />
-                            <Label style={{marginLeft: 25}} check>
-                            NÃO
-                            </Label>
-                            </Col>
                             </Row>
-                            </div>
-                      </Col>
-                    </Row>
-                    <Row>
-                    </Row>
+                   
+                    
                   </div>
                   
                 </Form>
@@ -148,7 +118,7 @@ function Modall(args) {
           <Button color="success" onClick={toggle}>
             Adicionar
           </Button>{' '}
-          <Button color="warning" onClick={toggle}>
+          <Button color="danger" onClick={toggle}>
             Cancelar
           </Button>
         </ModalFooter>

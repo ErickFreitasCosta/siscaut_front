@@ -44,7 +44,7 @@ function Modall(args) {
 
                   <div className="pl-lg-4">
                     <Row>
-                      <Col lg="6">
+                      <Col lg="12">
 
                         <FormGroup>
                           <label
@@ -59,13 +59,12 @@ function Modall(args) {
                             id="input-ModeloHt"
                             placeholder="Nº de serie"
                             type="text"
-                            value={nserie}
-                            onChange={(e)=> setNserie (e.target.value)}
                           />
                         </FormGroup>
                       </Col>
-
-                      <Col lg="6">
+                      </Row>
+                      <Row>
+                      <Col lg="12">
                         <FormGroup>
                           <label
                             className="form-control-label"
@@ -78,67 +77,13 @@ function Modall(args) {
                             id="Marca-Ht"
                             placeholder="Marca"
                             type="text"
-                            value={marca}
-                            onChange={(e)=> setMarca (e.target.value)}
                           />
                         </FormGroup>
                       </Col>
 
-                      <Col lg="6">
-                        <FormGroup>
-                          <label
-                            className="form-control-label"
-                            htmlFor="input-first-name"
-                          >
-                            Modelo
-                          </label>
-                          <Input
-                            className="form-control-alternative"
-                            /* defaultValue="Lucky" */
-                            id="input-first-name"
-                            placeholder="Modelo"
-                            type="text"
-                            value={modelo}
-                            onChange={(e)=> setModelo (e.target.value)}
-                          />
-                        </FormGroup>
-                      </Col>
-
-                      <Col lg="6">
-                        <FormGroup check inline>
-                          <label
-                            className="form-control-label"
-                            htmlFor="input-first-name"
-                          >
-                            Possui Base ?
-                          </label>
-                          {/* <label
-                            className="form-control-label"
-                            htmlFor="input-last-name"
-                          >
-                            Base de Carga
-                          </label> */}
-                        </FormGroup>
-                        <div className="pl-lg-4">
-                        <Row>
-                          <Col lg="6">
-                          <Input style={{marginLeft: 8}} type="checkbox" />
-                            <Label style={{marginLeft: 30}} check>
-                              SIM
-                            </Label>
-                            </Col>
-                            <Col lg="3">
-                            <Input style={{marginLeft: 5}} type="checkbox" />
-                            <Label style={{marginLeft: 25}} check>
-                            NÃO
-                            </Label>
-                            </Col>
-                            </Row>
-                            </div>
-                      </Col>
+                      
                     </Row>
-                    <Row>
-                    </Row>
+                    
                   </div>
                   
                 </Form>

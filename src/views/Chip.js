@@ -49,7 +49,7 @@ import {
 } from "variables/charts.js";
 
 import Header from "components/Headers/Header.js";
-import Modall from "components/ModalAddHt/Modal";
+import Modall from "components/ModalAddChip/Modal";
 
 const Aparelho = (props) => {
   const [activeNav, setActiveNav] = useState(1);
@@ -148,7 +148,7 @@ const Aparelho = (props) => {
           </Col> */}
         </Row>
         <Row className="mt-5">
-          <Col className="mb-5 mb-xl-0" xl="12">
+          <Col className="mb-5 mb-xl-0" xl="10">
             <Card className="shadow">
               <CardHeader className="border-0">
                 <Row className="align-items-center">
@@ -175,21 +175,22 @@ const Aparelho = (props) => {
               <Table className="align-items-center table-flush" responsive>
                 <thead className="thead-light">
                   <tr>
-                    <th scope="col">Número de série </th>
-                    <th scope="col">Marca</th>
-                    <th scope="col">Modelo</th>
-                    <th scope="col">Base</th>
+                    <th scope="col">Numero de Série</th>
+                    <th scope="col">Linha</th>
                     <th scope="col">Ações</th>
+                    {/* <th scope="col">1º IMEI</th>
+                    <th scope="col">2º IMEI</th>
+                    <th scope="col">Ações</th> */}
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
                     <th scope="row">Nilson</th>
                     <td>4,569</td>
-                    <td>340</td>
-                    <td>
-                      Tem
-                    </td>
+                    {/* <td>340</td> */}
+                    {/* {<td>
+                      <i className="fas fa-arrow-up text-success mr-3" /> 999999999
+                    </td>} */}
                     <td>
                       <div> <Link to="/auth/createUser">
                     
@@ -213,10 +214,41 @@ const Aparelho = (props) => {
                         </div>
                     </td>
                   </tr>
-                
-                 
-                 
-                 
+                  {/* <tr>
+                    <th scope="row">Nilson Teste</th>
+                    <td>3,985</td>
+                    <td>319</td>
+                    <td>
+                      <i className="fas fa-arrow-down text-warning mr-3" />{" "}
+                      999999999
+                    </td>
+                  </tr> */}
+                 {/*  <tr>
+                    <th scope="row">Nilson Teste</th>
+                    <td>3,513</td>
+                    <td>294</td>
+                    <td>
+                      <i className="fas fa-arrow-down text-warning mr-3" />{" "}
+                      9999999
+                    </td>
+                  </tr> */}
+                 {/*  <tr>
+                    <th scope="row">Nilson Teste</th>
+                    <td>2,050</td>
+                    <td>147</td>
+                    <td>
+                      <i className="fas fa-arrow-up text-success mr-3" /> 999999
+                    </td>
+                  </tr> */}
+                 {/*  <tr>
+                    <th scope="row">Nilson Teste</th>
+                    <td>1,795</td>
+                    <td>190</td>
+                    <td>
+                      <i className="fas fa-arrow-down text-danger mr-3" />{" "}
+                      9999999
+                    </td>
+                  </tr> */}
                 </tbody>
               </Table>
             </Card>
