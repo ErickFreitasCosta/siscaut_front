@@ -27,7 +27,7 @@ function Modall(args) {
 
   return (
     <div>
-      <Button size="sm"color="danger" onClick={toggle}>
+      <Button size="sm"color="success" onClick={toggle}>
         Adicionar
       </Button>
       <Modal isOpen={modal} toggle={toggle} {...args}>
@@ -71,7 +71,7 @@ function Modall(args) {
                             className="form-control-alternative"
                             id="input-email"
                             placeholder="000000"
-                            type="email"
+                            type="text"
                             value={rg}
                             onChange={(e)=> setRg (e.target.value)}
                           />

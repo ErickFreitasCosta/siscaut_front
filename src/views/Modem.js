@@ -49,7 +49,7 @@ import {
 } from "variables/charts.js";
 
 import Header from "components/Headers/Header.js";
-import Modall from "components/ModalAddAparelho/Modal";
+import Modall from "components/ModalAddModem/Modal";
 
 const Aparelho = (props) => {
   const [activeNav, setActiveNav] = useState(1);
@@ -148,7 +148,7 @@ const Aparelho = (props) => {
           </Col> */}
         </Row>
         <Row className="mt-5">
-          <Col className="mb-5 mb-xl-0" xl="12">
+          <Col className="mb-5 mb-xl-0" xl="10">
             <Card className="shadow">
               <CardHeader className="border-0">
                 <Row className="align-items-center">
@@ -177,8 +177,7 @@ const Aparelho = (props) => {
                   <tr>
                     <th scope="col">Modelo</th>
                     <th scope="col">Marca</th>
-                    <th scope="col">1º IMEI</th>
-                    <th scope="col">2º IMEI</th>
+                    <th scope="col">IMEI</th>
                     <th scope="col">Ações</th>
                   </tr>
                 </thead>
@@ -187,9 +186,7 @@ const Aparelho = (props) => {
                     <th scope="row">Nilson</th>
                     <td>4,569</td>
                     <td>340</td>
-                    <td>
-                      <i className="fas fa-arrow-up text-success mr-3" /> 999999999
-                    </td>
+                    
                     <td>
                       <div> <Link to="/auth/createUser">
                     
@@ -213,8 +210,8 @@ const Aparelho = (props) => {
                         </div>
                     </td>
                   </tr>
+              
                
-                 
                 
                  
                 </tbody>

@@ -49,7 +49,7 @@ import {
 } from "variables/charts.js";
 
 import Header from "components/Headers/Header.js";
-import Modall from "components/Modal/Modal";
+import Modall from "components/ModalAddUser/Modal";
 
 const Index = (props) => {
   const [activeNav, setActiveNav] = useState(1);
@@ -159,14 +159,6 @@ const Index = (props) => {
                     
                     <Modall/>
 
-                    <Button
-                      color="danger"
-                      // href="/admin/dashboard"
-                      
-                      size="sm"
-                    >
-                      Imprimir
-                    </Button>
                   </div>
                   {/* <div className="col text-right">
                     <Button
@@ -221,41 +213,10 @@ const Index = (props) => {
                         </div>
                     </td>
                   </tr>
-                  <tr>
-                    <th scope="row">Nilson Teste</th>
-                    <td>3,985</td>
-                    <td>319</td>
-                    <td>
-                      <i className="fas fa-arrow-down text-warning mr-3" />{" "}
-                      999999999
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Nilson Teste</th>
-                    <td>3,513</td>
-                    <td>294</td>
-                    <td>
-                      <i className="fas fa-arrow-down text-warning mr-3" />{" "}
-                      9999999
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Nilson Teste</th>
-                    <td>2,050</td>
-                    <td>147</td>
-                    <td>
-                      <i className="fas fa-arrow-up text-success mr-3" /> 999999
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Nilson Teste</th>
-                    <td>1,795</td>
-                    <td>190</td>
-                    <td>
-                      <i className="fas fa-arrow-down text-danger mr-3" />{" "}
-                      9999999
-                    </td>
-                  </tr>
+                 
+               
+               
+                  
                 </tbody>
               </Table>
             </Card>
