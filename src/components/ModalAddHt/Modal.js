@@ -8,7 +8,8 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Card,
     Container,
     Row,
     Col,
-  Label } from 'reactstrap';
+  Label, 
+  CustomInput} from 'reactstrap';
 
    
 
@@ -30,6 +31,7 @@ function Modall(args) {
       <Button size="sm"color="success" onClick={toggle}>
         Adicionar
       </Button>
+
       <Modal isOpen={modal} toggle={toggle} {...args}>
         <ModalHeader toggle={toggle}>Adicionar</ModalHeader>
         <ModalBody>
@@ -66,7 +68,7 @@ function Modall(args) {
                       </Col>
 
                       <Col lg="6">
-                        <FormGroup>
+                        {/* <FormGroup>
                           <label
                             className="form-control-label"
                             htmlFor="Marca-Ht"
@@ -81,7 +83,24 @@ function Modall(args) {
                             value={marca}
                             onChange={(e)=> setMarca (e.target.value)}
                           />
-                        </FormGroup>
+
+
+                        </FormGroup> */}
+                        <FormGroup>
+                          <Label for="exampleSelect">Marca</Label>
+                          <Input type="select" name="select" id="exampleSelect">
+                            <option selected>Escolha</option>
+                            <option>Marca 1</option>
+                            <option>Marca 2</option>
+                            <option>Marca 3</option>
+                            <option>Marca 4</option>
+                            <option>Marca 5</option>
+                          </Input>
+                      </FormGroup>
+
+
+
+
                       </Col>
 
                       <Col lg="6">
@@ -105,35 +124,52 @@ function Modall(args) {
                       </Col>
 
                       <Col lg="6">
-                        <FormGroup check inline>
+                        
+                        {/* <FormGroup check inline>
                           <label
                             className="form-control-label"
                             htmlFor="input-first-name"
                           >
                             Possui Base ?
                           </label>
-                          {/* <label
-                            className="form-control-label"
-                            htmlFor="input-last-name"
-                          >
-                            Base de Carga
-                          </label> */}
-                        </FormGroup>
+                      
+                        </FormGroup> */}
+                        {/* CheckBox selecionando apenas um */}
+                         <FormGroup>
+                            <Label for="exampleCheckbox">Possuí base ?</Label>
+                          </FormGroup>
+                          <FormGroup></FormGroup>
+
+
+
+
                         <div className="pl-lg-4">
-                        <Row>
+                        {/* <Row>
                           <Col lg="6">
                           <Input style={{marginLeft: 8}} type="checkbox" />
-                            <Label style={{marginLeft: 30}} check>
-                              SIM
-                            </Label>
+                              <Label style={{marginLeft: 30}} check> SIM</Label>
                             </Col>
                             <Col lg="3">
                             <Input style={{marginLeft: 5}} type="checkbox" />
-                            <Label style={{marginLeft: 25}} check>
-                            NÃO
-                            </Label>
+                              <Label style={{marginLeft: 25}} check>
+                              NÃO
+                              </Label>
+                            </Col>
+                            </Row> */}
+                            <Row>
+
+                            <Col lg="6">
+
+                            <CustomInput type="radio" id="exampleCustomRadio" name="customRadio" label="SIM" />
+                            </Col>
+                            <Col lg="3">
+
+                            <CustomInput type="radio" id="exampleCustomRadio2" name="customRadio" label="NÃO" />
                             </Col>
                             </Row>
+                            
+
+
                             </div>
                       </Col>
                     </Row>
