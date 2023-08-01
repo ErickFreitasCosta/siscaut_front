@@ -30,6 +30,7 @@ function Modall(args) {
       <Button size="sm"color="success" onClick={toggle}>
         Adicionar
       </Button>
+      
       <Modal isOpen={modal} toggle={toggle} {...args}>
         <ModalHeader toggle={toggle}>Adicionar</ModalHeader>
         <ModalBody>
