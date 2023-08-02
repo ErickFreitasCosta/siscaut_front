@@ -231,8 +231,9 @@ const Sidebar = (props) => {
           <Nav navbar>{createLinks(routes)}</Nav>
           {/* Divider */}
           <hr className="my-3" />
+          
           {/* Heading */}
-          {/* <h6 className="navbar-heading text-muted">Documentation</h6> */}
+         {/*  <h6 className="navbar-heading text-muted">Cautela</h6> */}
           {/* Navigation */}
           {/* <Nav className="mb-md-3" navbar>
             <NavItem>

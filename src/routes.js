@@ -31,6 +31,9 @@ import Aparelho from "views/aparelho"
 import Ht from "views/Ht"
 import Chip from "views/Chip"
 import Modem from "views/Modem"
+import Cautelar from "views/Cautelar"
+
+
 
 var routes = [
   {
@@ -79,13 +82,63 @@ var routes = [
     component: <Chip/>,
     layout: "/admin",
   },
-  /* {
+
+  {
+    path: "/Cautela",
+    name: "Cautelar Aparelho",
+    icon: "fas fa-solid fa-file-lines text-green",
+    component: <Cautelar/>,
+    layout: "/admin",
+  },
+  {
+    path: "/Cautela",
+    name: "Descautelar Aparelho",
+    icon: "fas fa-solid fa-file-lines text-red",
+    component: <Cautelar/>,
+    layout: "/admin",
+  },
+
+  {
+    path: "/Cautela",
+    name: "Cautelar modem",
+    icon: "fas fa-solid fa-file-lines text-green",
+    component: <Cautelar/>,
+    layout: "/admin",
+  },
+  {
+    path: "/Cautela",
+    name: "Descautelar modem",
+    icon: "fas fa-solid fa-file-lines text-red",
+    component: <Cautelar/>,
+    layout: "/admin",
+  },
+
+  {
+    path: "/Cautela",
+    name: "Cautelar HT",
+    icon: "fas fa-solid fa-file-lines text-green",
+    component: <Cautelar/>,
+    layout: "/admin",
+  },
+
+  {
+    path: "/Cautela",
+    name: "Descautelar HT",
+    icon: "fas fa-solid fa-file-lines text-red",
+    component: <Cautelar/>,
+    layout: "/admin",
+  },
+  
+
+
+   /* {
     path: "/icons",
     name: "Icons",
     icon: "ni ni-planet text-blue",
     component: <Icons />,
     layout: "/admin",
-  },
+  }, */
+  /*
   {
     path: "/maps",
     name: "Maps",
@@ -125,3 +178,5 @@ var routes = [
   
 ];
 export default routes;
+
+

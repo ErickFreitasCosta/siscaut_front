@@ -30,8 +30,9 @@ function Modall(args) {
     <div>
       <Button size="sm"color="success" onClick={toggle}>
         Adicionar
-      </Button>
-
+      </Button> 
+          
+develop
       <Modal isOpen={modal} toggle={toggle} {...args}>
         <ModalHeader toggle={toggle}>Adicionar</ModalHeader>
         <ModalBody>
