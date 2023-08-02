@@ -20,6 +20,7 @@
 // reactstrap components
 import { Card, CardBody, CardTitle, Container, Row, Col } from "reactstrap";
 
+
 const Header = () => {
   return (
     <>
@@ -28,8 +29,11 @@ const Header = () => {
           <div className="header-body">
             {/* Card stats */}
             <Row>
-              <Col lg="6" xl="2">
-                <Card className="card-stats mb-4 mb-xl-0">
+              <Col lg="3" xl="1">
+
+                {/* <Card className="card-stats mb-4 mb-xl-0">
+
+
                   <CardBody>
                     <Row>
                       <div className="col">
@@ -39,24 +43,31 @@ const Header = () => {
                         >
                           Cadastrar
                         </CardTitle>
-                        <span className="h2 font-weight-bold mb-0">
-                          Usuário
+                        <span className="h5 font-weight-bold mb-0">
+                          Responsável
                         </span>
                       </div>
+
+
                       <Col className="col-auto">
                         <div className="icon icon-shape bg-success text-white rounded-circle shadow">
                           <i className="ni ni-single-02" />
                         </div>
                       </Col>
+
                     </Row>
-                    {/* <p className="mt-3 mb-0 text-muted text-sm">
+                    <p className="mt-3 mb-0 text-muted text-sm">
                       <span className="text-success mr-2">
                         <i className="fa fa-arrow-up" /> 3.48%
                       </span>{" "}
                       <span className="text-nowrap">Since last month</span>
-                    </p> */}
+                    </p>
                   </CardBody>
-                </Card>
+
+
+                </Card> */}
+
+
               </Col>
               <Col lg="6" xl="2">
                 <Card className="card-stats mb-4 mb-xl-0">
@@ -67,9 +78,9 @@ const Header = () => {
                           tag="h5"
                           className="text-uppercase text-muted mb-0"
                         >
-                          Cadastrar
+                          Quantidade 
                         </CardTitle>
-                        <span className="h2 font-weight-bold mb-0">Aparelho</span>
+                        <span className="h3 font-weight-bold mb-0">Aparelhos</span>
                       </div>
                       <Col className="col-auto">
                         <div className="icon icon-shape bg-warning text-white rounded-circle shadow">
@@ -95,7 +106,7 @@ const Header = () => {
                           tag="h5"
                           className="text-uppercase text-muted mb-0"
                         >
-                          Cadastrar
+                          Quantidade
                         </CardTitle>
                         <span className="h2 font-weight-bold mb-0">HT</span>
                       </div>
@@ -123,9 +134,9 @@ const Header = () => {
                           tag="h5"
                           className="text-uppercase text-muted mb-0"
                         >
-                          Cadastrar
+                          Quantidade
                         </CardTitle>
-                        <span className="h2 font-weight-bold mb-0">Chip</span>
+                        <span className="h2 font-weight-bold mb-0">Chips</span>
                       </div>
                       <Col className="col-auto">
                         <div className="icon icon-shape bg-yellow text-white rounded-circle shadow">
@@ -151,9 +162,9 @@ const Header = () => {
                           tag="h5"
                           className="text-uppercase text-muted mb-0"
                         >
-                          Cadastrar
+                          Quantidade
                         </CardTitle>
-                        <span className="h2 font-weight-bold mb-0">Modem</span>
+                        <span className="h2 font-weight-bold mb-0">Modens</span>
                       </div>
                       <Col className="col-auto">
                         <div className="icon icon-shape bg-info text-white rounded-circle shadow">
