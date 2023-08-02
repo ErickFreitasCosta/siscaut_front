@@ -66,7 +66,8 @@ function Modall(args) {
                       </Row>
                       <Row>
                       <Col lg="11">
-                        <FormGroup>
+
+                        {/* <FormGroup>
                           <label
                             className="form-control-label"
                             htmlFor="Marca-Ht"
@@ -81,7 +82,20 @@ function Modall(args) {
                             value={marca}
                             onChange={(e)=> setMarca (e.target.value)}
                           />
-                        </FormGroup>
+                        </FormGroup> */}
+
+                     <FormGroup>
+                          <Label for="exampleSelect">Marca</Label>
+                          <Input type="select" name="select" id="exampleSelect" value={marca} onChange={(e)=>setMarca(e.target.value)}>
+                            <option selected>Escolha</option>
+                            <option>Marca 1</option>
+                            <option>Marca 2</option>
+                            <option>Marca 3</option>
+                            <option>Marca 4</option>
+                            <option>Marca 5</option>
+                          </Input>
+                      </FormGroup>
+
                       </Col>
                       </Row>
 

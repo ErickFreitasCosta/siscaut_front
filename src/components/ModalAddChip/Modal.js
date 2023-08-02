@@ -27,9 +27,10 @@ function Modall(args) {
 
   return (
     <div>
-      <Button size="sm"color="success" onClick={toggle}>
+      <Button size="xm"color="success" onClick={toggle}>
         Adicionar
       </Button>
+
       <Modal isOpen={modal} toggle={toggle} {...args}>
         <ModalHeader toggle={toggle}>Adicionar</ModalHeader>
         <ModalBody>
@@ -39,7 +40,7 @@ function Modall(args) {
                 <Form>
 
                   <h6 className="heading-small text-muted mb-4">
-                    Informações HT
+                    Informações Chip
                   </h6>
 
                   <div className="pl-lg-4">
@@ -57,7 +58,7 @@ function Modall(args) {
                             className="form-control-alternative"
                             /* defaultValue="lucky.jesse" */
                             id="input-ModeloHt"
-                            placeholder="Nº de serie"
+                            placeholder="Nº de série"
                             type="text"
                           />
                         </FormGroup>
@@ -89,6 +90,7 @@ function Modall(args) {
                 </Form>
               </CardBody>
         </ModalBody>
+
         <ModalFooter>
           <Button color="success" onClick={toggle}>
             Adicionar
@@ -98,6 +100,7 @@ function Modall(args) {
           </Button>
         </ModalFooter>
       </Modal>
+
     </div>
   );
 }
