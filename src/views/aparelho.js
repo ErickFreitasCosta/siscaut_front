@@ -188,7 +188,7 @@ const Aparelho = (props) => {
                     <td>4,569</td>
                     <td>340</td>
                     <td>
-                      <i className="fas fa-arrow-up text-success mr-3" /> 999999999
+                      {/* <i className="fas fa-arrow-up text-success mr-3" />  */}
                     </td>
                     <td>
                       <div> <Link to="/auth/createUser">
@@ -202,14 +202,7 @@ const Aparelho = (props) => {
                           </Button>
                         </Link>
 
-                          <Button
-                            color="danger"
-                            // href="/admin/dashboard"
-                            
-                            size="sm"
-                          >
-                            Excluir
-                          </Button>
+                          <Button color="danger" size="sm"> Excluir </Button>
                         </div>
                     </td>
                   </tr>
