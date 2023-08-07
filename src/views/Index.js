@@ -54,7 +54,7 @@ import Modall from "components/ModalAddUser/Modal";
 const Index = (props) => {
   const [activeNav, setActiveNav] = useState(1);
   const [chartExample1Data, setChartExample1Data] = useState("data1");
-
+  const [modelo, setModelo] = useState('')
   if (window.Chart) {
     parseOptions(Chart, chartOptions());
   }

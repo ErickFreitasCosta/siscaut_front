@@ -40,6 +40,10 @@ import {
   Col,
 } from "reactstrap";
 
+//FirebsaeConfigs
+import {db} from '../firebase'
+import {doc, setDoc, Collection, addDoc, collection} from 'firebase/firestore'
+
 // core components
 import {
   chartOptions,
@@ -51,13 +55,54 @@ import {
 import Header from "components/Headers/Header.js";
 import Modall from "components/ModalAddAparelho/Modal";
 
+
+
+
 const Aparelho = (props) => {
   const [activeNav, setActiveNav] = useState(1);
   const [chartExample1Data, setChartExample1Data] = useState("data1");
 
+
+  const [modelo, setModelo] = useState('')
+  const [imei1, setImei1] = useState('')
+    const [imei2, setImei2] = useState('')
+    const [marca, setMarca] = useState('')
+
+
   if (window.Chart) {
     parseOptions(Chart, chartOptions());
   }
+
+  //Função de add do Aparelho ao bando de dados
+  async function handleAdd(){
+
+  await addDoc(collection(db,"Aparelhos"),{
+    imei1: imei1,
+    imei2: imei2,
+    marca:marca,
+    modelo:modelo,
+  })
+  .then(()=>{
+    console.log("conseguiu")
+    setImei1('')
+    setImei2('')
+    setModelo('')
+    setMarca('')
+  })
+  .catch((error)=>{
+    console.log(error)
+
+  });
+
+}
+
+  /* function handleAddd(){
+
+    console.log(modelo, imei1, imei2, marca )
+
+  } */
+
+
 
   const toggleNavs = (e, index) => {
     e.preventDefault();
@@ -156,7 +201,22 @@ const Aparelho = (props) => {
                     <h3 className="mb-0">Aparelhos</h3>
                   </div>
                   <div> 
-                    <Modall/>
+                    <Modall
+                    valueModelo={modelo}
+                    valueAltModelo={(e)=>setModelo(e)}
+
+                    valueMarca={marca}
+                    valueAltMarca={(e)=>setMarca(e)}
+
+                    value1imei={imei1}
+                    valueAlt1imei={(e)=>setImei1(e)}
+
+                    value2imei={imei2}
+                    valueAlt2imei={(e)=>setImei2(e)}
+
+                    
+                    Add={handleAdd}
+                    />
 
                    
                   </div>

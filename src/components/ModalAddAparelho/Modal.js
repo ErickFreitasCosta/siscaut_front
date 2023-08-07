@@ -16,10 +16,10 @@ function Modall(args) {
 
   
 
-    const [imei1, setImei1] = useState('')
+    /* const [imei1, setImei1] = useState('')
     const [imei2, setImei2] = useState('')
-    const [marca, setMarca] = useState('')
-    const [modelo, setModelo] = useState('')
+    const [marca, setMarca] = useState('') */
+    /* const [modelo, setModelo] = useState('') */
 
 
   const toggle = () => setModal(!modal);
@@ -57,8 +57,8 @@ function Modall(args) {
                             id="input-last-name"
                             placeholder="Modelo"
                             type="text"
-                            value={modelo}
-                            onChange={(e)=> setModelo (e.target.value)}
+                            value={args.valueModelo}
+                            onChange={(e)=> args.valueAltModelo(e.target.value)}
                           />
                         </FormGroup>
                       </Col>
@@ -78,8 +78,9 @@ function Modall(args) {
                             id="input-username"
                             placeholder="Marca"
                             type="text"
-                            value={marca}
-                            onChange={(e)=> setMarca (e.target.value)}
+                            value={args.valueMarca}
+                            onChange={(e)=> args.valueAltMarca(e.target.value)}
+                           
                           />
                         </FormGroup>
                       </Col>
@@ -96,8 +97,8 @@ function Modall(args) {
                             id="input-email"
                             placeholder="IMEI"
                             type="text"
-                            value={imei1}
-                            onChange={(e)=> setImei1 (e.target.value)}
+                            value={args.value1imei}
+                            onChange={(e)=> args.valueAlt1imei(e.target.value)}
                           />
                         </FormGroup>
                       </Col>
@@ -114,8 +115,8 @@ function Modall(args) {
                             id="input-first-name"
                             placeholder="IMEI"
                             type="text"
-                            value={imei2}
-                            onChange={(e)=> setImei2 (e.target.value)}
+                            value={args.value2imei}
+                            onChange={(e)=> args.valueAlt2imei(e.target.value)}
 
                           />
                         </FormGroup>
@@ -134,7 +135,7 @@ function Modall(args) {
 
 
         <ModalFooter>
-          <Button color="success" onClick={toggle}>
+          <Button color="success" onClick={args.Add}>
             Adicionar
           </Button>{' '}
           <Button color="warning" onClick={toggle}>
