@@ -24,7 +24,7 @@ function Modall(args) {
     const [modelo, setModelo] = useState('')
 
 
-  const toggle = () => setModal(!modal);
+  const toggle = (props) => setModal(!modal);
 
   return (
     <div>
@@ -79,7 +79,7 @@ develop
                           <Input
                             className="form-control-alternative"
                             id="Marca-Ht"
-                            placeholder="Marca"
+                            placehconst [modelo, setModelo] = useState('')older="Marca"
                             type="text"
                             value={marca}
                             onChange={(e)=> setMarca (e.target.value)}
