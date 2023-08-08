@@ -19,21 +19,17 @@ import {Link} from "react-router-dom";
 
 import { useState } from "react";
 // node.js library that concatenates classes (strings)
-import classnames from "classnames";
+
 // javascipt plugin for creating charts
 import Chart from "chart.js";
 // react plugin used to create charts
-import { Line, Bar } from "react-chartjs-2";
+
 // reactstrap components
 import {
   Button,
   Card,
   CardHeader,
-  CardBody,
-  NavItem,
-  NavLink,
-  Nav,
-  Progress,
+
   Table,
   Container,
   Row,
@@ -44,8 +40,7 @@ import {
 import {
   chartOptions,
   parseOptions,
-  chartExample1,
-  chartExample2,
+ 
 } from "variables/charts.js";
 
 import Header from "components/Headers/Header.js";
@@ -186,7 +181,7 @@ const Index = (props) => {
                   <tr>
                     <th scope="row">Nilson</th>
                     <td>4,569</td>
-                    <td>340</td>
+                    <td>34</td>
                     <td>
                       <i className="fas fa-arrow-up text-success mr-3" /> 999999999
                     </td>

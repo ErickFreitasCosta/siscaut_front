@@ -25,6 +25,7 @@ import Chart from "chart.js";
 // react plugin used to create charts
 import { Line, Bar } from "react-chartjs-2";
 // reactstrap components
+import './index.css'
 import {
   Button,
   Card,
@@ -174,21 +175,21 @@ const Aparelho = (props) => {
               </CardHeader>
               <Table className="align-items-center table-flush" responsive>
                 <thead className="thead-light">
-                  <tr>
+                  <tr className="justificar">
                     <th scope="col">Modelo</th>
                     <th scope="col">Marca</th>
-                    <th scope="col">IMEI</th>
+                    <th scope="col" className="ajeitar">IMEI</th>
                     <th scope="col">Ações</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <th scope="row">Nilson</th>
-                    <td>4,569</td>
-                    <td>340</td>
+                    <th scope="row">S20</th>
+                    <td>Samsung</td>
+                    <td>340 123 432 234 785</td>
                     
                     <td>
-                    
+                        {/* ISSO É O BUTTON DE CAUTELAR DE APARELHOS */}
                         <Modall/>
                     </td>
                   </tr>
