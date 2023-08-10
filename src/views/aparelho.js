@@ -17,7 +17,7 @@
 */
 import {Link} from "react-router-dom";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 // node.js library that concatenates classes (strings)
 import classnames from "classnames";
 // javascipt plugin for creating charts
@@ -42,7 +42,7 @@ import {
 
 //FirebsaeConfigs
 import {db} from '../firebase'
-import {doc, setDoc, Collection, addDoc, collection} from 'firebase/firestore'
+import {doc, setDoc, Collection, addDoc, collection, onSnapshot} from 'firebase/firestore'
 
 // core components
 import {
@@ -63,10 +63,12 @@ const Aparelho = (props) => {
   const [chartExample1Data, setChartExample1Data] = useState("data1");
 
 
-  const [modelo, setModelo] = useState('')
-  const [imei1, setImei1] = useState('')
+    const [modelo, setModelo] = useState('')
+    const [imei1, setImei1] =   useState('')
     const [imei2, setImei2] = useState('')
     const [marca, setMarca] = useState('')
+
+    const [aparelhos,setAparelhos] = useState([])
 
 
   if (window.Chart) {
@@ -96,11 +98,35 @@ const Aparelho = (props) => {
 
 }
 
-  /* function handleAddd(){
 
-    console.log(modelo, imei1, imei2, marca )
+function teste(){
+  console.log(typeof(aparelhos) )
+}
 
-  } */
+
+
+  //função de exibição 
+  useEffect(()=>{
+    async function loadAparelhos(){
+      const unsub = onSnapshot(collection(db,'Aparelhos'), (snapshot)=>{
+        let listaAparelhos = [];
+
+        snapshot.forEach((doc)=>{
+          listaAparelhos.push({
+            id: doc.id,
+            imei1: doc.data().imei1,
+            imei2: doc.data().imei2,
+            marca: doc.data().marca,
+            modelo: doc.data().modelo
+          })
+        })
+        setAparelhos(listaAparelhos);
+      });
+
+    }
+      loadAparelhos();
+
+  },[])
 
 
 
@@ -199,20 +225,23 @@ const Aparelho = (props) => {
                 <Row className="align-items-center">
                   <div className="col">
                     <h3 className="mb-0">Aparelhos</h3>
-                  </div>
+                   </div>
                   <div> 
                     <Modall
                     valueModelo={modelo}
                     valueAltModelo={(e)=>setModelo(e)}
 
+                    
                     valueMarca={marca}
                     valueAltMarca={(e)=>setMarca(e)}
+
 
                     value1imei={imei1}
                     valueAlt1imei={(e)=>setImei1(e)}
 
+
                     value2imei={imei2}
-                    valueAlt2imei={(e)=>setImei2(e)}
+                    valueAlt2imei={e=>setImei2(e)}
 
                     
                     Add={handleAdd}
@@ -243,12 +272,46 @@ const Aparelho = (props) => {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
+
+                   
+                   
+                   
+                   {aparelhos.map((aparelhos) =>{
+                    return(
+                      <tr key={aparelhos.id}>
+                        <th scope="row">{aparelhos.modelo}</th>
+                        <th>{aparelhos.marca}</th>
+                        <th>{aparelhos.imei1}</th>
+                        <th>{aparelhos.imei2}</th>
+                        <td>
+                      <div> <Link to="/auth/createUser">
+                    
+                        <Button
+                            color="success"
+                            // href="/admin/dashboard"
+                            size="sm"
+                          >
+                            Editar
+                          </Button>
+                        </Link>
+
+                          <Button color="danger" size="sm" onClick={teste}> Excluir </Button>
+                        </div>
+                    </td>
+                      </tr>
+                    )
+                   })}
+
+
+
+
+
+
+                  {/* <tr>
                     <th scope="row">Nilson</th>
                     <td>4,569</td>
                     <td>340</td>
                     <td>
-                      {/* <i className="fas fa-arrow-up text-success mr-3" />  */}
                     </td>
                     <td>
                       <div> <Link to="/auth/createUser">
@@ -262,10 +325,12 @@ const Aparelho = (props) => {
                           </Button>
                         </Link>
 
-                          <Button color="danger" size="sm"> Excluir </Button>
+                          <Button color="danger" size="sm" onClick={teste}> Excluir </Button>
                         </div>
                     </td>
                   </tr>
+ */}
+                  
                
                  
                 

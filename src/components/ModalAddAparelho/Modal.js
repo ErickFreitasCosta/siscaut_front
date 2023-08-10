@@ -22,7 +22,18 @@ function Modall(args) {
     /* const [modelo, setModelo] = useState('') */
 
 
-  const toggle = () => setModal(!modal);
+  const toggle = () => setModal(!modal) 
+
+  const Add = () => args.Add()
+  
+  const acionarConstantes = () => {
+    Add()
+    toggle()
+  };
+
+
+ 
+  
 
   return (
     <div>
@@ -58,7 +69,7 @@ function Modall(args) {
                             placeholder="Modelo"
                             type="text"
                             value={args.valueModelo}
-                            onChange={(e)=> args.valueAltModelo(e.target.value)}
+                  onChange={(e) => args.valueAltModelo(e.target.value)}
                           />
                         </FormGroup>
                       </Col>
@@ -135,7 +146,7 @@ function Modall(args) {
 
 
         <ModalFooter>
-          <Button color="success" onClick={args.Add}>
+          <Button color="success" onClick={acionarConstantes}>
             Adicionar
           </Button>{' '}
           <Button color="warning" onClick={toggle}>
