@@ -48,21 +48,17 @@ function Modall(args) {
           
           
         <Form>
-                  <h6 className="heading-small text-muted mb-4">
-                    Informações do Aparelho
-                  </h6>
-                  <div className="pl-lg-4">
-                    <Row>
-                      
+                  <h6 className="heading-small text-muted mb-4">Informações do Aparelho</h6>
 
+                  <div className="pl-lg-4">
+
+                    <Row>
                     <Col lg="12">
                         <FormGroup>
-                          <label
-                            className="form-control-label"
-                            htmlFor="input-last-name"
-                          >
+                          <label className="form-control-label" htmlFor="input-last-name">
                             Modelo
                           </label>
+
                           <Input
                             className="form-control-alternative"
                             id="input-last-name"
@@ -71,10 +67,9 @@ function Modall(args) {
                             value={args.valueModelo}
                   onChange={(e) => args.valueAltModelo(e.target.value)}
                           />
+
                         </FormGroup>
                       </Col>
-
-
 
                       <Col lg="12">
                         <FormGroup>
