@@ -42,7 +42,7 @@ import {
 
 //FirebsaeConfigs
 import {db} from '../firebase'
- feature/banco_de_dados
+ 
 import {doc, setDoc, Collection, addDoc, collection, onSnapshot} from 'firebase/firestore'
 
 // core components
@@ -68,7 +68,7 @@ const Aparelho = (props) => {
 
 
     const [modelo, setModelo] = useState('')
-feature/banco_de_dados
+
     const [imei1, setImei1] =   useState('')
   
     const [imei2, setImei2] = useState('')
@@ -104,7 +104,7 @@ feature/banco_de_dados
   });
 }
 
- feature/banco_de_dados
+
 
 function teste(){
   console.log(typeof(aparelhos) )
@@ -143,21 +143,6 @@ function teste(){
     setActiveNav(index);
     setChartExample1Data("data" + index);
   };
-
-
-
-  async function getList(){
-
-    const postsRef =collection(db,"Aparelhos")
-    const response  = await getDocs(postsRef)
-    const data = response.docs.map((doc)=>({...doc.data(),id: doc.id}))
-
-    console.log('POSTREF' ,data)
-    setListaAparelho(data)
- 
-  }
-  useEffect(()=>{getList()},[])
-
 
 
 
@@ -206,7 +191,7 @@ function teste(){
               <Table className="align-items-center table-flush" responsive>
         
                 <tbody>
-feature/banco_de_dados
+
 
                    
                    
