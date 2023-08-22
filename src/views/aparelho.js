@@ -193,12 +193,12 @@ async function editAparelho(){
 
                     value2imei={imei2}
                     valueAlt2imei={e=>setImei2(e)}
-
+    
                     
                     Add={handleAdd}
                     />
 
-                   
+                    
                   </div>
     
                 </Row>
