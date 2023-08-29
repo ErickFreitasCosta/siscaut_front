@@ -173,6 +173,7 @@ async function editAparelho(){
                   <div className="col">
                     <h3 className="mb-0">Aparelhos</h3>
                    </div>
+                   
                   <div> 
                     <Modall
                     nameBtn= "Adicionar"
