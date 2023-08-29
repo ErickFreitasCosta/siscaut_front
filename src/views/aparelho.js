@@ -215,6 +215,8 @@ async function editAparelho(){
                     <th scope="col" >2º IMEI</th>
                     <th scope="col">Ações</th>
                   </tr>
+
+                     
                 </thead>
 
 
