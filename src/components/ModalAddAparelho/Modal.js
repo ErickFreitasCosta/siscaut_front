@@ -64,9 +64,10 @@ function Modall(args) {
                             id="input-last-name"
                             placeholder="Modelo"
                             type="text"
+                            name = "valueModelo"
                             value={args.valueModelo}
                   onChange={(e) => args.valueAltModelo(e.target.value)}
-                          />
+                  />
 
                         </FormGroup>
                       </Col>
