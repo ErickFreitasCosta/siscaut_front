@@ -25,7 +25,8 @@ import AdminFooter from "components/Footers/AdminFooter.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
 
 import routes from "routes.js";
-
+import Logo from '../assets/img/brand/ditel.png'
+import './index.css'
 
 const Admin = (props) => {
   const mainContent = React.useRef(null);
@@ -63,15 +64,17 @@ const Admin = (props) => {
 
   return (
     <>
+    
       <Sidebar
         {...props}
         routes={routes}
         logo={{
           innerLink: "/admin/index",
-          imgSrc: require("../assets/img/brand/logo.png"),
+          imgSrc: require("../assets/img/brand/ditel.png"),
           imgAlt: "...",
-          style: {
+          styles: {
             width: '100%',
+         
           }
           
         }}

@@ -82,7 +82,7 @@ const CreateChip = () => {
               <CardBody>
                 <Form>
                   <h6 className="heading-small text-muted mb-4">
-                    Informações do Chip
+                    Informações do chip 
                   </h6>
                   <div className="pl-lg-4">
                     <Row>
@@ -92,7 +92,7 @@ const CreateChip = () => {
                             className="form-control-label"
                             htmlFor="input-username"
                           >
-                            Nª de serie
+                            Nª de Série 
                           </label>
                           <Input
                             className="form-control-alternative"
@@ -111,6 +111,7 @@ const CreateChip = () => {
                             htmlFor="input-email"
                           >
                             Linha
+
                           </label>
                           <Input
                             className="form-control-alternative"
@@ -184,6 +185,8 @@ const CreateChip = () => {
                         </FormGroup>
                       </Col>
                     </Row> */}
+                    
+                  
 
 
                   </div>

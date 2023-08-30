@@ -27,6 +27,13 @@ import CreateChip from "components/CreateChip.js";
 import CreatePhone from "components/CreatePhone.js";
 import CreateHt from "components/CreateHt.js";
 import CreateModem from "components/CreateModem.js";
+import Aparelho from "views/aparelho"
+import Ht from "views/Ht"
+import Chip from "views/Chip"
+import Modem from "views/Modem"
+import Cautelar from "views/Cautelar"
+
+
 
 var routes = [
   {
@@ -36,48 +43,102 @@ var routes = [
     component: <Index />,
     layout: "/admin",
   },
+  
   {
     path: "/createUser",
-    name: "Cadastrar Usuário",
+    name: "Usuário",
     icon: "ni ni-single-02 text-primary",
-    component: <CreateUser />,
-    layout: "/auth",
+    component: <Index />,
+    layout: "/admin",
   },
+
   {
     path: "/createPhone",
-    name: "Cadastrar Aparelho",
+    name: "Aparelho",
     icon: "fas fa fa-mobile text-primary",
-    component: <CreatePhone />,
-    layout: "/auth",
+    component: <Aparelho />,
+    layout: "/admin",
   },
+
+
   {
     path: "/createHT",
-    name: "Cadastrar HT",
+    name: "HT",
     icon: "fas fa fa-walkie-talkie text-primary",
-    component: <CreateHt />,
-    layout: "/auth",
+    component: <Ht />,
+    layout: "/admin",
   },
   {
     path: "/createModem",
-    name: "Cadastrar Modem",
+    name: "Modem",
     icon: "fas fa fa-wifi text-primary",
-    component: <CreateModem />,
-    layout: "/auth",
+    component: <Modem />,
+    layout: "/admin",
   },
   {
     path: "/createChip",
-    name: "Cadastrar Chip",
+    name: "Chip",
     icon: "fas fa-sim-card text-primary",
-    component: <CreateChip />,
-    layout: "/auth",
+    component: <Chip/>,
+    layout: "/admin",
   },
-  /* {
+
+  {
+    path: "/Cautela",
+    name: "Cautelar Aparelho",
+    icon: "fas fa-solid fa-file-lines text-green",
+    component: <Cautelar/>,
+    layout: "/admin",
+  },
+  {
+    path: "/Cautela",
+    name: "Descautelar Aparelho",
+    icon: "fas fa-solid fa-file-lines text-red",
+    component: <Cautelar/>,
+    layout: "/admin",
+  },
+
+  {
+    path: "/Cautela",
+    name: "Cautelar modem",
+    icon: "fas fa-solid fa-file-lines text-green",
+    component: <Cautelar/>,
+    layout: "/admin",
+  },
+  {
+    path: "/Cautela",
+    name: "Descautelar modem",
+    icon: "fas fa-solid fa-file-lines text-red",
+    component: <Cautelar/>,
+    layout: "/admin",
+  },
+
+  {
+    path: "/Cautela",
+    name: "Cautelar HT",
+    icon: "fas fa-solid fa-file-lines text-green",
+    component: <Cautelar/>,
+    layout: "/admin",
+  },
+
+  {
+    path: "/Cautela",
+    name: "Descautelar HT",
+    icon: "fas fa-solid fa-file-lines text-red",
+    component: <Cautelar/>,
+    layout: "/admin",
+  },
+  
+
+
+   /* {
     path: "/icons",
     name: "Icons",
     icon: "ni ni-planet text-blue",
     component: <Icons />,
     layout: "/admin",
-  },
+  }, */
+  /*
   {
     path: "/maps",
     name: "Maps",
@@ -109,10 +170,13 @@ var routes = [
   } */
   {
     path: "/tables",
-    name: "Tables",
+    name: "Cautelar",
     icon: "ni ni-bullet-list-67 text-red",
     component: <Tables />,
     layout: "/admin",
   },
+  
 ];
 export default routes;
+
+
