@@ -291,6 +291,11 @@ async function editAparelho(){
                   </tr>
  */}                                       
                  
+  
+
+
+
+
                 </tbody>
               </Table>
             </Card>
