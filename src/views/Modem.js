@@ -19,17 +19,21 @@ import {Link} from "react-router-dom";
 
 import { useState } from "react";
 // node.js library that concatenates classes (strings)
-
+import classnames from "classnames";
 // javascipt plugin for creating charts
 import Chart from "chart.js";
 // react plugin used to create charts
-
+import { Line, Bar } from "react-chartjs-2";
 // reactstrap components
 import {
   Button,
   Card,
   CardHeader,
-
+  CardBody,
+  NavItem,
+  NavLink,
+  Nav,
+  Progress,
   Table,
   Container,
   Row,
@@ -40,16 +44,17 @@ import {
 import {
   chartOptions,
   parseOptions,
- 
+  chartExample1,
+  chartExample2,
 } from "variables/charts.js";
 
 import Header from "components/Headers/Header.js";
-import Modall from "components/ModalAddUser/Modal";
+import Modall from "components/ModalAddModem/Modal";
 
-const Index = (props) => {
+const Aparelho = (props) => {
   const [activeNav, setActiveNav] = useState(1);
   const [chartExample1Data, setChartExample1Data] = useState("data1");
-  const [modelo, setModelo] = useState('')
+
   if (window.Chart) {
     parseOptions(Chart, chartOptions());
   }
@@ -143,17 +148,17 @@ const Index = (props) => {
           </Col> */}
         </Row>
         <Row className="mt-5">
-          <Col className="mb-5 mb-xl-0" xl="12">
+          <Col className="mb-5 mb-xl-0" xl="10">
             <Card className="shadow">
               <CardHeader className="border-0">
                 <Row className="align-items-center">
                   <div className="col">
-                    <h3 className="mb-0">Usuários Cadastrados</h3>
+                    <h3 className="mb-0">Aparelhos</h3>
                   </div>
                   <div> 
-                    
                     <Modall/>
 
+                   
                   </div>
                   {/* <div className="col text-right">
                     <Button
@@ -170,10 +175,9 @@ const Index = (props) => {
               <Table className="align-items-center table-flush" responsive>
                 <thead className="thead-light">
                   <tr>
-                    <th scope="col">Nome</th>
-                    <th scope="col">Posto/Grad</th>
-                    <th scope="col">Unidade</th>
-                    <th scope="col">Contato</th>
+                    <th scope="col">Modelo</th>
+                    <th scope="col">Marca</th>
+                    <th scope="col">IMEI</th>
                     <th scope="col">Ações</th>
                   </tr>
                 </thead>
@@ -181,10 +185,8 @@ const Index = (props) => {
                   <tr>
                     <th scope="row">Nilson</th>
                     <td>4,569</td>
-                    <td>34</td>
-                    <td>
-                      <i className="fas fa-arrow-up text-success mr-3" /> 999999999
-                    </td>
+                    <td>340</td>
+                    
                     <td>
                       <div> <Link to="/auth/createUser">
                     
@@ -208,10 +210,10 @@ const Index = (props) => {
                         </div>
                     </td>
                   </tr>
+              
+               
+                
                  
-               
-               
-                  
                 </tbody>
               </Table>
             </Card>
@@ -330,4 +332,4 @@ const Index = (props) => {
   );
 };
 
-export default Index;
+export default Aparelho;

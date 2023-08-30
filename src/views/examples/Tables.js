@@ -44,8 +44,8 @@ const Tables = () => {
       <Header />
       {/* Page content */}
       <Container className="mt--7" fluid>
-        {/* Table */}
-        <Row>
+        Table
+        {/* <Row>
           <div className="col">
             <Card className="shadow">
               <CardHeader className="border-0">
@@ -867,7 +867,13 @@ const Tables = () => {
               </CardFooter>
             </Card>
           </div>
-        </Row>
+        </Row> */}
+
+
+
+
+
+        
         {/* Dark table */}
         <Row className="mt-5">
           <div className="col">
@@ -881,11 +887,11 @@ const Tables = () => {
               >
                 <thead className="thead-dark">
                   <tr>
-                    <th scope="col">Project</th>
-                    <th scope="col">Budget</th>
+                    <th scope="col">Usuários</th>
+                    <th scope="col">Chip</th>
                     <th scope="col">Status</th>
-                    <th scope="col">Users</th>
-                    <th scope="col">Completion</th>
+                    {/* <th scope="col"></th> */}
+                    <th scope="col">Aparelho</th>
                     <th scope="col" />
                   </tr>
                 </thead>
@@ -905,20 +911,22 @@ const Tables = () => {
                         </a>
                         <Media>
                           <span className="mb-0 text-sm">
-                            Argon Design System
+                            Erick
                           </span>
                         </Media>
                       </Media>
                     </th>
-                    <td>$2,500 USD</td>
+                    <td>TIM</td>
                     <td>
                       <Badge color="" className="badge-dot mr-4">
                         <i className="bg-warning" />
-                        pending
+                        PENDENTE
                       </Badge>
                     </td>
                     <td>
-                      <div className="avatar-group">
+
+
+                      {/* <div className="avatar-group">
                         <a
                           className="avatar avatar-sm"
                           href="#pablo"
@@ -991,9 +999,12 @@ const Tables = () => {
                         >
                           Jessica Doe
                         </UncontrolledTooltip>
-                      </div>
+                      </div> */}
+
+
                     </td>
-                    <td>
+                    
+                    {/* <td>
                       <div className="d-flex align-items-center">
                         <span className="mr-2">60%</span>
                         <div>
@@ -1004,8 +1015,9 @@ const Tables = () => {
                           />
                         </div>
                       </div>
-                    </td>
-                    <td className="text-right">
+                    </td> */}
+
+                    {/* <td className="text-right">
                       <UncontrolledDropdown>
                         <DropdownToggle
                           className="btn-icon-only text-light"
@@ -1038,7 +1050,9 @@ const Tables = () => {
                           </DropdownItem>
                         </DropdownMenu>
                       </UncontrolledDropdown>
-                    </td>
+                    </td> */}
+
+
                   </tr>
                   <tr>
                     <th scope="row">
@@ -1055,19 +1069,20 @@ const Tables = () => {
                         </a>
                         <Media>
                           <span className="mb-0 text-sm">
-                            Angular Now UI Kit PRO
+                            Leonardo
                           </span>
                         </Media>
                       </Media>
                     </th>
-                    <td>$1,800 USD</td>
+                    <td>Claro</td>
                     <td>
                       <Badge color="" className="badge-dot">
                         <i className="bg-success" />
-                        completed
+                        Entregue
                       </Badge>
                     </td>
-                    <td>
+
+                    {/* <td>
                       <div className="avatar-group">
                         <a
                           className="avatar avatar-sm"
@@ -1139,8 +1154,10 @@ const Tables = () => {
                           Jessica Doe
                         </UncontrolledTooltip>
                       </div>
-                    </td>
-                    <td>
+                    </td> */}
+
+
+                    {/* <td>
                       <div className="d-flex align-items-center">
                         <span className="mr-2">100%</span>
                         <div>
@@ -1151,7 +1168,8 @@ const Tables = () => {
                           />
                         </div>
                       </div>
-                    </td>
+                    </td> */}
+                    
                     <td className="text-right">
                       <UncontrolledDropdown>
                         <DropdownToggle

@@ -1,0 +1,16 @@
+.justificar{
+    padding: 10px;
+    color: red;
+    font-size: 30px;
+    margin-left: 10px;
+   
+   
+}
+.ajeitar{
+    margin-left: 50px;
+}
+.lista{
+    display: flex;
+    justify-content: space-between;
+    
+}
