@@ -37,7 +37,7 @@ function ModalExample(props) {
         if(!listaAparelho.marca ) {
             return alert("DIGTE A MARCA")
         }
-        
+
         const docRef = doc(db,'Aparelhos',props.data.id)
         await updateDoc(docRef,{
             modelo: listaAparelho.modelo,
@@ -69,12 +69,12 @@ function ModalExample(props) {
 
   return (
     <div>
-      <Button color="warning" onClick={toggle}>
+      <Button className='botaoEditar' size='sm' onClick={toggle}>
         Editar
       </Button>
 
       <Modal isOpen={modal} toggle={toggle} external={externalCloseBtn}>
-        <ModalHeader>Editar</ModalHeader>
+        <ModalHeader>Editar Aparelhos</ModalHeader>
         <ModalBody>
 
         <Form>
@@ -179,10 +179,11 @@ function ModalExample(props) {
 
      
         <ModalFooter>
-          <Button color="primary" onClick={editarPost}>
-            Salvar Novos dados
+          <Button color="success"  onClick={editarPost}>
+            Salvar
           </Button>{' '}
-          <Button color="secondary" onClick={toggle}>
+
+          <Button color="danger" onClick={toggle}>
             Cancelar
           </Button>
         </ModalFooter>

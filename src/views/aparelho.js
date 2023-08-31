@@ -116,25 +116,6 @@ async function excluirAparelho(id){
   })
 }
 
-
-
-
-//função de Edit
-// async function editAparelho(){
-//   const aparelhos= doc(db,"Aparelhos", idAparelho)
-//   await updateDoc(aparelhos,{
-//     imei1: imei1,
-//     imei2: imei2,
-//     marca:marca,
-//     modelo:modelo,
-//   })
-// }
-
-
-
-
-
-
   //função de exibição 
   useEffect(()=>{
     async function loadAparelhos(){
@@ -158,16 +139,11 @@ async function excluirAparelho(id){
 
   },[])
 
-
-
-
   const toggleNavs = (e, index) => {
     e.preventDefault();
     setActiveNav(index);
     setChartExample1Data("data" + index);
   };
-
-
 
   return (
     <>
@@ -247,16 +223,14 @@ async function excluirAparelho(id){
 
                     
          
-                        <ModalExample
-                        data={aparelhos}
+                        <div className="OrganizarBotoes">
 
-                        
-                        
-                        />
+                          
+                          <ModalExample data={aparelhos}/>
+                          <ModalExcluir excluir={() => excluirAparelho(aparelhos.id)} />
+                        </div>
 
-                          <ModalExcluir
-                            excluir={() => excluirAparelho(aparelhos.id)}
-                          />
+
                         </div>
                     </td>
                       </tr>

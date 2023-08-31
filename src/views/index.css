@@ -14,3 +14,14 @@
     justify-content: space-between;
     
 }
+.OrganizarBotoes{
+    display: flex;
+}
+.botaoEditar{
+    background-color: #ffba01;
+    border: 1px solid #ffba01;
+}
+.botaoEditar:hover{
+    background-color: #ED990B;
+    border: 1px solid #ED990B;
+}
