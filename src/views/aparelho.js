@@ -57,6 +57,7 @@ import Header from "components/Headers/Header.js";
 import Modall from "components/ModalAddAparelho/Modal";
 import ModalExcluir from 'components/ModalExcluir/ModalExcluir'
 import './index.css'
+import  ModalExample from 'components/ModalEditAparelho/ModalO'
 
 
 
@@ -67,20 +68,17 @@ const Aparelho = (props) => {
   const [activeNav, setActiveNav] = useState(1);
   const [chartExample1Data, setChartExample1Data] = useState("data1");
 
-
     const [modelo, setModelo] = useState('')
 
     const [imei1, setImei1] =   useState('')
   
     const [imei2, setImei2] = useState('')
     const [marca, setMarca] = useState('')
-    const [idAparelho, setIdAparelho] = useState('')
     
-
     const [listaAparelho,setListaAparelho] = useState([])
-
     const [aparelhos,setAparelhos] = useState([])
-
+    
+    const [idAparelho, setIdAparelho] = useState('')
 
   if (window.Chart) {
     parseOptions(Chart, chartOptions());
@@ -118,25 +116,6 @@ async function excluirAparelho(id){
   })
 }
 
-
-
-
-//função de Edit
-async function editAparelho(){
-  const aparelhos= doc(db,"Aparelhos", idAparelho)
-  await updateDoc(aparelhos,{
-    imei1: imei1,
-    imei2: imei2,
-    marca:marca,
-    modelo:modelo,
-  })
-}
-
-
-
-
-
-
   //função de exibição 
   useEffect(()=>{
     async function loadAparelhos(){
@@ -160,16 +139,11 @@ async function editAparelho(){
 
   },[])
 
-
-
-
   const toggleNavs = (e, index) => {
     e.preventDefault();
     setActiveNav(index);
     setChartExample1Data("data" + index);
   };
-
-
 
   return (
     <>
@@ -188,12 +162,14 @@ async function editAparelho(){
                   <div className="col">
                     <h3 className="mb-0">Aparelhos</h3>
                    </div>
+                   
                   <div> 
-                    <Modall
+
+                    <Modall                
                     nameBtn= "Adicionar"
 
                     header="Adicionar Aparelho"
-
+                    
                     valueModelo={modelo}
                     valueAltModelo={(e)=>setModelo(e)}
 
@@ -212,8 +188,6 @@ async function editAparelho(){
                     
                     Add={handleAdd}
                     />
-
-                    
                   </div>
     
                 </Row>
@@ -246,32 +220,17 @@ async function editAparelho(){
                         <th>{aparelhos.imei2}</th>
                         <td>
                       <div> 
+
                     
-                       <Modall
-                       nameBtn="Editar"
+         
+                        <div className="OrganizarBotoes">
 
-                       header="Adicionar Aparelho"
+                          
+                          <ModalExample data={aparelhos}/>
+                          <ModalExcluir excluir={() => excluirAparelho(aparelhos.id)} />
+                        </div>
 
-                    valueModelo={aparelhos.modelo}
-                    valueAltModelo={(e)=>setModelo(e)}
-                    
-                    valueMarca={aparelhos.marca}
-                    valueAltMarca={(e)=>setMarca(e)}
 
-                    value1imei={aparelhos.imei1}
-                    valueAlt1imei={(e)=>setImei1(e)}
-
-                    value2imei={aparelhos.imei2}
-                    valueAlt2imei={e=>setImei2(e)}
-                    
-                    Add={editAparelho}
-                       
-                       />
-                        
-
-                          <ModalExcluir
-                            excluir={() => excluirAparelho(aparelhos.id)}
-                          />
                         </div>
                     </td>
                       </tr>
@@ -279,40 +238,6 @@ async function editAparelho(){
                    })}
 
 
-
-
-
-
-                  {/* <tr>
-                    <th scope="row">Nilson</th>
-                    <td>4,569</td>
-                    <td>340</td>
-                    <td>
-                    </td>
-                    <td>
-                      <div> <Link to="/auth/createUser">
-                    
-                        <Button
-                            color="success"
-                            // href="/admin/dashboard"
-                            size="sm"
-                          >
-                            Editar
-                          </Button>
-                        </Link>
-
-                          <Button color="danger" size="sm" onClick={teste}> Excluir </Button>
-                        </div>
-                    </td>
-                  </tr>
- */}
-
-        
-                  
-               
-                 
-                
-                 
                 </tbody>
               </Table>
             </Card>
