@@ -43,7 +43,7 @@ import {
 //FirebsaeConfigs
 import {db} from '../firebase'
  
-import {doc, setDoc, Collection, addDoc, collection, onSnapshot, updateDoc} from 'firebase/firestore'
+import {doc, setDoc, Collection, addDoc, collection, onSnapshot, updateDoc, deleteDoc} from 'firebase/firestore'
 
 // core components
 import {
@@ -55,6 +55,7 @@ import {
 
 import Header from "components/Headers/Header.js";
 import Modall from "components/ModalAddAparelho/Modal";
+import ModalExcluir from 'components/ModalExcluir/ModalExcluir'
 import './index.css'
 
 
@@ -106,6 +107,19 @@ const Aparelho = (props) => {
 
   });
 }
+
+//função excluir
+async function excluirAparelho(id){
+  /* alert("excluiu" + id) */
+  const excluDoc = doc(db, "Aparelhos", id)
+  await deleteDoc(excluDoc)
+  .then(() =>{
+      alert("sucesso na exclusão " + id)
+  })
+}
+
+
+
 
 //função de Edit
 async function editAparelho(){
@@ -255,7 +269,9 @@ async function editAparelho(){
                        />
                         
 
-                          <Button color="danger" size="sm" > Excluir </Button>
+                          <ModalExcluir
+                            excluir={() => excluirAparelho(aparelhos.id)}
+                          />
                         </div>
                     </td>
                       </tr>
@@ -308,4 +324,4 @@ async function editAparelho(){
   );
 };
 
-export default Aparelho;
+export default Aparelho;  
