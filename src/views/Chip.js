@@ -17,7 +17,7 @@
 */
 import {Link} from "react-router-dom";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 // node.js library that concatenates classes (strings)
 import classnames from "classnames";
 // javascipt plugin for creating charts
@@ -51,7 +51,20 @@ import {
 import Header from "components/Headers/Header.js";
 import Modall from "components/ModalAddChip/Modal";
 
+import ModalExcluir from 'components/ModalExcluir/ModalExcluir'
+
+
+import {db} from '../firebase'
+ 
+import {doc, setDoc, Collection, addDoc, collection, onSnapshot, updateDoc, deleteDoc} from 'firebase/firestore'
+
+
+
 const Aparelho = (props) => {
+
+
+  const [chip, setChip ] = useState([])
+
   const [activeNav, setActiveNav] = useState(1);
   const [chartExample1Data, setChartExample1Data] = useState("data1");
 
@@ -64,6 +77,46 @@ const Aparelho = (props) => {
     setActiveNav(index);
     setChartExample1Data("data" + index);
   };
+
+////////////////////////////////////////////função de exibição////////////////////////////////////////////
+
+useEffect(()=>{
+  async function loadChips(){
+    const unsub = onSnapshot(collection(db,'Chip'), (snapshot)=>{
+      let listaChips = [];
+
+      snapshot.forEach((doc)=>{
+        listaChips.push({
+          id: doc.id,
+          linha: doc.data().linha,
+          nserie: doc.data().nserie,
+        })
+      })
+      setChip(listaChips);
+    });
+
+  }
+    loadChips();
+
+},[])
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////função excluir///////////////////////////////////
+async function excluirChip(id){
+  /* alert("excluiu" + id) */
+  const excluDoc = doc(db, "Chip", id)
+  await deleteDoc(excluDoc)
+  .then(() =>{
+      alert("sucesso na exclusão " + id)
+  })
+}
+///////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
   return (
     <>
       <Header />
@@ -183,37 +236,35 @@ const Aparelho = (props) => {
                     <th scope="col">Ações</th> */}
                   </tr>
                 </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row">Nilson</th>
-                    <td>4,569</td>
-                    {/* <td>340</td> */}
-                    {/* {<td>
-                      <i className="fas fa-arrow-up text-success mr-3" /> 999999999
-                    </td>} */}
-                    <td>
-                      <div> <Link to="/auth/createUser">
-                    
-                        <Button
-                            color="success"
-                            // href="/admin/dashboard"
-                            size="sm"
-                          >
-                            Editar
-                          </Button>
-                        </Link>
 
-                          <Button
-                            color="danger"
-                            // href="/admin/dashboard"
-                            
-                            size="sm"
-                          >
-                            Excluir
-                          </Button>
+
+                <tbody>
+                {chip.map((chips)=>{
+                      return(
+                        <tr key={chips.id}>
+                          <th scope="row">{chips.linha}</th>
+                          <th scope="row">{chips.nserie}</th>
+
+                          <td>
+                      <div> 
+
+                    
+         
+                        <div className="OrganizarBotoes">
+                         
+                          <ModalExcluir func={() => excluirChip(chips.id)} />
+                        </div>
+
+
                         </div>
                     </td>
-                  </tr>
+
+
+                        </tr>
+                      )
+                    })}
+
+
                   {/* <tr>
                     <th scope="row">Nilson Teste</th>
                     <td>3,985</td>
