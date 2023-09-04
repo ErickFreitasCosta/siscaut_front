@@ -43,7 +43,7 @@ import {
 //FirebsaeConfigs
 import {db} from '../firebase'
  
-import {doc, setDoc, Collection, addDoc, collection, onSnapshot, updateDoc} from 'firebase/firestore'
+import {doc, setDoc, Collection, addDoc, collection, onSnapshot, updateDoc, deleteDoc} from 'firebase/firestore'
 
 // core components
 import {
@@ -54,8 +54,10 @@ import {
 } from "variables/charts.js";
 
 import Header from "components/Headers/Header.js";
-import Modall from "components/ModalAddAparelho/Modal";
+import ModalAdd from "components/ModalAddAparelho/Modal";
+import ModalExcluir from 'components/ModalExcluir/ModalExcluir'
 import './index.css'
+import  ModalExample from 'components/ModalEditAparelho/ModalO'
 
 
 
@@ -66,27 +68,23 @@ const Aparelho = (props) => {
   const [activeNav, setActiveNav] = useState(1);
   const [chartExample1Data, setChartExample1Data] = useState("data1");
 
-
     const [modelo, setModelo] = useState('')
-
     const [imei1, setImei1] =   useState('')
-  
     const [imei2, setImei2] = useState('')
     const [marca, setMarca] = useState('')
-    const [idAparelho, setIdAparelho] = useState('')
     
-
     const [listaAparelho,setListaAparelho] = useState([])
-
     const [aparelhos,setAparelhos] = useState([])
-
+    
+    const [idAparelho, setIdAparelho] = useState('')
 
   if (window.Chart) {
     parseOptions(Chart, chartOptions());
   }
 
   //Função de add do Aparelho ao bando de dados
-  async function handleAdd(){
+
+/*   async function handleAdd(){
 
   await addDoc(collection(db,"Aparelhos"),{
     imei1: imei1,
@@ -105,25 +103,21 @@ const Aparelho = (props) => {
     console.log(error)
 
   });
-}
+} */
 
-//função de Edit
-async function editAparelho(){
-  const aparelhos= doc(db,"Aparelhos", idAparelho)
-  await updateDoc(aparelhos,{
-    imei1: imei1,
-    imei2: imei2,
-    marca:marca,
-    modelo:modelo,
+///////////////////////////////////////função excluir///////////////////////////////////
+async function excluirAparelho(id){
+  /* alert("excluiu" + id) */
+  const excluDoc = doc(db, "Aparelhos", id)
+  await deleteDoc(excluDoc)
+  .then(() =>{
+      alert("sucesso na exclusão " + id)
   })
 }
+///////////////////////////////////////////////////////////////////////////////////////
 
 
-
-
-
-
-  //função de exibição 
+/////////////////////////////////////////função de exibição///////////////////////////// 
   useEffect(()=>{
     async function loadAparelhos(){
       const unsub = onSnapshot(collection(db,'Aparelhos'), (snapshot)=>{
@@ -145,9 +139,7 @@ async function editAparelho(){
       loadAparelhos();
 
   },[])
-
-
-
+  ////////////////////////////////////////////////////////////////////////////////
 
   const toggleNavs = (e, index) => {
     e.preventDefault();
@@ -155,14 +147,13 @@ async function editAparelho(){
     setChartExample1Data("data" + index);
   };
 
-
-
   return (
     <>
       <Header />
       {/* Page content */}
       <Container className="mt--7" fluid>
         <Row>
+          
           
         </Row>
         <Row className="mt-5">
@@ -175,30 +166,8 @@ async function editAparelho(){
                    </div>
                    
                   <div> 
-                    <Modall
-                    nameBtn= "Adicionar"
 
-                    header="Adicionar Aparelho"
-
-                    valueModelo={modelo}
-                    valueAltModelo={(e)=>setModelo(e)}
-
-                    
-                    valueMarca={marca}
-                    valueAltMarca={(e)=>setMarca(e)}
-
-
-                    value1imei={imei1}
-                    valueAlt1imei={(e)=>setImei1(e)}
-
-
-                    value2imei={imei2}
-                    valueAlt2imei={e=>setImei2(e)}
-    
-                    
-                    Add={handleAdd}
-                    />
-
+                    <ModalAdd/>
                     
                   </div>
     
@@ -232,30 +201,17 @@ async function editAparelho(){
                         <th>{aparelhos.imei2}</th>
                         <td>
                       <div> 
+
                     
-                       <Modall
-                       nameBtn="Editar"
+         
+                        <div className="OrganizarBotoes">
 
-                       header="Adicionar Aparelho"
+                          
+                          <ModalExample data={aparelhos}/>
+                          <ModalExcluir func={() => excluirAparelho(aparelhos.id)} />
+                        </div>
 
-                    valueModelo={aparelhos.modelo}
-                    valueAltModelo={(e)=>setModelo(e)}
-                    
-                    valueMarca={aparelhos.marca}
-                    valueAltMarca={(e)=>setMarca(e)}
 
-                    value1imei={aparelhos.imei1}
-                    valueAlt1imei={(e)=>setImei1(e)}
-
-                    value2imei={aparelhos.imei2}
-                    valueAlt2imei={e=>setImei2(e)}
-                    
-                    Add={editAparelho}
-                       
-                       />
-                        
-
-                          <Button color="danger" size="sm" > Excluir </Button>
                         </div>
                     </td>
                       </tr>
@@ -263,34 +219,6 @@ async function editAparelho(){
                    })}
 
 
-
-
-
-
-                  {/* <tr>
-                    <th scope="row">Nilson</th>
-                    <td>4,569</td>
-                    <td>340</td>
-                    <td>
-                    </td>
-                    <td>
-                      <div> <Link to="/auth/createUser">
-                    
-                        <Button
-                            color="success"
-                            // href="/admin/dashboard"
-                            size="sm"
-                          >
-                            Editar
-                          </Button>
-                        </Link>
-
-                          <Button color="danger" size="sm" onClick={teste}> Excluir </Button>
-                        </div>
-                    </td>
-                  </tr>
- */}                                       
-                 
                 </tbody>
               </Table>
             </Card>
@@ -302,4 +230,4 @@ async function editAparelho(){
   );
 };
 
-export default Aparelho;
+export default Aparelho;  

@@ -1,74 +1,83 @@
 import React, { useState } from 'react';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Card,
-    CardHeader,
-    CardBody,
-    FormGroup,
-    Form,
-    Input,
-    Container,
-    Row,
-    Col } from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Input, FormGroup, Col, Row, Form } from 'reactstrap';
 
-    import {doc, setDoc, Collection, addDoc, collection, onSnapshot, updateDoc, deleteDoc} from 'firebase/firestore'
-    import {db} from '../../firebase'
+import {db} from '../../firebase';
+import {doc, updateDoc,addDoc,getDocs} from 'firebase/firestore'
 
-   
 
-function Modall(args) {
+
+function ModalEditUser(props) {
   const [modal, setModal] = useState(false);
-
-  
-
-    const [nome, setNome] = useState('')
-    const [funcao, setFuncao] = useState('')
-    const [rg, setRg] = useState('')
-    const [unidade, setUnidade] = useState('')
-    const [postgrad, setPostgrad] = useState('')
-
-
-      /////////////////////////////////função handleAdd/////////////////////////////////////
-
-  async function handleAdd(){
-
-    await addDoc(collection(db,"Militares"),{
-      nome: nome,
-      funcao: funcao,
-      rg:rg,
-      unidade: unidade,
-      postgrad: postgrad,
-    })
-    .then(()=>{
-      console.log("conseguiu")
-      setNome('')
-      setFuncao('')
-      setUnidade('')
-      setPostgrad('')
-      setRg('')
-      toggle()
-    })
-    .catch((error)=>{
-      console.log(error)
-  
-    });
-  } 
-/////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
+  console.log('aqui',props)
 
   const toggle = () => setModal(!modal);
 
+  const externalCloseBtn = (
+    <button
+      type="button"
+      className="close"
+      style={{ position: 'absolute', top: '15px', right: '15px' }}
+      onClick={toggle}
+    >
+      &times;
+    </button>
+  );
+
+
+
+    const [listaMilitar, setListaMilitar]= useState(props.data)
+
+    const [nome, setNome] = useState('')
+  const [funcao, setFuncao] = useState('')
+  const [rg, setRg] = useState('')
+  const [unidade, setUnidade] = useState('')
+  const [postgrad, setPostgrad] = useState('')
+    
+
+    async function editarPost(){
+
+        const docRef = doc(db,'Militares',props.data.id)
+        await updateDoc(docRef,{
+          nome: listaMilitar.nome,
+          funcao: listaMilitar.funcao,
+          rg:listaMilitar.rg,
+          unidade: listaMilitar.unidade,
+          postgrad: listaMilitar.postgrad,
+         
+        })
+        .then(()=>{
+            console.log('Atualizado')
+            setNome('')
+            setFuncao('')
+            setRg('')
+            setUnidade('')
+            setPostgrad('')
+            toggle()
+
+        })
+        .catch(()=>{
+            console.log('Erro ao atualizar')
+
+        })
+    }
+
+    function handleSobreescrever(e){
+        setListaMilitar({...listaMilitar,[e.target.name] : e.target.value})
+
+    }
+
+
+
   return (
     <div>
-      <Button size="sm"color="success" onClick={toggle}>
-        Adicionar
+      <Button className='botaoEditar' size='sm' onClick={toggle}>
+        Editar
       </Button>
-      <Modal isOpen={modal} toggle={toggle} {...args}>
-        <ModalHeader toggle={toggle}>Adicionar Usuário</ModalHeader>
+
+      <Modal isOpen={modal} toggle={toggle} external={externalCloseBtn}>
+        <ModalHeader>Editar Aparelhos</ModalHeader>
         <ModalBody>
-          
-          
+        
         <Form>
                   <h6 className="heading-small text-muted mb-4">
                     Informações Pessoais
@@ -87,9 +96,10 @@ function Modall(args) {
                             className="form-control-alternative"
                             id="input-username"
                             placeholder="Nome"
+                            name='nome'
                             type="text"
-                            value={nome}
-                            onChange={(e)=> setNome (e.target.value)}
+                            value={listaMilitar.nome}
+                            onChange={e =>handleSobreescrever(e)}
                           />
                         </FormGroup>
                       </Col>
@@ -105,9 +115,10 @@ function Modall(args) {
                             className="form-control-alternative"
                             id="input-email"
                             placeholder="000000"
+                            name='rg'
                             type="text"
-                            value={rg}
-                            onChange={(e)=> setRg (e.target.value)}
+                            value={listaMilitar.rg}
+                            onChange={e =>handleSobreescrever(e)}
                           />
                         </FormGroup>
                       </Col>
@@ -123,10 +134,10 @@ function Modall(args) {
                             className="form-control-alternative"
                             id="input-first-name"
                             placeholder="Posto/Grad"
+                            name='postgrad'
                             type="text"
-                            value={postgrad}
-                            onChange={(e)=> setPostgrad (e.target.value)}
-
+                            value={listaMilitar.postgrad}
+                            onChange={e =>handleSobreescrever(e)}
                           />
                         </FormGroup>
                       </Col>
@@ -144,9 +155,10 @@ function Modall(args) {
                             className="form-control-alternative"
                             id="input-last-name"
                             placeholder="Unidade"
+                            name="unidade"
                             type="text"
-                            value={unidade}
-                            onChange={(e)=> setUnidade (e.target.value)}
+                            value={listaMilitar.unidade}
+                            onChange={e =>handleSobreescrever(e)}
                           />
                         </FormGroup>
                       </Col>
@@ -162,9 +174,10 @@ function Modall(args) {
                             className="form-control-alternative"
                             id="input-last-name"
                             placeholder="Função"
+                            name='funcao'
                             type="text"
-                            value={funcao}
-                            onChange={(e)=> setFuncao (e.target.value)}
+                            value={listaMilitar.funcao}
+                            onChange={e =>handleSobreescrever(e)}
                           />
                         </FormGroup>
                       </Col>
@@ -174,15 +187,16 @@ function Modall(args) {
                   {/* Address */}
                   
                 </Form>
-
-
-
+       
         </ModalBody>
+
+     
         <ModalFooter>
-          <Button color="success" onClick={handleAdd}>
-            Adicionar
+          <Button color="success"  onClick={editarPost}>
+            Salvar
           </Button>{' '}
-          <Button color="warning" onClick={toggle}>
+
+          <Button color="danger" onClick={toggle}>
             Cancelar
           </Button>
         </ModalFooter>
@@ -191,4 +205,4 @@ function Modall(args) {
   );
 }
 
-export default Modall;
+export default ModalEditUser;

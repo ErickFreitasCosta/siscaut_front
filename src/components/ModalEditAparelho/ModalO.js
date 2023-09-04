@@ -1,76 +1,82 @@
 import React, { useState } from 'react';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Card,
-    CardHeader,
-    CardBody,
-    FormGroup,
-    Form,
-    Input,
-    Container,
-    Row,
-    Col } from 'reactstrap';
-  
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Input, FormGroup, Col, Row, Form } from 'reactstrap';
 
-    import {doc, setDoc, Collection, addDoc, collection, onSnapshot, updateDoc, deleteDoc} from 'firebase/firestore'
-    import {db} from '../../firebase'
+import {db} from '../../firebase';
+import {doc, updateDoc,addDoc,getDocs} from 'firebase/firestore'
 
-function ModalAdd(args) {
+
+
+function ModalExample(props) {
   const [modal, setModal] = useState(false);
+  console.log('aqui',props)
 
-  const [modelo, setModelo] = useState('')
+  const toggle = () => setModal(!modal);
+
+  const externalCloseBtn = (
+    <button
+      type="button"
+      className="close"
+      style={{ position: 'absolute', top: '15px', right: '15px' }}
+      onClick={toggle}
+    >
+      &times;
+    </button>
+  );
+
+
+    const [modelo,setModelo] = useState('');
     const [imei1, setImei1] =   useState('')
     const [imei2, setImei2] = useState('')
     const [marca, setMarca] = useState('')
 
-    console.log(modelo)
+    const [idAparelho, setIdAparelho]= useState('')
 
-  const toggle = () => setModal(!modal) 
+    const [listaAparelho, setListaAparelho]= useState(props.data)
+    
+    async function editarPost(){
+        if(!listaAparelho.marca ) {
+            return alert("DIGTE A MARCA")
+        }
 
-/*   const Add = () => args.Add()
-  
-  const acionarConstantes = () => {
-    Add()
-    toggle()
-  }; */
+        const docRef = doc(db,'Aparelhos',props.data.id)
+        await updateDoc(docRef,{
+            modelo: listaAparelho.modelo,
+            imei1:listaAparelho.imei1,
+            imei2:listaAparelho.imei2,
+            marca:listaAparelho.marca
+        })
+        .then(()=>{
+            console.log('Atualizado')
+            setMarca('')
+            setImei1('')
+            setImei2('')
+            setModelo('')
+            toggle()
 
+        })
+        .catch(()=>{
+            console.log('Erro ao atualizar')
 
-  /////////////////////////////////função handleAdd/////////////////////////////////////
+        })
+    }
 
-  async function handleAdd(){
+    function handleSobreescrever(e){
+        setListaAparelho({...listaAparelho,[e.target.name] : e.target.value})
 
-    await addDoc(collection(db,"Aparelhos"),{
-      imei1: imei1,
-      imei2: imei2,
-      marca:marca,
-      modelo:modelo,
-    })
-    .then(()=>{
-      console.log("conseguiu")
-      setImei1('')
-      setImei2('')
-      setModelo('')
-      setMarca('')
-      toggle()
-    })
-    .catch((error)=>{
-      console.log(error)
-  
-    });
-  } 
-/////////////////////////////////////////////////////////////////////////////////////////////////
+    }
+
 
 
   return (
     <div>
-      <Button size="sm"color="success" onClick={toggle}>
-        Adicionar
+      <Button className='botaoEditar' size='sm' onClick={toggle}>
+        Editar
       </Button>
 
-
-      <Modal isOpen={modal} toggle={toggle} {...args}>
-        <ModalHeader toggle={toggle}>Adicionar aparelhos</ModalHeader>
+      <Modal isOpen={modal} toggle={toggle} external={externalCloseBtn}>
+        <ModalHeader>Editar Aparelhos</ModalHeader>
         <ModalBody>
-          
-          
+
         <Form>
                   <h6 className="heading-small text-muted mb-4">Informações do Aparelho</h6>
 
@@ -88,9 +94,11 @@ function ModalAdd(args) {
                             id="input-last-name"
                             placeholder="Modelo"
                             type="text"
-                            name = "valueModelo"
-                            value={modelo}
-                  onChange={(e) => setModelo(e.target.value)}
+
+                            name = "modelo"
+                            value={listaAparelho.modelo}
+                            onChange={e =>handleSobreescrever(e)}
+                     
                   />
 
                         </FormGroup>
@@ -98,22 +106,22 @@ function ModalAdd(args) {
 
                       <Col lg="12">
                         <FormGroup>
-                          <label
-                            className="form-control-label"
-                            htmlFor="input-username"
-                          >
-                            Marca 
-                          </label>
+                          <label className="form-control-label" htmlFor="input-username"> Marca </label>
+
                           <Input
                             className="form-control-alternative"
                             id="input-username"
                             placeholder="Marca"
                             type="text"
-                            value={marca}
-                            onChange={(e)=> setMarca(e.target.value)}
+
+                            name = "marca"
+                            value={listaAparelho.marca}
+                            onChange={e =>handleSobreescrever(e)}
+                        
                            
                           />
                         </FormGroup>
+
                       </Col>
                       <Col lg="6">
                         <FormGroup>
@@ -128,8 +136,11 @@ function ModalAdd(args) {
                             id="input-email"
                             placeholder="IMEI"
                             type="text"
-                            value={imei1}
-                            onChange={(e)=> setImei1(e.target.value)}
+
+                            name = "imei1"
+                            value={listaAparelho.imei1}
+                            onChange={e =>handleSobreescrever(e)}
+                           
                           />
                         </FormGroup>
                       </Col>
@@ -146,8 +157,11 @@ function ModalAdd(args) {
                             id="input-first-name"
                             placeholder="IMEI"
                             type="text"
-                            value={imei2}
-                            onChange={(e)=> setImei2(e.target.value)}
+
+                            name = "imei2"
+                            value={listaAparelho.imei2}
+                            onChange={e =>handleSobreescrever(e)}
+                      
 
                           />
                         </FormGroup>
@@ -159,24 +173,23 @@ function ModalAdd(args) {
                     </Row>
                   </div>
               
-                  {/* Address */}
                   
-                </Form>
+                </Form> 
         </ModalBody>
 
-
+     
         <ModalFooter>
-          <Button color="success" onClick={handleAdd}>
-            Adicionar
+          <Button color="success"  onClick={editarPost}>
+            Salvar
           </Button>{' '}
-          <Button color="warning" onClick={toggle}>
+
+          <Button color="danger" onClick={toggle}>
             Cancelar
           </Button>
         </ModalFooter>
       </Modal>
-      
     </div>
   );
 }
 
-export default ModalAdd;
+export default ModalExample;

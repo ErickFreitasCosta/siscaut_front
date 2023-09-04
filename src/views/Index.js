@@ -17,7 +17,7 @@
 */
 import {Link} from "react-router-dom";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 // node.js library that concatenates classes (strings)
 
 // javascipt plugin for creating charts
@@ -45,11 +45,27 @@ import {
 
 import Header from "components/Headers/Header.js";
 import Modall from "components/ModalAddUser/Modal";
+import ModalExcluir from '../components/ModalExcluir/ModalExcluir'
+import ModalEditUser from '../components/ModalEditUser/ModalEditUser'
+
+import {doc, setDoc, Collection, addDoc, collection, onSnapshot, updateDoc, deleteDoc} from 'firebase/firestore'
+    import {db} from '../firebase'
 
 const Index = (props) => {
   const [activeNav, setActiveNav] = useState(1);
   const [chartExample1Data, setChartExample1Data] = useState("data1");
   const [modelo, setModelo] = useState('')
+
+  const [militares, setMilitares] = useState([])
+  const [listaMilitares, setListaMilitares] = useState([])
+  const [nome, setNome] = useState('')
+  const [funcao, setFuncao] = useState('')
+  const [rg, setRg] = useState('')
+  const [unidade, setUnidade] = useState('')
+  const [postgrad, setPostgrad] = useState('')
+
+
+
   if (window.Chart) {
     parseOptions(Chart, chartOptions());
   }
@@ -59,6 +75,53 @@ const Index = (props) => {
     setActiveNav(index);
     setChartExample1Data("data" + index);
   };
+
+
+  ///////////////////////////////////////função excluir///////////////////////////////////
+async function excluirMilitar(id){
+  /* alert("excluiu" + id) */
+  const excluDoc = doc(db, "Militares", id)
+  await deleteDoc(excluDoc)
+  .then(() =>{
+      alert("sucesso na exclusão " + id)
+  })
+}
+///////////////////////////////////////////////////////////////////////////////////////
+
+
+
+  /////////////////////////////////////////função de exibição///////////////////////////// 
+  useEffect(()=>{
+    async function loadMilitares(){
+      const unsub = onSnapshot(collection(db,'Militares'), (snapshot)=>{
+        let listaMilitares = [];
+
+        snapshot.forEach((doc)=>{
+          listaMilitares.push({
+            id: doc.id,
+            funcao: doc.data().funcao,
+            nome: doc.data().nome,
+            postgrad: doc.data().postgrad,
+            rg: doc.data().rg,
+            unidade: doc.data().unidade
+
+          })
+        })
+        setMilitares(listaMilitares);
+      });
+
+    }
+      loadMilitares();
+
+  },[])
+  ////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
   return (
     <>
       <Header />
@@ -171,43 +234,43 @@ const Index = (props) => {
                 <thead className="thead-light">
                   <tr>
                     <th scope="col">Nome</th>
+                    <th scope="col">  Rg</th>
                     <th scope="col">Posto/Grad</th>
                     <th scope="col">Unidade</th>
-                    <th scope="col">Contato</th>
+                    <th scope="col">função</th>
                     <th scope="col">Ações</th>
+                    
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <th scope="row">Nilson</th>
-                    <td>4,569</td>
-                    <td>34</td>
-                    <td>
-                      <i className="fas fa-arrow-up text-success mr-3" /> 999999999
-                    </td>
-                    <td>
-                      <div> <Link to="/auth/createUser">
-                    
-                        <Button
-                            color="success"
-                            // href="/admin/dashboard"
-                            size="sm"
-                          >
-                            Editar
-                          </Button>
-                        </Link>
+                  {militares.map(militares=>{
 
-                          <Button
-                            color="danger"
-                            // href="/admin/dashboard"
-                            
-                            size="sm"
-                          >
-                            Excluir
-                          </Button>
+                      return(
+                        <tr key={militares.id}>
+                        <th>{militares.nome}</th>
+                        <th>{militares.rg}</th>
+                        <th>{militares.postgrad}</th>
+                        <th>{militares.unidade}</th>
+                        <th>{militares.funcao}</th>
+                        <td>
+                      <div> 
+
+                    
+         
+                        <div className="OrganizarBotoes">
+
+                          
+                        <ModalEditUser data={militares}/>
+                          <ModalExcluir func={() => excluirMilitar(militares.id)} />
+                        </div>
+
+
                         </div>
                     </td>
-                  </tr>
+
+                        </tr>
+                      )
+                  })}
                  
                
                
