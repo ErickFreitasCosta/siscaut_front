@@ -51,6 +51,7 @@ import {
 import Header from "components/Headers/Header.js";
 import Modall from "components/ModalAddChip/Modal";
 
+import ModalEditChip from "components/ModalEditChip/ModalEditChip";
 import ModalExcluir from 'components/ModalExcluir/ModalExcluir'
 
 
@@ -88,8 +89,8 @@ useEffect(()=>{
       snapshot.forEach((doc)=>{
         listaChips.push({
           id: doc.id,
-          linha: doc.data().linha,
           nserie: doc.data().nserie,
+          linha: doc.data().linha,
         })
       })
       setChip(listaChips);
@@ -242,8 +243,8 @@ async function excluirChip(id){
                 {chip.map((chips)=>{
                       return(
                         <tr key={chips.id}>
-                          <th scope="row">{chips.linha}</th>
                           <th scope="row">{chips.nserie}</th>
+                          <th scope="row">{chips.linha}</th>
 
                           <td>
                       <div> 
@@ -251,7 +252,7 @@ async function excluirChip(id){
                     
          
                         <div className="OrganizarBotoes">
-                         
+                         <ModalEditChip data= {chips}/>
                           <ModalExcluir func={() => excluirChip(chips.id)} />
                         </div>
 
