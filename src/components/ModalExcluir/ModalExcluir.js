@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
-function Example(args) {
+function Example({args, func}) {
   const [modal, setModal] = useState(false);
 
   const toggle = () => setModal(!modal);
@@ -17,7 +17,7 @@ function Example(args) {
          VOCÊ TEM CERTEZA QUE DESEJA EXCLUIR ?
         </ModalBody>
         <ModalFooter>
-          <Button color="danger" onClick={args.excluir}>
+          <Button color="danger" onClick={func}>
             Sim
           </Button>{' '}
           <Button color="primary" onClick={toggle}>

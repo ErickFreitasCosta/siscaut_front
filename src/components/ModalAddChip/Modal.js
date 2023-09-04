@@ -10,7 +10,10 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Card,
     Col,
   Label } from 'reactstrap';
 
-   
+import {db} from '../../firebase'
+import {doc, setDoc, Collection, addDoc, collection, onSnapshot, updateDoc, deleteDoc} from 'firebase/firestore'
+
+
 
 function Modall(args) {
   const [modal, setModal] = useState(false);
@@ -18,16 +21,39 @@ function Modall(args) {
   
 
     const [nserie, setNserie] = useState('')
-    const [base, setbase] = useState('')
-    const [marca, setMarca] = useState('')
-    const [modelo, setModelo] = useState('')
+    const [linha, setLinha] = useState('')
+    const [numero, setNumero] = useState('')
 
-
+   
   const toggle = () => setModal(!modal);
+
+
+  /////////////////////////////////Função HandleAdd////////////////////////////
+
+  async function handleAdd(){
+
+    await addDoc(collection(db,"Chip"),{
+      linha: linha,
+      nserie: nserie,
+    })
+    .then(()=>{
+      console.log("conseguiu")
+      setNserie('')
+      setLinha('')
+      toggle()
+    })
+    .catch((error)=>{
+      console.log(error)
+  
+    });
+  } 
+
+
+
 
   return (
     <div>
-      <Button size="xm"color="success" onClick={toggle}>
+      <Button size="sm"color="success" onClick={toggle}>
         Adicionar
       </Button>
 
@@ -59,6 +85,8 @@ function Modall(args) {
                             /* defaultValue="lucky.jesse" */
                             id="input-ModeloHt"
                             placeholder="Nº de série"
+                            value={nserie}
+                            onChange={(e)=>setNserie(e.target.value)}
                             type="text"
                           />
                         </FormGroup>
@@ -77,6 +105,8 @@ function Modall(args) {
                             className="form-control-alternative"
                             id="Marca-Ht"
                             placeholder="Marca"
+                            value={linha}
+                            onChange={(e)=> setLinha(e.target.value)}
                             type="text"
                           />
                         </FormGroup>
@@ -92,7 +122,7 @@ function Modall(args) {
         </ModalBody>
 
         <ModalFooter>
-          <Button color="success" onClick={toggle}>
+          <Button color="success" onClick={handleAdd}>
             Adicionar
           </Button>{' '}
           <Button color="warning" onClick={toggle}>

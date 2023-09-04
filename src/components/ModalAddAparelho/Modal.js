@@ -8,42 +8,69 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Card,
     Container,
     Row,
     Col } from 'reactstrap';
-
-   
-
-function Modall(args) {
-  const [modal, setModal] = useState(false);
-
   
 
-    /* const [imei1, setImei1] = useState('')
-    const [imei2, setImei2] = useState('')
-    const [marca, setMarca] = useState('') */
-    /* const [modelo, setModelo] = useState('') */
+    import {doc, setDoc, Collection, addDoc, collection, onSnapshot, updateDoc, deleteDoc} from 'firebase/firestore'
+    import {db} from '../../firebase'
 
+function ModalAdd(args) {
+  const [modal, setModal] = useState(false);
+
+  const [modelo, setModelo] = useState('')
+    const [imei1, setImei1] =   useState('')
+    const [imei2, setImei2] = useState('')
+    const [marca, setMarca] = useState('')
+
+    console.log(modelo)
 
   const toggle = () => setModal(!modal) 
 
-  const Add = () => args.Add()
+/*   const Add = () => args.Add()
   
   const acionarConstantes = () => {
     Add()
     toggle()
-  };
+  }; */
+
+
+  /////////////////////////////////função handleAdd
+
+  async function handleAdd(){
+
+    await addDoc(collection(db,"Aparelhos"),{
+      imei1: imei1,
+      imei2: imei2,
+      marca:marca,
+      modelo:modelo,
+    })
+    .then(()=>{
+      console.log("conseguiu")
+      setImei1('')
+      setImei2('')
+      setModelo('')
+      setMarca('')
+      toggle()
+    })
+    .catch((error)=>{
+      console.log(error)
+  
+    });
+  } 
+
 
 
  
-  
+  /////////////////////////////////////////////////////////////////////////////////////////////////
 
   return (
     <div>
       <Button size="sm"color="success" onClick={toggle}>
-        {args.nameBtn}
+        Adicionar
       </Button>
 
 
       <Modal isOpen={modal} toggle={toggle} {...args}>
-        <ModalHeader toggle={toggle}>{args.header}</ModalHeader>
+        <ModalHeader toggle={toggle}>Adicionar aparelhos</ModalHeader>
         <ModalBody>
           
           
@@ -65,8 +92,8 @@ function Modall(args) {
                             placeholder="Modelo"
                             type="text"
                             name = "valueModelo"
-                            value={args.valueModelo}
-                  onChange={(e) => args.valueAltModelo(e.target.value)}
+                            value={modelo}
+                  onChange={(e) => setModelo(e.target.value)}
                   />
 
                         </FormGroup>
@@ -85,8 +112,8 @@ function Modall(args) {
                             id="input-username"
                             placeholder="Marca"
                             type="text"
-                            value={args.valueMarca}
-                            onChange={(e)=> args.valueAltMarca(e.target.value)}
+                            value={marca}
+                            onChange={(e)=> setMarca(e.target.value)}
                            
                           />
                         </FormGroup>
@@ -104,8 +131,8 @@ function Modall(args) {
                             id="input-email"
                             placeholder="IMEI"
                             type="text"
-                            value={args.value1imei}
-                            onChange={(e)=> args.valueAlt1imei(e.target.value)}
+                            value={imei1}
+                            onChange={(e)=> setImei1(e.target.value)}
                           />
                         </FormGroup>
                       </Col>
@@ -122,8 +149,8 @@ function Modall(args) {
                             id="input-first-name"
                             placeholder="IMEI"
                             type="text"
-                            value={args.value2imei}
-                            onChange={(e)=> args.valueAlt2imei(e.target.value)}
+                            value={imei2}
+                            onChange={(e)=> setImei2(e.target.value)}
 
                           />
                         </FormGroup>
@@ -142,7 +169,7 @@ function Modall(args) {
 
 
         <ModalFooter>
-          <Button color="success" onClick={acionarConstantes}>
+          <Button color="success" onClick={handleAdd}>
             Adicionar
           </Button>{' '}
           <Button color="warning" onClick={toggle}>
@@ -155,4 +182,4 @@ function Modall(args) {
   );
 }
 
-export default Modall;
+export default ModalAdd;
