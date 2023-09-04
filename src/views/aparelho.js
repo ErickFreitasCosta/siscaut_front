@@ -54,7 +54,7 @@ import {
 } from "variables/charts.js";
 
 import Header from "components/Headers/Header.js";
-import Modall from "components/ModalAddAparelho/Modal";
+import ModalAdd from "components/ModalAddAparelho/Modal";
 import ModalExcluir from 'components/ModalExcluir/ModalExcluir'
 import './index.css'
 import  ModalExample from 'components/ModalEditAparelho/ModalO'
@@ -69,9 +69,7 @@ const Aparelho = (props) => {
   const [chartExample1Data, setChartExample1Data] = useState("data1");
 
     const [modelo, setModelo] = useState('')
-
     const [imei1, setImei1] =   useState('')
-  
     const [imei2, setImei2] = useState('')
     const [marca, setMarca] = useState('')
     
@@ -85,7 +83,8 @@ const Aparelho = (props) => {
   }
 
   //Função de add do Aparelho ao bando de dados
-  async function handleAdd(){
+
+/*   async function handleAdd(){
 
   await addDoc(collection(db,"Aparelhos"),{
     imei1: imei1,
@@ -104,9 +103,9 @@ const Aparelho = (props) => {
     console.log(error)
 
   });
-}
+} */
 
-//função excluir
+///////////////////////////////////////função excluir///////////////////////////////////
 async function excluirAparelho(id){
   /* alert("excluiu" + id) */
   const excluDoc = doc(db, "Aparelhos", id)
@@ -115,8 +114,10 @@ async function excluirAparelho(id){
       alert("sucesso na exclusão " + id)
   })
 }
+///////////////////////////////////////////////////////////////////////////////////////
 
-  //função de exibição 
+
+/////////////////////////////////////////função de exibição///////////////////////////// 
   useEffect(()=>{
     async function loadAparelhos(){
       const unsub = onSnapshot(collection(db,'Aparelhos'), (snapshot)=>{
@@ -138,6 +139,7 @@ async function excluirAparelho(id){
       loadAparelhos();
 
   },[])
+  ////////////////////////////////////////////////////////////////////////////////
 
   const toggleNavs = (e, index) => {
     e.preventDefault();
@@ -165,29 +167,8 @@ async function excluirAparelho(id){
                    
                   <div> 
 
-                    <Modall                
-                    nameBtn= "Adicionar"
-
-                    header="Adicionar Aparelho"
+                    <ModalAdd/>
                     
-                    valueModelo={modelo}
-                    valueAltModelo={(e)=>setModelo(e)}
-
-                    
-                    valueMarca={marca}
-                    valueAltMarca={(e)=>setMarca(e)}
-
-
-                    value1imei={imei1}
-                    valueAlt1imei={(e)=>setImei1(e)}
-
-
-                    value2imei={imei2}
-                    valueAlt2imei={e=>setImei2(e)}
-    
-                    
-                    Add={handleAdd}
-                    />
                   </div>
     
                 </Row>
@@ -227,7 +208,7 @@ async function excluirAparelho(id){
 
                           
                           <ModalExample data={aparelhos}/>
-                          <ModalExcluir excluir={() => excluirAparelho(aparelhos.id)} />
+                          <ModalExcluir func={() => excluirAparelho(aparelhos.id)} />
                         </div>
 
 
