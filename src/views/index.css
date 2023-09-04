@@ -25,3 +25,10 @@
     background-color: #ED990B;
     border: 1px solid #ED990B;
 }
+.divADICIONAR{
+    display: flex;
+    align-items: end;
+}
+.busca{
+    margin-left: 40%;
+}

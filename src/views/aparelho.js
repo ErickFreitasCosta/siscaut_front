@@ -38,6 +38,9 @@ import {
   Container,
   Row,
   Col,
+  FormGroup,
+  Label,
+  Input,
 } from "reactstrap";
 
 //FirebsaeConfigs
@@ -145,6 +148,8 @@ async function excluirAparelho(id){
     setChartExample1Data("data" + index);
   };
 
+
+  // __________________________________________________________________________________________________________
   return (
     <>
       <Header />
@@ -163,7 +168,9 @@ async function excluirAparelho(id){
                     <h3 className="mb-0">Aparelhos</h3>
                    </div>
                    
-                  <div> 
+                  <div className="divADICIONAR"> 
+
+             
 
                     <Modall                
                     nameBtn= "Adicionar"
@@ -189,6 +196,23 @@ async function excluirAparelho(id){
                     Add={handleAdd}
                     />
                   </div>
+
+                  <FormGroup>
+                       
+                       <Input
+                         id="exampleSearch"
+                         name="search"
+                         placeholder="Pesquise por Imei"
+                         type="search"
+                         className="busca"
+                       />
+                     </FormGroup>
+                     
+                     <Modall                
+                 nameBtn= "Pesquisar"
+
+         
+                 />
     
                 </Row>
               </CardHeader>
@@ -225,7 +249,7 @@ async function excluirAparelho(id){
          
                         <div className="OrganizarBotoes">
 
-                          
+              
                           <ModalExample data={aparelhos}/>
                           <ModalExcluir excluir={() => excluirAparelho(aparelhos.id)} />
                         </div>
