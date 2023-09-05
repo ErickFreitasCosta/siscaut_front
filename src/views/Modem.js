@@ -17,7 +17,7 @@
 */
 import {Link} from "react-router-dom";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 // node.js library that concatenates classes (strings)
 import classnames from "classnames";
 // javascipt plugin for creating charts
@@ -40,6 +40,16 @@ import {
   Col,
 } from "reactstrap";
 
+
+//FirebsaeConfigs
+import {db} from '../firebase'
+ 
+import {doc, setDoc, Collection, addDoc, collection, onSnapshot, updateDoc, deleteDoc} from 'firebase/firestore'
+
+
+import ModalExcluir from '../components/ModalExcluir/ModalExcluir'
+import ModalEditModem from "components/ModalEditModem/ModalEditModem";
+
 // core components
 import {
   chartOptions,
@@ -55,6 +65,14 @@ const Aparelho = (props) => {
   const [activeNav, setActiveNav] = useState(1);
   const [chartExample1Data, setChartExample1Data] = useState("data1");
 
+
+  const [modens,setModens] = useState([])
+
+  const [ListaModens,setListaModens] = useState([])
+  
+
+
+
   if (window.Chart) {
     parseOptions(Chart, chartOptions());
   }
@@ -64,6 +82,49 @@ const Aparelho = (props) => {
     setActiveNav(index);
     setChartExample1Data("data" + index);
   };
+
+
+  ///////////////////////////////////////função excluir//////////////////////////////////////////////
+async function excluirModem(id){
+  /* alert("excluiu" + id) */
+  const excluDoc = doc(db, "Modem", id)
+  await deleteDoc(excluDoc)
+  .then(() =>{
+      alert("sucesso na exclusão " + id)
+  })
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+  /////////////////////////////////////////função de exibição///////////////////////////// 
+  useEffect(()=>{
+    async function loadModens(){
+      const unsub = onSnapshot(collection(db,'Modem'), (snapshot)=>{
+        let listaModens = [];
+
+        snapshot.forEach((doc)=>{
+          listaModens.push({
+            id: doc.id,
+            imei: doc.data().imei,
+            marca: doc.data().marca,
+            modelo: doc.data().modelo
+          })
+        })
+        setModens(listaModens);
+      });
+
+    }
+      loadModens();
+
+  },[])
+  ////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
   return (
     <>
       <Header />
@@ -182,7 +243,39 @@ const Aparelho = (props) => {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
+
+
+                    {modens.map((modens)=>{
+                      return(
+
+                        <tr key={modens.id}>
+                        <th>{modens.modelo}</th>
+                        <th>{modens.marca}</th>
+                        <th>{modens.imei}</th>
+
+                        <td>
+                      <div> 
+
+                    
+         
+                        <div className="OrganizarBotoes">
+
+                          
+                        <ModalEditModem data={modens}/>
+                          <ModalExcluir func={() => excluirModem(modens.id)} />
+                        </div>
+
+
+                        </div>
+                    </td>
+
+
+                        </tr>
+                        
+                      )
+                    })}
+
+                 {/*  <tr>
                     <th scope="row">Nilson</th>
                     <td>4,569</td>
                     <td>340</td>
@@ -192,7 +285,7 @@ const Aparelho = (props) => {
                     
                         <Button
                             color="success"
-                            // href="/admin/dashboard"
+                           
                             size="sm"
                           >
                             Editar
@@ -201,7 +294,7 @@ const Aparelho = (props) => {
 
                           <Button
                             color="danger"
-                            // href="/admin/dashboard"
+                           
                             
                             size="sm"
                           >
@@ -209,7 +302,7 @@ const Aparelho = (props) => {
                           </Button>
                         </div>
                     </td>
-                  </tr>
+                  </tr> */}
               
                
                 
