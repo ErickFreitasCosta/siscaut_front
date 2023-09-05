@@ -43,7 +43,9 @@ const Header = () => {
                         >
                           Quantidade 
                         </CardTitle>
-                        <span className="h3 font-weight-bold mb-0">Aparelhos</span>
+                       
+                       
+                        <span className="h1 font-weight-bold mb-0">100</span>
                       </div>
                       <Col className="col-auto">
                         <div className="icon icon-shape bg-warning text-white rounded-circle shadow">
@@ -71,7 +73,7 @@ const Header = () => {
                         >
                           Quantidade
                         </CardTitle>
-                        <span className="h2 font-weight-bold mb-0">HT</span>
+                        <span className="h1 font-weight-bold mb-0"> ? </span>
                       </div>
                       <Col className="col-auto">
                         <div className="icon icon-shape bg-dark text-white rounded-circle shadow">

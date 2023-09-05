@@ -179,12 +179,14 @@ async function excluirAparelho(id){
                       </div>
 
   
-                       <div><Button className='botaoPesquisar  pi pi-search p-c p-button-icon-left' size='xl' > Buscar </Button></div>
+                       <div>
+                        <Button className='botaoPesquisar  pi pi-search p-c p-button-icon-left' size='xl' > Buscar </Button>
+                        </div>
                     </div>
 
 
       {/* Page content */}
-      <Container className="mt--7" fluid>
+      <Container className="mt--5" fluid>
         <Row>
           
           
