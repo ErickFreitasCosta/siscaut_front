@@ -38,6 +38,9 @@ import {
   Container,
   Row,
   Col,
+  FormGroup,
+  Label,
+  Input,
 } from "reactstrap";
 
 //FirebsaeConfigs
@@ -58,6 +61,8 @@ import ModalAdd from "components/ModalAddAparelho/Modal";
 import ModalExcluir from 'components/ModalExcluir/ModalExcluir'
 import './index.css'
 import  ModalExample from 'components/ModalEditAparelho/ModalO'
+
+import 'primeicons/primeicons.css';
 
 
 
@@ -117,6 +122,11 @@ async function excluirAparelho(id){
 ///////////////////////////////////////////////////////////////////////////////////////
 
 
+
+
+
+
+
 /////////////////////////////////////////função de exibição///////////////////////////// 
   useEffect(()=>{
     async function loadAparelhos(){
@@ -147,11 +157,36 @@ async function excluirAparelho(id){
     setChartExample1Data("data" + index);
   };
 
+
+  // __________________________________________________________________________________________________________
   return (
     <>
       <Header />
+
+{/* CAMPO DE BUSCA */}
+                    <div className="campoBusca">
+  
+                      <div>
+                        <FormGroup>
+                           <Input
+                             id="exampleSearch"
+                             name="search"
+                             placeholder="Pesquise por Imei"
+                             type="search"
+                             className="busca"
+                           />
+                         </FormGroup>
+                      </div>
+
+  
+                       <div>
+                        <Button className='botaoPesquisar  pi pi-search p-c p-button-icon-left' size='xl' > Buscar </Button>
+                        </div>
+                    </div>
+
+
       {/* Page content */}
-      <Container className="mt--7" fluid>
+      <Container className="mt--5" fluid>
         <Row>
           
           
@@ -164,12 +199,17 @@ async function excluirAparelho(id){
                   <div className="col">
                     <h3 className="mb-0">Aparelhos</h3>
                    </div>
+
                    
-                  <div> 
+                  <div className="divADICIONAR"> 
+
+             
 
                     <ModalAdd/>
                     
                   </div>
+
+               
     
                 </Row>
               </CardHeader>
@@ -206,7 +246,7 @@ async function excluirAparelho(id){
          
                         <div className="OrganizarBotoes">
 
-                          
+              
                           <ModalExample data={aparelhos}/>
                           <ModalExcluir func={() => excluirAparelho(aparelhos.id)} />
                         </div>
