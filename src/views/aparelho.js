@@ -62,6 +62,8 @@ import ModalExcluir from 'components/ModalExcluir/ModalExcluir'
 import './index.css'
 import  ModalExample from 'components/ModalEditAparelho/ModalO'
 
+import 'primeicons/primeicons.css';
+
 
 
 
@@ -120,6 +122,11 @@ async function excluirAparelho(id){
 ///////////////////////////////////////////////////////////////////////////////////////
 
 
+
+
+
+
+
 /////////////////////////////////////////função de exibição///////////////////////////// 
   useEffect(()=>{
     async function loadAparelhos(){
@@ -155,6 +162,27 @@ async function excluirAparelho(id){
   return (
     <>
       <Header />
+
+{/* CAMPO DE BUSCA */}
+                    <div className="campoBusca">
+  
+                      <div>
+                        <FormGroup>
+                           <Input
+                             id="exampleSearch"
+                             name="search"
+                             placeholder="Pesquise por Imei"
+                             type="search"
+                             className="busca"
+                           />
+                         </FormGroup>
+                      </div>
+
+  
+                       <div><Button className='botaoPesquisar  pi pi-search p-c p-button-icon-left' size='xl' > Buscar </Button></div>
+                    </div>
+
+
       {/* Page content */}
       <Container className="mt--7" fluid>
         <Row>
@@ -169,6 +197,7 @@ async function excluirAparelho(id){
                   <div className="col">
                     <h3 className="mb-0">Aparelhos</h3>
                    </div>
+
                    
                   <div className="divADICIONAR"> 
 
@@ -178,22 +207,7 @@ async function excluirAparelho(id){
                     
                   </div>
 
-                  <FormGroup>
-                       
-                       <Input
-                         id="exampleSearch"
-                         name="search"
-                         placeholder="Pesquise por Imei"
-                         type="search"
-                         className="busca"
-                       />
-                     </FormGroup>
-                     
-                     <Modall                
-                 nameBtn= "Pesquisar"
-
-         
-                 />
+               
     
                 </Row>
               </CardHeader>
