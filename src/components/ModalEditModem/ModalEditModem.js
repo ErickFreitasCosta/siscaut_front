@@ -1,70 +1,78 @@
 import React, { useState } from 'react';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Card,
-    CardHeader,
-    CardBody,
-    FormGroup,
-    Form,
-    Input,
-    Container,
-    Row,
-    Col,
-  Label } from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Input, FormGroup, Col, Row, Form, Label, CardBody } from 'reactstrap';
 
-  import {doc, setDoc, Collection, addDoc, collection, onSnapshot, updateDoc, deleteDoc} from 'firebase/firestore'
-  import {db} from '../../firebase'
+import {db} from '../../firebase';
+import {doc, updateDoc,addDoc,getDocs} from 'firebase/firestore'
 
-  
 
-function Modall(args) {
+
+function ModalEditModem(props) {
   const [modal, setModal] = useState(false);
-
-  
-
-    const [imei, setImei] = useState('')
-    const [marca, setMarca] = useState('')
-    const [modelo, setModelo] = useState('')
-
+  console.log('aqui',props)
 
   const toggle = () => setModal(!modal);
 
-
-  /////////////////////////////////função handleAdd/////////////////////////////////////
-
-  async function handleAdd(){
-
-    await addDoc(collection(db,"Modem"),{
-      imei: imei,
-      marca:marca,
-      modelo:modelo,
-    })
-    .then(()=>{
-      console.log("conseguiu")
-      setImei('')
-      setModelo('')
-      setMarca('')
-      toggle()
-    })
-    .catch((error)=>{
-      console.log(error)
-  
-    });
-  } 
-/////////////////////////////////////////////////////////////////////////////////////////////////
+  const externalCloseBtn = (
+    <button
+      type="button"
+      className="close"
+      style={{ position: 'absolute', top: '15px', right: '15px' }}
+      onClick={toggle}
+    >
+      &times;
+    </button>
+  );
 
 
+  const [imei, setImei] = useState('')
+  const [marca, setMarca] = useState('')
+  const [modelo, setModelo] = useState('')
+
+
+    const [listaModem, setListaModem]= useState(props.data)
+    
+    async function editarPost(){
+
+        const docRef = doc(db,'Modem',props.data.id)
+        await updateDoc(docRef,{
+            imei: listaModem.imei,
+            marca:listaModem.marca,
+            marca:listaModem.marca,
+         
+        })
+        .then(()=>{
+            console.log('Atualizado')
+            setImei('')
+            setMarca('')
+            setModelo('')
+            toggle()
+
+        })
+        .catch(()=>{
+            console.log('Erro ao atualizar')
+
+        })
+    }
+
+    function handleSobreescrever(e){
+        setListaModem({...listaModem,[e.target.name] : e.target.value})
+
+    }
 
 
 
   return (
     <div>
-      <Button size="sm"color="success" onClick={toggle}>
-        Adicionar
+      <Button className='botaoEditar' size='sm' onClick={toggle}>
+        Editar
       </Button>
-      <Modal isOpen={modal} toggle={toggle} {...args}>
-        <ModalHeader toggle={toggle}>Adicionar</ModalHeader>
+
+      <Modal isOpen={modal} toggle={toggle} external={externalCloseBtn}>
+        <ModalHeader>Editar Aparelhos</ModalHeader>
         <ModalBody>
-          
-          
+        
+        
+        
         <CardBody>
                 <Form>
 
@@ -89,8 +97,9 @@ function Modall(args) {
                             id="input-imeiModem"
                             placeholder="Nº de serie"
                             type="text"
-                            value={imei}
-                            onChange={(e)=> setImei (e.target.value)}
+                            value={listaModem.imei}
+                            name='imei'
+                            onChange={e =>handleSobreescrever(e)}
                           />
                         </FormGroup>
                       </Col>
@@ -117,9 +126,16 @@ function Modall(args) {
 
                      <FormGroup>
                           <Label for="exampleSelect">Marca</Label>
-                          <Input type="select" name="select" id="exampleSelect" value={marca} onChange={(e)=>setMarca(e.target.value)}>
+                          <Input type="select"  id="exampleSelect" 
+                          value={listaModem.marca}
+                          name='marca'
+                          onChange={e =>handleSobreescrever(e)}>
                             <option value=''>Escolha</option>
-                            <option value='Claro'>Claro </option>
+                            <option value='Marca 1'>Marca 1 </option>
+                            <option value='Marca 2'>Marca 2 </option>
+                            <option value='Marca 3'>Marca 3 </option>
+                            <option value='Marca 4'>Marca 4 </option>
+                            <option value='Marca 5'>Marca 5 </option>
                           </Input>
                       </FormGroup>
 
@@ -131,13 +147,13 @@ function Modall(args) {
                       <Col lg="11">
                         <FormGroup>
                         <Label for="SelectMarca">Modelo</Label>
-                          <Input type="select" name="select" id="SelectMarca" value={modelo} onChange={(e)=>setModelo(e.target.value)}>
+                          <Input type="select" id="SelectMarca" 
+                           value={listaModem.modelo}
+                           name='modelo'
+                           onChange={e =>handleSobreescrever(e)}>
                             <option value=''>Escolha</option>
-                            <option value='Marca 1'>Marca 1 </option>
-                            <option value='Marca 2'>Marca 2 </option>
-                            <option value='Marca 3'>Marca 3 </option>
-                            <option value='Marca 4'>Marca 4 </option>
-                            <option value='Marca 5'>Marca 5 </option>
+                            <option value='Claro'>Claro</option>
+                            
                           </Input>
                         </FormGroup>
                       </Col>
@@ -148,11 +164,15 @@ function Modall(args) {
                   
                 </Form>
               </CardBody>
+       
         </ModalBody>
+
+     
         <ModalFooter>
-          <Button color="success" onClick={handleAdd}>
-            Adicionar
+          <Button color="success"  onClick={editarPost}>
+            Salvar
           </Button>{' '}
+
           <Button color="danger" onClick={toggle}>
             Cancelar
           </Button>
@@ -162,4 +182,4 @@ function Modall(args) {
   );
 }
 
-export default Modall;
+export default ModalEditModem;
