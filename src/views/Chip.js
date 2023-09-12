@@ -54,6 +54,9 @@ import Modall from "components/ModalAddChip/Modal";
 import ModalEditChip from "components/ModalEditChip/ModalEditChip";
 import ModalExcluir from 'components/ModalExcluir/ModalExcluir'
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 import {db} from '../firebase'
  
@@ -108,8 +111,13 @@ async function excluirChip(id){
   const excluDoc = doc(db, "Chip", id)
   await deleteDoc(excluDoc)
   .then(() =>{
-      alert("sucesso na exclusão " + id)
+      toast.error("Chip foi excluido");
+      /* alert("sucesso na exclusão " + id) */
   })
+  .catch((error)=>{
+    toast.error('Algo deu errado, tente novamente mais tarde')
+
+  });
 }
 ///////////////////////////////////////////////////////////////////////////////////////
 
