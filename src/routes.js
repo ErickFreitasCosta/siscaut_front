@@ -83,7 +83,7 @@ var routes = [
     layout: "/admin",
   },
 
-  {
+  /* {
     path: "/Cautela",
     name: "Cautelar Aparelho",
     icon: "fas fa-solid fa-file-lines text-green",
@@ -105,6 +105,7 @@ var routes = [
     component: <Cautelar/>,
     layout: "/admin",
   },
+
   {
     path: "/Cautela",
     name: "Descautelar modem",
@@ -127,7 +128,7 @@ var routes = [
     icon: "fas fa-solid fa-file-lines text-red",
     component: <Cautelar/>,
     layout: "/admin",
-  },
+  }, */
   
 
 
@@ -168,13 +169,13 @@ var routes = [
     component: <Register />,
     layout: "/auth",
   } */
-  {
+ /*  {
     path: "/tables",
     name: "Cautelar",
     icon: "ni ni-bullet-list-67 text-red",
     component: <Tables />,
     layout: "/admin",
-  },
+  }, */
   
 ];
 export default routes;

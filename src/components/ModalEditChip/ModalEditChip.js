@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Input, FormGroup, Col, Row, Form } from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Input, FormGroup, Col, Row, Form,Alert } from 'reactstrap';
 
 import {db} from '../../firebase';
 import {doc, updateDoc,addDoc,getDocs} from 'firebase/firestore'
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 function ModalEditCHip(props) {
   const [modal, setModal] = useState(false);
-  console.log('aqui',props)
 
-  const toggle = () => setModal(!modal);
+  const toggle = () => {setModal(!modal)
+    setEmptyevalue(false)};
 
   const externalCloseBtn = (
     <button
@@ -27,37 +28,51 @@ function ModalEditCHip(props) {
     const [linha,setLinha] = useState('');
     const [nserie, setNserie] =   useState('')
 
+    const [emptyevalue, setEmptyevalue] = useState(false);
+  const [validChip, setValidChip] = useState(false);
 
     const [idAparelho, setIdAparelho]= useState('')
 
     const [listaChip, setListaChip]= useState(props.data)
-    
-    async function editarPost(){
 
-        const docRef = doc(db,'Chip',props.data.id)
+    //////////////////////HANDLE EDIT /////////////////////////////////////////
+    async function editarPost(){
+      const docRef = doc(db,'Chip',props.data.id)
+      
+      if ( !listaChip.nserie|| !listaChip.linha ){
+        setEmptyevalue(true)
+      }else{
+        if(nserie.length<20){
+          setValidChip(true)
+        }else{
         await updateDoc(docRef,{
             linha: listaChip.linha,
             nserie:listaChip.nserie,
          
         })
         .then(()=>{
-            console.log('Atualizado')
+          toast.success('Chip alterado com sucesso')
             setLinha('')
             setNserie('')
             toggle()
 
         })
         .catch(()=>{
-            console.log('Erro ao atualizar')
+          toast.error('erro ao alterar')
+            
 
         })
+      }
     }
+  }
+  
 
+  //////////////////////////////////////////////////////////////////////////////////
     function handleSobreescrever(e){
         setListaChip({...listaChip,[e.target.name] : e.target.value})
 
     }
-
+  
 
 
   return (
@@ -91,11 +106,20 @@ function ModalEditCHip(props) {
           /* defaultValue="lucky.jesse" */
           id="input-ModeloHt"
           placeholder="Nº de série"
+          onInput={(e) => {
+            e.target.value = e.target.value.replace(/[^0-9]/g, '').slice(0, 20);
+            setNserie(e.target.value);
+          }}
           value={listaChip.nserie}
           name='nserie'
           onChange={e =>handleSobreescrever(e)}
           type="text"
+          maxLength={20}
+          
         />
+        {emptyevalue && listaChip.nserie==='' ? <Alert color='danger'>Coloque o número de serie</Alert> :''}
+
+        {validChip && listaChip.nserie.length<20 &&  listaChip.nserie.length>0 ? <Alert color='danger'>número de serie inválido</Alert> :''}
       </FormGroup>
     </Col>
     </Row>
@@ -108,7 +132,17 @@ function ModalEditCHip(props) {
         >
           Linha
         </label>
-        <Input
+        
+        <Input type="select" name="linha" id="SelectMarca" value={listaChip.linha} onChange={e =>handleSobreescrever(e)}>
+                            <option value=''>Escolha</option>
+                            <option value='Vivo'>Vivo </option>
+                          </Input>
+                          {emptyevalue && listaChip.linha ==='' ? <Alert color='danger'>Coloque a linha</Alert> :''}
+
+        
+        
+        
+        {/* <Input
           className="form-control-alternative"
           id="Marca-Ht"
           placeholder="Marca"
@@ -116,7 +150,7 @@ function ModalEditCHip(props) {
            value={listaChip.linha} 
           onChange={e =>handleSobreescrever(e)}
           type="text"
-        />
+        /> */}
       </FormGroup>
     </Col>
 
