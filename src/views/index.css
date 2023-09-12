@@ -17,6 +17,8 @@
 .OrganizarBotoes{
     display: flex;
 }
+
+
 .botaoEditar{
     background-color: #ffba01;
     border: 1px solid #ffba01;
@@ -25,3 +27,42 @@
     background-color: #ED990B;
     border: 1px solid #ED990B;
 }
+
+
+
+
+
+
+
+.divADICIONAR{
+    display: flex;
+    align-items: end;
+    
+}
+
+
+.campoBusca{
+    display: flex;
+    justify-content: end;
+    gap: 1%;
+    
+    margin-bottom: 2%;
+    width: 100%;
+}
+.botaoPesquisar{
+    background-color: #007ad9;
+    height: 43px;
+    border: none;
+}
+.botaoPesquisar:hover{
+    background-color: #116FBF;
+}
+.busca{
+    padding-left: 20%;
+    width: 110px;
+  
+    transition: none;
+    gap:2px;
+    
+}
+
