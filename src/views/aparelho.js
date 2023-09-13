@@ -157,13 +157,21 @@ async function excluirAparelho(id){
     setChartExample1Data("data" + index);
   };
 
+   //////////////////////////////////////////////////////////////////////////// /
+
+
+
+
+   const [searchTerm, setSearchTerm] = useState('');
+   const [searchResult, setSearchResult] = useState('');
+
 
   // __________________________________________________________________________________________________________
   return (
     <>
       <Header />
 
-{/* CAMPO DE BUSCA */}
+                                                {/* CAMPO DE BUSCA */}
                     <div className="campoBusca">
   
                       <div>
@@ -173,6 +181,9 @@ async function excluirAparelho(id){
                              name="search"
                              placeholder="Pesquise por Imei"
                              type="search"
+
+                             value={searchTerm}
+                             onChange={(e) => setSearchTerm(e.target.value)}
                              className="busca"
                            />
                          </FormGroup>
@@ -180,9 +191,14 @@ async function excluirAparelho(id){
 
   
                        <div>
-                        <Button className='botaoPesquisar  pi pi-search p-c p-button-icon-left' size='xl' > Buscar </Button>
+                        <Button className='botaoPesquisar  pi pi-search p-c p-button-icon-left' size='xl'  > Buscar </Button>
                         </div>
+                      
+
+                        
                     </div>
+
+                  {/* /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */}
 
 
       {/* Page content */}

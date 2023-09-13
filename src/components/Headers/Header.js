@@ -18,13 +18,118 @@
 //                                    ITENS DO PAINEL INICIAL
 
 // reactstrap components
+import { db } from "../../firebase";
+import {doc, setDoc, Collection, addDoc, collection, onSnapshot, updateDoc, deleteDoc} from 'firebase/firestore'
+import { useEffect, useState } from "react";
 import { Card, CardBody, CardTitle, Container, Row, Col } from "reactstrap";
+import Aparelho from "views/Cautelar";
+
+
+
+
+
 
 
 const Header = () => {
+  const [aparelhos,setAparelhos] = useState([])
+  const [modelo, setModelo] = useState('')
+  const [imei1, setImei1] =   useState('')
+  const [imei2, setImei2] = useState('')
+  const [marca, setMarca] = useState('')
+
+  // QUANTIDADE NA TELA
+  const [Chips,setChips] = useState([])
+  const [modem,setModem] = useState([])
+
+  //////////////////////////////////
+
+  const [searchTerm, setSearchTerm] = useState('');
+  const [searchResult, setSearchResult] = useState([])
+
+
+
+
+
+
+
+  useEffect(()=>{
+    async function loadAparelhos(){
+      const unsub = onSnapshot(collection(db,'Aparelhos'), (snapshot)=>{
+        let listaAparelhos = [];
+
+        snapshot.forEach((doc)=>{
+          listaAparelhos.push({
+            id: doc.id,
+            imei1: doc.data().imei1,
+            imei2: doc.data().imei2,
+            marca: doc.data().marca,
+            modelo: doc.data().modelo
+          })
+        })
+        setAparelhos(listaAparelhos);
+      });
+
+    }
+      loadAparelhos();
+
+  },[])
+
+  useEffect(()=>{
+    async function loadChips(){
+      const unsub = onSnapshot(collection(db,'Chip'), (snapshot)=>{
+        let listaChips = [];
+
+        snapshot.forEach((doc)=>{
+          listaChips.push({
+            id: doc.id,
+            nserie: doc.data().nserie,
+            linha: doc.data().linha,
+          })
+        })
+        setChips(listaChips);
+      });
+
+    }
+      loadChips();
+
+  },[])
+
+  useEffect(()=>{
+    async function loadModem(){
+      const unsub = onSnapshot(collection(db,'Modem'), (snapshot)=>{
+        let listaModem = [];
+
+        snapshot.forEach((doc)=>{
+          listaModem.push({
+            id: doc.id,
+            imei1: doc.data().imei1,
+            imei2: doc.data().imei2,
+            marca: doc.data().marca,
+            modelo: doc.data().modelo
+          })
+        })
+        setModem(listaModem);
+      });
+
+    }
+      loadModem();
+
+  },[])
+
+
+
+
+
+
+
+
+
+  
   return (
+
+
     <>
-      <div className="header bg-gradient-info pb-8 pt-5 pt-md-8">
+      <div className="header pb-8 pt-5 pt-md-8 " style={{backgroundColor :"#193D5A"}}>
         <Container fluid>
           <div className="header-body">
             {/* Card stats */}
@@ -41,11 +146,19 @@ const Header = () => {
                           tag="h5"
                           className="text-uppercase text-muted mb-0"
                         >
-                          Quantidade 
+                          
+                          Quantidade
+
                         </CardTitle>
                        
                        
-                        <span className="h1 font-weight-bold mb-0">100</span>
+                        <span className="h1 font-weight-bold mb-0">
+                        <h1> {aparelhos.length}</h1>
+                          
+                
+              
+                          </span>
+
                       </div>
                       <Col className="col-auto">
                         <div className="icon icon-shape bg-warning text-white rounded-circle shadow">
@@ -73,7 +186,12 @@ const Header = () => {
                         >
                           Quantidade
                         </CardTitle>
-                        <span className="h1 font-weight-bold mb-0"> ? </span>
+                        <span className="h1 font-weight-bold mb-0"> 
+
+                        {/* <h1> {Chips.length}</h1> */}
+                        ?
+                        
+                         </span>
                       </div>
                       <Col className="col-auto">
                         <div className="icon icon-shape bg-dark text-white rounded-circle shadow">
@@ -101,7 +219,13 @@ const Header = () => {
                         >
                           Quantidade
                         </CardTitle>
-                        <span className="h2 font-weight-bold mb-0">Chips</span>
+                        <span className="h2 font-weight-bold mb-0">
+                          
+                          
+                        <h1> {Chips.length}</h1>
+                          
+                          
+                          </span>
                       </div>
                       <Col className="col-auto">
                         <div className="icon icon-shape bg-yellow text-white rounded-circle shadow">
@@ -129,7 +253,11 @@ const Header = () => {
                         >
                           Quantidade
                         </CardTitle>
-                        <span className="h2 font-weight-bold mb-0">Modens</span>
+                        <span className="h2 font-weight-bold mb-0">
+                          
+                        <h1> {modem.length}</h1>
+                          
+                          </span>
                       </div>
                       <Col className="col-auto">
                         <div className="icon icon-shape bg-info text-white rounded-circle shadow">
