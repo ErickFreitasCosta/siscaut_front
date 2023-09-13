@@ -215,7 +215,7 @@ async function excluirChip(id){
               <CardHeader className="border-0">
                 <Row className="align-items-center">
                   <div className="col">
-                    <h3 className="mb-0">Aparelhos</h3>
+                    <h3 className="mb-0">Chips</h3>
                   </div>
                   <div> 
                     <Modall/>
