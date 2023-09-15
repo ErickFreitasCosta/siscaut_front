@@ -67,8 +67,6 @@ import 'primeicons/primeicons.css';
 
 
 
-
-
 const Aparelho = (props) => {
   const [activeNav, setActiveNav] = useState(1);
   const [chartExample1Data, setChartExample1Data] = useState("data1");
@@ -83,32 +81,13 @@ const Aparelho = (props) => {
     
     const [idAparelho, setIdAparelho] = useState('')
 
+    const [renderizar ,setRenderizar] = useState(false)
+
   if (window.Chart) {
     parseOptions(Chart, chartOptions());
   }
 
-  //Função de add do Aparelho ao bando de dados
-
-/*   async function handleAdd(){
-
-  await addDoc(collection(db,"Aparelhos"),{
-    imei1: imei1,
-    imei2: imei2,
-    marca:marca,
-    modelo:modelo,
-  })
-  .then(()=>{
-    console.log("conseguiu")
-    setImei1('')
-    setImei2('')
-    setModelo('')
-    setMarca('')
-  })
-  .catch((error)=>{
-    console.log(error)
-
-  });
-} */
+ 
 
 ///////////////////////////////////////função excluir///////////////////////////////////
 async function excluirAparelho(id){
@@ -118,10 +97,10 @@ async function excluirAparelho(id){
   .then(() =>{
       alert("sucesso na exclusão " + id)
   })
+  setRenderizar(!renderizar)
+  setFilter([])
 }
 ///////////////////////////////////////////////////////////////////////////////////////
-
-
 
 
 
@@ -148,7 +127,7 @@ async function excluirAparelho(id){
     }
       loadAparelhos();
 
-  },[])
+  },[renderizar])
   ////////////////////////////////////////////////////////////////////////////////
 
   const toggleNavs = (e, index) => {
@@ -159,13 +138,18 @@ async function excluirAparelho(id){
 
    //////////////////////////////////////////////////////////////////////////// /
 
+  //  PESQUISA
+   const [filter, setFilter] = useState([]);
 
-
-
-   const [searchTerm, setSearchTerm] = useState('');
-   const [searchResult, setSearchResult] = useState('');
-
-
+   function Pesquisa(e){
+    console.log(e)
+    
+    const filteredAparelhos = aparelhos.filter(aparelho =>
+      aparelho.imei1.toLowerCase().includes(e.toLowerCase())
+    );
+    console.log(filteredAparelhos,"APARELJP")
+    setFilter(filteredAparelhos);
+  }
   // __________________________________________________________________________________________________________
   return (
     <>
@@ -173,33 +157,9 @@ async function excluirAparelho(id){
 
                                                 {/* CAMPO DE BUSCA */}
                     <div className="campoBusca">
-  
-                      <div>
-                        <FormGroup>
-                           <Input
-                             id="exampleSearch"
-                             name="search"
-                             placeholder="Pesquise por Imei"
-                             type="search"
-
-                             value={searchTerm}
-                             onChange={(e) => setSearchTerm(e.target.value)}
-                             className="busca"
-                           />
-                         </FormGroup>
-                      </div>
-
-  
-                       <div>
-                        <Button className='botaoPesquisar  pi pi-search p-c p-button-icon-left' size='xl'  > Buscar </Button>
-                        </div>
-                      
-
-                        
+                 
                     </div>
-
-                  {/* /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */}
-
+                          
 
       {/* Page content */}
       <Container className="mt--5" fluid>
@@ -218,6 +178,7 @@ async function excluirAparelho(id){
 
                    
                   <div className="divADICIONAR"> 
+                  <input type="search" placeholder='Pesquisar Imei' onChange={(e) => Pesquisa(e.target.value)} />
 
              
 
@@ -242,13 +203,48 @@ async function excluirAparelho(id){
                   </tr>
                 </thead>
 
+{filter.length > 0 ? 
+                <tbody>
+                   
+                   {filter.map((aparelhos) =>{
+                          /* setMarca(aparelhos.modelo) */
+                      
+                    return(
+                      <tr key={aparelhos.id}>
+                        <th scope="row">{aparelhos.modelo}</th>
+                        <th>{aparelhos.marca}</th>
+                        <th>{aparelhos.imei1}</th>
+                        <th>{aparelhos.imei2}</th>
+                        <td>
+                      <div> 
 
+                    
+         
+                        <div className="OrganizarBotoes">
+
+              
+                          <ModalExample data={aparelhos}/>
+                          <ModalExcluir  
+                           func={() => excluirAparelho(aparelhos.id)}
+                           renderizar ={renderizar}  
+                           setRenderizar={setRenderizar}/>
+                        </div>
+
+
+                        </div>
+                    </td>
+                      </tr>
+                    )
+                   })}
+
+
+                </tbody>
+                :
                 <tbody>
                    
                    {aparelhos.map((aparelhos) =>{
                           /* setMarca(aparelhos.modelo) */
                       
-
                     return(
                       <tr key={aparelhos.id}>
                         <th scope="row">{aparelhos.modelo}</th>
@@ -265,6 +261,7 @@ async function excluirAparelho(id){
               
                           <ModalExample data={aparelhos}/>
                           <ModalExcluir func={() => excluirAparelho(aparelhos.id)} />
+
                         </div>
 
 
@@ -276,6 +273,9 @@ async function excluirAparelho(id){
 
 
                 </tbody>
+
+}
+
               </Table>
             </Card>
           </Col>

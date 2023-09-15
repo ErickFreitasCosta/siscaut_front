@@ -6,7 +6,7 @@ import {doc, updateDoc,addDoc,getDocs} from 'firebase/firestore'
 
 
 
-function ModalEditUser(props) {
+function ModalEditUser(props,renderizar,setRenderizar,filter,setFilter) {
   const [modal, setModal] = useState(false);
   console.log('aqui',props)
 
@@ -26,12 +26,13 @@ function ModalEditUser(props) {
 
 
     const [listaMilitar, setListaMilitar]= useState(props.data)
-
     const [nome, setNome] = useState('')
-  const [funcao, setFuncao] = useState('')
-  const [rg, setRg] = useState('')
-  const [unidade, setUnidade] = useState('')
-  const [postgrad, setPostgrad] = useState('')
+    const [funcao, setFuncao] = useState('')
+    const [rg, setRg] = useState('')
+    const [unidade, setUnidade] = useState('')
+    const [postgrad, setPostgrad] = useState('')
+
+  
     
 
     async function editarPost(){
@@ -54,16 +55,31 @@ function ModalEditUser(props) {
             setPostgrad('')
             toggle()
 
-        })
+            
+           
+          }
+          )
         .catch(()=>{
             console.log('Erro ao atualizar')
 
         })
+        
     }
 
-    function handleSobreescrever(e){
-        setListaMilitar({...listaMilitar,[e.target.name] : e.target.value})
+    // function handleSobreescrever(e){
+    //     setListaMilitar({...listaMilitar,[e.target.name] : e.target.value})
+    //     setRenderizar(!renderizar)
+    //     setFilter([])
 
+    // }
+    function handleSobreescrever(e) {
+      const { name, value } = e.target;
+      // Atualize o estado `listaMilitar` com os novos valores.
+      setListaMilitar({ ...listaMilitar, [name]: value });
+      // Atualize o estado `props.data` para refletir as edições imediatamente.
+      props.data[name] = value;
+      // Atualize o estado `renderizar` para forçar a renderização do componente.
+      setRenderizar(!renderizar);
     }
 
 
@@ -192,7 +208,7 @@ function ModalEditUser(props) {
 
      
         <ModalFooter>
-          <Button color="success"  onClick={editarPost}>
+          <Button color="success"  onClick={editarPost} func={() => (handleSobreescrever.aparelhos.id)} >
             Salvar
           </Button>{' '}
 
