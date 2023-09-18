@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
-function Example({args, func, title}) {
+
+function Example({args, func,renderizar,setRenderizar}) {
+
   const [modal, setModal] = useState(false);
 
   const toggle = () => setModal(!modal);

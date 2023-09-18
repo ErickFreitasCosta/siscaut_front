@@ -65,6 +65,7 @@ const Admin = (props) => {
   return (
     <>
     
+    {/* IMAGEM DITEL */}
       <Sidebar
         {...props}
         routes={routes}
@@ -74,6 +75,8 @@ const Admin = (props) => {
           imgAlt: "...",
           styles: {
             width: '100%',
+            
+            
          
           }
           
