@@ -111,7 +111,7 @@ async function excluirChip(id){
   const excluDoc = doc(db, "Chip", id)
   await deleteDoc(excluDoc)
   .then(() =>{
-      toast.error("Chip foi excluido");
+      toast.error("O chip foi excluido");
       /* alert("sucesso na exclusão " + id) */
   })
   .catch((error)=>{
@@ -261,7 +261,9 @@ async function excluirChip(id){
          
                         <div className="OrganizarBotoes">
                          <ModalEditChip data= {chips}/>
-                          <ModalExcluir func={() => excluirChip(chips.id)} />
+                          <ModalExcluir 
+                          title='chip'
+                          func={() => excluirChip(chips.id)} />
                         </div>
 
 

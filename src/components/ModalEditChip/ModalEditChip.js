@@ -119,7 +119,7 @@ function ModalEditCHip(props) {
         />
         {emptyevalue && listaChip.nserie==='' ? <Alert color='danger'>Coloque o número de serie</Alert> :''}
 
-        {validChip && listaChip.nserie.length<20 &&  listaChip.nserie.length>0 ? <Alert color='danger'>número de serie inválido</Alert> :''}
+        {validChip && listaChip.nserie.length<20 &&  listaChip.nserie.length>0 ? <Alert color='danger'>número de serie inválido, são necessários 20 digitos!</Alert> :''}
       </FormGroup>
     </Col>
     </Row>
