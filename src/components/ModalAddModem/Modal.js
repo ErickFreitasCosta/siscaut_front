@@ -8,6 +8,7 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Card,
     Container,
     Row,
     Col,
+    Alert,
   Label } from 'reactstrap';
 
   import {doc, setDoc, Collection, addDoc, collection, onSnapshot, updateDoc, deleteDoc} from 'firebase/firestore'
@@ -135,9 +136,7 @@ function Modall(args) {
                             <option value=''>Escolha</option>
                             <option value='Marca 1'>Marca 1 </option>
                             <option value='Marca 2'>Marca 2 </option>
-                            <option value='Marca 3'>Marca 3 </option>
-                            <option value='Marca 4'>Marca 4 </option>
-                            <option value='Marca 5'>Marca 5 </option>
+                           
                           </Input>
                         </FormGroup>
                       </Col>

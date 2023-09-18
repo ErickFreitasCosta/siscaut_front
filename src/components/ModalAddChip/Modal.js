@@ -42,6 +42,7 @@ function Modall(args) {
   /////////////////////////////////Função HandleAdd////////////////////////////
 
   async function handleAdd(){
+    
 
     if ( !nserie|| !linha ){
       setEmptyevalue(true)
@@ -71,6 +72,7 @@ function Modall(args) {
   }
 }
   }
+
   /////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -123,7 +125,7 @@ function Modall(args) {
                           />
                           
                           {emptyevalue && nserie==='' ? <Alert color='danger'>Coloque o número de serie</Alert> :''}
-                          {validChip && nserie.length<20 &&  nserie.length>0 ? <Alert color='danger'>número de serie inválido</Alert> :''}
+                          {validChip && nserie.length<20 &&  nserie.length>0 ? <Alert color='danger'>número de serie inválido, são necessários 20 digitos!</Alert> :''}
 
                         </FormGroup>
                       </Col>
@@ -155,7 +157,7 @@ function Modall(args) {
                           /> */}
 
 
-                          {emptyevalue && linha ==='' ? <Alert color='danger'>Coloque a marca</Alert> :''}
+                          {emptyevalue && linha ==='' ? <Alert color='danger'>Coloque a marca.</Alert> :''}
                         </FormGroup>
                       </Col>
 
@@ -170,7 +172,7 @@ function Modall(args) {
 
         <ModalFooter>
           <Button color="success" onClick={handleAdd}>
-            Adicionar
+            Salvar
           </Button>{' '}
           <Button color="warning" onClick={toggle}>
             Cancelar
