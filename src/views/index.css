@@ -65,4 +65,39 @@
     gap:2px;
     
 }
-
+/* Estilo para a div */
+.divADICIONAR {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+    padding: 10px;
+    background-color: #f0f0f0; /* Cor de fundo da div */
+    border-radius: 5px; /* Borda arredondada */
+  }
+  
+  /* Estilo para o input */
+  .divADICIONAR input[type="search"] {
+     /* Ocupa o espaço disponível na div */
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    outline: none; /* Remove a borda de foco padrão */
+    font-size: 16px;
+    width: 100%;
+    /* Outros estilos, como cores, margens, etc., podem ser personalizados aqui */
+  }
+  
+  /* Estilo para o botão (se necessário) */
+  .divADICIONAR button {
+    background-color: #007bff; /* Cor de fundo do botão */
+    color: #fff; /* Cor do texto do botão */
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    margin-left: 10px; /* Espaço entre o input e o botão */
+    cursor: pointer;
+    /* Outros estilos do botão podem ser personalizados aqui */
+  }
+  .conteinerSearch{
+    width: 100%;
+  }

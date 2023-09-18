@@ -136,9 +136,9 @@ async function excluirAparelho(id){
     setChartExample1Data("data" + index);
   };
 
-   //////////////////////////////////////////////////////////////////////////// /
+   /////////////////////////////////////////////////////////////////////////////
 
-  //  PESQUISA
+  // ///////////////////////// Função PESQUISA  ////////////////////////////////
    const [filter, setFilter] = useState([]);
 
    function Pesquisa(e){
@@ -172,18 +172,17 @@ async function excluirAparelho(id){
             <Card className="shadow">
               <CardHeader className="border-0">
                 <Row className="align-items-center">
-                  <div className="col">
-                    <h3 className="mb-0">Aparelhos</h3>
-                   </div>
 
-                   
-                  <div className="divADICIONAR"> 
-                  <input type="search" placeholder='Pesquisar Imei' onChange={(e) => Pesquisa(e.target.value)} />
-
-             
-
-                    <ModalAdd/>
+                  <div className="conteinerSearch">
+                    <div className="col divADICIONAR">
+                      <h3 className="mb-0">Aparelhos</h3>
+                      <input type="search" placeholder='Pesquisa por Imei' onChange={(e) => Pesquisa(e.target.value)} />
+                     </div>
                     
+                    <div className="divADICIONAR" style={{justifyContent : "flex-end"}}>
+                    
+                        <ModalAdd/>
+                    </div>
                   </div>
 
                
