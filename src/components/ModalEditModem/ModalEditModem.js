@@ -1,16 +1,27 @@
 import React, { useState } from 'react';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Input, FormGroup, Col, Row, Form, Label, CardBody } from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Input, FormGroup, Col, Row, Form, Label, CardBody, Alert } from 'reactstrap';
 
 import {db} from '../../firebase';
 import {doc, updateDoc,addDoc,getDocs} from 'firebase/firestore'
+
+import { toast } from 'react-toastify';
 
 
 
 function ModalEditModem(props) {
   const [modal, setModal] = useState(false);
-  console.log('aqui',props)
+ 
+  //////////////validação/////////////
+  const [emptyevalue, setEmptyevalue] = useState(false);
+  const [validImei, setValidImei] = useState(false);
+ //////////////////////////////////////////////// 
 
-  const toggle = () => setModal(!modal);
+  const toggle = () => {
+    setModal(!modal)
+    setEmptyevalue(false)
+    setValidImei(false)
+
+  };
 
   const externalCloseBtn = (
     <button
@@ -33,6 +44,14 @@ function ModalEditModem(props) {
     
     async function editarPost(){
 
+      if ( !listaModem.imei || !listaModem.marca || !listaModem.modelo ){
+        setEmptyevalue(true)
+      }if(listaModem.imei.length<15){
+        setValidImei(true)
+      }else{if(imei.length<15){
+        setValidImei(true)
+      }else{
+
         const docRef = doc(db,'Modem',props.data.id)
         await updateDoc(docRef,{
             imei: listaModem.imei,
@@ -42,16 +61,19 @@ function ModalEditModem(props) {
         })
         .then(()=>{
             console.log('Atualizado')
+            toast.success("Os dados do modem foram alterados com sucesso")
             setImei('')
             setMarca('')
             setModelo('')
             toggle()
 
         })
-        .catch(()=>{
-            console.log('Erro ao atualizar')
+        .catch((error)=>{
+            console.log(error)
 
         })
+      }
+      }
     }
 
     function handleSobreescrever(e){
@@ -96,11 +118,17 @@ function ModalEditModem(props) {
                             /* defaultValue="lucky.jesse" */
                             id="input-imeiModem"
                             placeholder="Nº de serie"
+                            onInput={(e) => {
+                              e.target.value = e.target.value.replace(/[^0-9]/g, '').slice(0, 15);
+                              setImei(e.target.value);
+                            }}
                             type="text"
                             value={listaModem.imei}
                             name='imei'
                             onChange={e =>handleSobreescrever(e)}
                           />
+                          {emptyevalue && listaModem.imei==='' ? <Alert color='danger'>Coloque o número de serie</Alert> :''}
+                          {validImei && listaModem.imei.length<15 &&  listaModem.imei.length>0 ? <Alert color='danger'>Imei inválido, são necessários 15 digitos!</Alert> :''}
                         </FormGroup>
                       </Col>
                       </Row>
@@ -137,6 +165,7 @@ function ModalEditModem(props) {
                             <option value='Marca 4'>Marca 4 </option>
                             <option value='Marca 5'>Marca 5 </option>
                           </Input>
+                          {emptyevalue && listaModem.marca==='' ? <Alert color='danger'>Coloque a marca</Alert> :''}
                       </FormGroup>
 
                       </Col>
@@ -155,6 +184,7 @@ function ModalEditModem(props) {
                             <option value='Claro'>Claro</option>
                             
                           </Input>
+                          {emptyevalue && listaModem.modelo==='' ? <Alert color='danger'>Coloque o modelo</Alert> :''}
                         </FormGroup>
                       </Col>
                             </Row>

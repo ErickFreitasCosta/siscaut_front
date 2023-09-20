@@ -23,9 +23,11 @@ import { ToastContainer, toast } from 'react-toastify';
 function Modall(args) {
   const [modal, setModal] = useState(false);
 
+
+      //////////////validação/////////////
   const [emptyevalue, setEmptyevalue] = useState(false);
   const [validChip, setValidChip] = useState(false);
-  
+ //////////////////////////////////////////////// 
 
     const [nserie, setNserie] = useState('')
     const [linha, setLinha] = useState('')
@@ -58,7 +60,7 @@ function Modall(args) {
       nserie: nserie,
     })
     .then(()=>{
-      toast.success('Chip cadastrado com sucesso')
+      toast.success('Chip adicionado com sucesso')
       setNserie('')
       setLinha('')
       setEmptyevalue(false)

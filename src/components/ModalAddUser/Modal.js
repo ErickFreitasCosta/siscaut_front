@@ -7,7 +7,12 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Card,
     Input,
     Container,
     Row,
-    Col } from 'reactstrap';
+    Col,
+    Alert } from 'reactstrap';
+
+    import { ToastContainer, toast } from 'react-toastify';
+    import 'react-toastify/dist/ReactToastify.css';
+
 
     import {doc, setDoc, Collection, addDoc, collection, onSnapshot, updateDoc, deleteDoc} from 'firebase/firestore'
     import {db} from '../../firebase'
@@ -17,7 +22,10 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Card,
 function Modall(args) {
   const [modal, setModal] = useState(false);
 
-  
+  /////////////////////////// //validação
+  const [emptyevalue, setEmptyevalue] = useState(false);
+  const [validRg, setValidRg] = useState(false);
+//////////////////////////
 
     const [nome, setNome] = useState('')
     const [funcao, setFuncao] = useState('')
@@ -30,6 +38,12 @@ function Modall(args) {
 
   async function handleAdd(){
 
+    if ( !nome|| !funcao ||!rg  || !unidade || !postgrad ){
+      setEmptyevalue(true)
+    }else{ if(rg.length<7){
+      setValidRg(true)
+    }else{
+
     await addDoc(collection(db,"Militares"),{
       nome: nome,
       funcao: funcao,
@@ -38,7 +52,7 @@ function Modall(args) {
       postgrad: postgrad,
     })
     .then(()=>{
-      console.log("conseguiu")
+      toast.success("Militar adicionado com sucesso")
       setNome('')
       setFuncao('')
       setUnidade('')
@@ -48,8 +62,11 @@ function Modall(args) {
     })
     .catch((error)=>{
       console.log(error)
+      toast.error("Ocorreu algum erro, tente novamente mais tarde")
   
     });
+       }
+    }
   } 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -57,10 +74,21 @@ function Modall(args) {
 
 
 
-  const toggle = () => setModal(!modal);
+  const toggle = () => {
+
+    setModal(!modal)
+    setEmptyevalue(false)
+    setValidRg(false)
+    setNome('')
+      setFuncao('')
+      setUnidade('')
+      setPostgrad('')
+      setRg('')
+  };
 
   return (
     <div>
+     
       <Button size="sm"color="success" onClick={toggle}>
         Adicionar
       </Button>
@@ -91,6 +119,8 @@ function Modall(args) {
                             value={nome}
                             onChange={(e)=> setNome (e.target.value)}
                           />
+
+{emptyevalue && nome==='' ? <Alert color='danger'>Coloque o nome</Alert> :''}
                         </FormGroup>
                       </Col>
                       <Col lg="6">
@@ -104,11 +134,18 @@ function Modall(args) {
                           <Input
                             className="form-control-alternative"
                             id="input-email"
-                            placeholder="000000"
+                            placeholder="00000"
+                            onInput={(e) => {
+                              e.target.value = e.target.value.replace(/[^0-9]/g, '').slice(0, 7);
+                              setRg(e.target.value);
+                            }}
                             type="text"
                             value={rg}
                             onChange={(e)=> setRg (e.target.value)}
                           />
+                          {emptyevalue && rg==='' ? <Alert color='danger'>Coloque o rg</Alert> :''}
+                          {validRg && rg.length<7 &&  rg.length>0 ? <Alert color='danger'>RG inválido, são necessários 7 digitos!</Alert> :''}
+
                         </FormGroup>
                       </Col>
                       <Col lg="6">
@@ -119,7 +156,7 @@ function Modall(args) {
                           >
                             Posto/Grad
                           </label>
-                          <Input
+                          {/* <Input
                             className="form-control-alternative"
                             id="input-first-name"
                             placeholder="Posto/Grad"
@@ -127,7 +164,23 @@ function Modall(args) {
                             value={postgrad}
                             onChange={(e)=> setPostgrad (e.target.value)}
 
-                          />
+                          /> */}
+                          <Input type="select" name="select" id="SelectMarca" value={postgrad} onChange={(e)=>setPostgrad(e.target.value)}>
+                            <option value=''>Escolha</option>
+                            <option value='Soldado'>Soldado</option>
+                            <option value='Cabo'>Cabo</option>
+                            <option value='3º Sargento'>3ª Sargento</option>
+                            <option value='2º Sargento'>2ª Sargento</option>
+                            <option value='1º Sargento'>1ª Sargento</option>
+                            <option value='Sub Tenente'>Sub Tenente</option>
+                            <option value='2º tenente'>2º tenente</option>
+                            <option value='1º tenente'>1º tenente</option>
+                            <option value='Capitão'>Capitão</option>
+                            <option value='Major'>Major</option>
+                            <option value='Tenente Coronel'>Tenente Coronel</option>
+                            <option value='Coronel'>Coronel</option>
+                          </Input>
+                          {emptyevalue && postgrad==='' ? <Alert color='danger'>Coloque o Posto/Grad</Alert> :''}
                         </FormGroup>
                       </Col>
                     </Row>
@@ -148,6 +201,7 @@ function Modall(args) {
                             value={unidade}
                             onChange={(e)=> setUnidade (e.target.value)}
                           />
+                          {emptyevalue && unidade==='' ? <Alert color='danger'>Coloque a unidade</Alert> :''}
                         </FormGroup>
                       </Col>
                       <Col lg="6">
@@ -166,6 +220,7 @@ function Modall(args) {
                             value={funcao}
                             onChange={(e)=> setFuncao (e.target.value)}
                           />
+                          {emptyevalue && funcao==='' ? <Alert color='danger'>Coloque a função</Alert> :''}
                         </FormGroup>
                       </Col>
                     </Row>
@@ -180,7 +235,7 @@ function Modall(args) {
         </ModalBody>
         <ModalFooter>
           <Button color="success" onClick={handleAdd}>
-            Adicionar
+            salvar
           </Button>{' '}
           <Button color="warning" onClick={toggle}>
             Cancelar

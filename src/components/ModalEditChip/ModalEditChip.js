@@ -10,6 +10,11 @@ import 'react-toastify/dist/ReactToastify.css';
 function ModalEditCHip(props) {
   const [modal, setModal] = useState(false);
 
+  ////////////////validação////////////
+  const [emptyevalue, setEmptyevalue] = useState(false);
+  const [validChip, setValidChip] = useState(false);
+//////////////////////////////////////
+
   const toggle = () => {setModal(!modal)
     setEmptyevalue(false)};
 
@@ -27,9 +32,6 @@ function ModalEditCHip(props) {
 
     const [linha,setLinha] = useState('');
     const [nserie, setNserie] =   useState('')
-
-    const [emptyevalue, setEmptyevalue] = useState(false);
-  const [validChip, setValidChip] = useState(false);
 
     const [idAparelho, setIdAparelho]= useState('')
 
@@ -77,6 +79,7 @@ function ModalEditCHip(props) {
 
   return (
     <div>
+   
       <Button className='botaoEditar' size='sm' onClick={toggle}>
         Editar
       </Button>
