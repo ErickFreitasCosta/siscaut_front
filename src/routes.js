@@ -69,19 +69,19 @@ var routes = [
     layout: "/admin",
   },
   {
-    path: "/createModem",
-    name: "Modem",
-    icon: "fas fa fa-wifi text-primary",
-    component: <Modem />,
-    layout: "/admin",
-  },
-  {
     path: "/createChip",
     name: "Chip",
     icon: "fas fa-sim-card text-primary",
     component: <Chip/>,
     layout: "/admin",
     
+  },
+  {
+    path: "/createModem",
+    name: "Modem",
+    icon: "fas fa fa-wifi text-primary",
+    component: <Modem />,
+    layout: "/admin",
   },
   {
   path: "/Cautela",
