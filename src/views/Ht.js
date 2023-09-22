@@ -17,7 +17,7 @@
 */
 import {Link} from "react-router-dom";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 // node.js library that concatenates classes (strings)
 import classnames from "classnames";
 // javascipt plugin for creating charts
@@ -40,6 +40,17 @@ import {
   Col,
 } from "reactstrap";
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
+import ModalExcluir from '../components/ModalExcluir/ModalExcluir'
+
+
+import {db} from '../firebase'
+  import {doc, setDoc, Collection, addDoc, collection, onSnapshot, updateDoc, deleteDoc} from 'firebase/firestore'
+
+
 // core components
 import {
   chartOptions,
@@ -50,8 +61,17 @@ import {
 
 import Header from "components/Headers/Header.js";
 import Modall from "components/ModalAddHt/Modal";
+import ModalEditHt from "components/ModalEditHt/ModalEditHt";
 
 const Aparelho = (props) => {
+
+    const [nserie, setNserie] = useState('')
+    const [base, setBase] = useState('')
+    const [marca, setMarca] = useState('')
+    const [modelo, setModelo] = useState('')
+
+    const [ht, setHt]= useState([])
+
   const [activeNav, setActiveNav] = useState(1);
   const [chartExample1Data, setChartExample1Data] = useState("data1");
 
@@ -64,8 +84,53 @@ const Aparelho = (props) => {
     setActiveNav(index);
     setChartExample1Data("data" + index);
   };
+
+
+  //////////////////////////////////////////função de exibição////////////////////////////////////////////
+
+useEffect(()=>{
+  async function loadHt(){
+    const unsub = onSnapshot(collection(db,'Ht'), (snapshot)=>{
+      let listaHt = [];
+
+      snapshot.forEach((doc)=>{
+        listaHt.push({
+          id: doc.id,
+          marca: doc.data().marca,
+          modelo: doc.data().modelo,
+          nserie: doc.data().nserie,
+          base: doc.data().base,
+        })
+      })
+      setHt(listaHt);
+    });
+
+  }
+    loadHt();
+
+},[])
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////função excluir///////////////////////////////////
+async function excluirHt(id){
+  /* alert("excluiu" + id) */
+  const excluDoc = doc(db, "Ht", id)
+  await deleteDoc(excluDoc)
+  .then(() =>{
+      toast.error("O Ht foi excluido permanentemente");
+      /* alert("sucesso na exclusão " + id) */
+  })
+  .catch((error)=>{
+    toast.error('Algo deu errado, tente novamente mais tarde')
+
+  });
+}
+///////////////////////////////////////////////////////////////////////////////////////
+
+
   return (
     <>
+    <ToastContainer/>
       <Header />
       {/* Page content */}
       <Container className="mt--7" fluid>
@@ -182,7 +247,36 @@ const Aparelho = (props) => {
                     <th scope="col">Ações</th>
                   </tr>
                 </thead>
-                <tbody>
+                  {ht.map((hts)=>{
+                    return(
+                      <tr key={hts.id}>
+
+                      <th scope="row">{hts.nserie}</th>
+                      <th scope="row">{hts.marca}</th>
+                      <th scope="row">{hts.modelo}</th>
+                      <th scope="row">{hts.base}</th>
+                      <td>
+                      <div> 
+
+                    
+         
+                        <div className="OrganizarBotoes">
+                          {<ModalEditHt data= {hts}/>}
+                         {/* <ModalEditChip data= {chips}/> */}
+                      
+                          <ModalExcluir 
+                          title='Ht'
+                          func={() => excluirHt(hts.id)} />
+                        </div>
+
+
+                        </div>
+                    </td>
+                      </tr>
+
+                    )
+                  })}
+                {/* <tbody>
                   <tr>
                     <th scope="row">Nilson</th>
                     <td>4,569</td>
@@ -217,7 +311,7 @@ const Aparelho = (props) => {
                  
                  
                  
-                </tbody>
+                </tbody> */}
               </Table>
             </Card>
           </Col>

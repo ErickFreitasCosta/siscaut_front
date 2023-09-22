@@ -60,6 +60,7 @@ import {
 
 import Header from "components/Headers/Header.js";
 import Modall from "components/ModalAddModem/Modal";
+import { ToastContainer,toast } from 'react-toastify';
 
 const Aparelho = (props) => {
   const [activeNav, setActiveNav] = useState(1);
@@ -90,7 +91,7 @@ async function excluirModem(id){
   const excluDoc = doc(db, "Modem", id)
   await deleteDoc(excluDoc)
   .then(() =>{
-      alert("sucesso na exclusão " + id)
+      toast.error("O modem foi excluido permanentemente")
   })
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -127,6 +128,7 @@ async function excluirModem(id){
 
   return (
     <>
+    <ToastContainer/>
       <Header />
       {/* Page content */}
       <Container className="mt--7" fluid>

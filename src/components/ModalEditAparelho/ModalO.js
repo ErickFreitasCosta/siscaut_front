@@ -1,16 +1,29 @@
 import React, { useState } from 'react';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Input, FormGroup, Col, Row, Form } from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Input, FormGroup, Col, Row, Form, Alert } from 'reactstrap';
 
 import {db} from '../../firebase';
 import {doc, updateDoc,addDoc,getDocs} from 'firebase/firestore'
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 
 function ModalExample(props) {
   const [modal, setModal] = useState(false);
-  console.log('aqui',props)
 
-  const toggle = () => setModal(!modal);
+  //validação
+  const [emptyevalue, setEmptyevalue] = useState(false);
+  const [validImei, setValidImei] = useState(false);
+
+
+  
+
+  const toggle = () => {
+    setModal(!modal)
+    setModal(!modal)
+    setEmptyevalue(false)
+  };
 
   const externalCloseBtn = (
     <button
@@ -34,11 +47,17 @@ function ModalExample(props) {
     const [listaAparelho, setListaAparelho]= useState(props.data)
     
     async function editarPost(){
-        if(!listaAparelho.marca ) {
-            return alert("DIGTE A MARCA")
-        }
+      const docRef = doc(db,'Aparelhos',props.data.id)
+         if ( !listaAparelho.modelo|| !listaAparelho.imei1 ||!listaAparelho.imei2  || !listaAparelho.marca ){
+      setEmptyevalue(true)
+      
+    }else{
 
-        const docRef = doc(db,'Aparelhos',props.data.id)
+      if(listaAparelho.imei1.length<15 || listaAparelho.imei2.length<15){
+        setValidImei(true)
+        
+      }else{  
+
         await updateDoc(docRef,{
             modelo: listaAparelho.modelo,
             imei1:listaAparelho.imei1,
@@ -46,7 +65,7 @@ function ModalExample(props) {
             marca:listaAparelho.marca
         })
         .then(()=>{
-            console.log('Atualizado')
+          toast.success('Aparelho alterado com sucesso')
             setMarca('')
             setImei1('')
             setImei2('')
@@ -55,11 +74,12 @@ function ModalExample(props) {
 
         })
         .catch(()=>{
-            console.log('Erro ao atualizar')
+            toast.error('erro ao alterar')
 
         })
+      }
     }
-
+  }
     function handleSobreescrever(e){
         setListaAparelho({...listaAparelho,[e.target.name] : e.target.value})
 
@@ -100,6 +120,7 @@ function ModalExample(props) {
                             onChange={e =>handleSobreescrever(e)}
                      
                   />
+                  {emptyevalue && listaAparelho.modelo==='' ? <Alert color='danger'>Coloque o modelo</Alert> :''}
 
                         </FormGroup>
                       </Col>
@@ -120,6 +141,7 @@ function ModalExample(props) {
                         
                            
                           />
+                          {emptyevalue && listaAparelho.marca==='' ? <Alert color='danger'>Coloque a marca</Alert> :''}
                         </FormGroup>
 
                       </Col>
@@ -136,12 +158,17 @@ function ModalExample(props) {
                             id="input-email"
                             placeholder="IMEI"
                             type="text"
-
+                            onInput={(e) => {
+                              e.target.value = e.target.value.replace(/[^0-9]/g, '').slice(0, 15);
+                              setImei2(e.target.value);
+                            }}
                             name = "imei1"
                             value={listaAparelho.imei1}
                             onChange={e =>handleSobreescrever(e)}
                            
                           />
+                          {emptyevalue && listaAparelho.imei1==='' ? <Alert color='danger'>Coloque o imei</Alert> :''}
+                          {validImei && listaAparelho.imei1.length<15 &&  listaAparelho.imei1.length>0 ? <Alert color='danger'>Imei inválido, são necessários 15 digitos!</Alert> :''}
                         </FormGroup>
                       </Col>
                       <Col lg="6">
@@ -157,13 +184,18 @@ function ModalExample(props) {
                             id="input-first-name"
                             placeholder="IMEI"
                             type="text"
-
+                            onInput={(e) => {
+                              e.target.value = e.target.value.replace(/[^0-9]/g, '').slice(0, 15);
+                              setImei2(e.target.value);
+                            }}
                             name = "imei2"
                             value={listaAparelho.imei2}
                             onChange={e =>handleSobreescrever(e)}
                       
 
                           />
+                          {emptyevalue && listaAparelho.imei2==='' ? <Alert color='danger'>Coloque o segundo Imei</Alert> :''}
+                          {validImei && listaAparelho.imei2.length<15 &&  listaAparelho.imei2.length>0 ? <Alert color='danger'>Imei inválido, são necessários 15 digitos!</Alert> :''}
                         </FormGroup>
                       </Col>
                     </Row>

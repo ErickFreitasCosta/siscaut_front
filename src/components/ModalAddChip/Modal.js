@@ -15,7 +15,6 @@ import {db} from '../../firebase'
 import {doc, setDoc, Collection, addDoc, collection, onSnapshot, updateDoc, deleteDoc} from 'firebase/firestore'
 
 import { ToastContainer, toast } from 'react-toastify';
-
   import 'react-toastify/dist/ReactToastify.css';
 
 
@@ -23,9 +22,11 @@ import { ToastContainer, toast } from 'react-toastify';
 function Modall(args) {
   const [modal, setModal] = useState(false);
 
+
+      //////////////validação/////////////
   const [emptyevalue, setEmptyevalue] = useState(false);
   const [validChip, setValidChip] = useState(false);
-  
+ //////////////////////////////////////////////// 
 
     const [nserie, setNserie] = useState('')
     const [linha, setLinha] = useState('')
@@ -42,6 +43,7 @@ function Modall(args) {
   /////////////////////////////////Função HandleAdd////////////////////////////
 
   async function handleAdd(){
+    
 
     if ( !nserie|| !linha ){
       setEmptyevalue(true)
@@ -57,7 +59,7 @@ function Modall(args) {
       nserie: nserie,
     })
     .then(()=>{
-      toast.success('Chip cadastrado com sucesso')
+      toast.success('Chip foi adicionado com sucesso')
       setNserie('')
       setLinha('')
       setEmptyevalue(false)
@@ -71,6 +73,7 @@ function Modall(args) {
   }
 }
   }
+
   /////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -123,7 +126,7 @@ function Modall(args) {
                           />
                           
                           {emptyevalue && nserie==='' ? <Alert color='danger'>Coloque o número de serie</Alert> :''}
-                          {validChip && nserie.length<20 &&  nserie.length>0 ? <Alert color='danger'>número de serie inválido</Alert> :''}
+                          {validChip && nserie.length<20 &&  nserie.length>0 ? <Alert color='danger'>número de serie inválido, são necessários 20 digitos!</Alert> :''}
 
                         </FormGroup>
                       </Col>
@@ -155,7 +158,7 @@ function Modall(args) {
                           /> */}
 
 
-                          {emptyevalue && linha ==='' ? <Alert color='danger'>Coloque a marca</Alert> :''}
+                          {emptyevalue && linha ==='' ? <Alert color='danger'>Coloque a marca.</Alert> :''}
                         </FormGroup>
                       </Col>
 
@@ -170,7 +173,7 @@ function Modall(args) {
 
         <ModalFooter>
           <Button color="success" onClick={handleAdd}>
-            Adicionar
+            Salvar
           </Button>{' '}
           <Button color="warning" onClick={toggle}>
             Cancelar

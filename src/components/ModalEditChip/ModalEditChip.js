@@ -10,6 +10,11 @@ import 'react-toastify/dist/ReactToastify.css';
 function ModalEditCHip(props) {
   const [modal, setModal] = useState(false);
 
+  ////////////////validação////////////
+  const [emptyevalue, setEmptyevalue] = useState(false);
+  const [validChip, setValidChip] = useState(false);
+//////////////////////////////////////
+
   const toggle = () => {setModal(!modal)
     setEmptyevalue(false)};
 
@@ -27,9 +32,6 @@ function ModalEditCHip(props) {
 
     const [linha,setLinha] = useState('');
     const [nserie, setNserie] =   useState('')
-
-    const [emptyevalue, setEmptyevalue] = useState(false);
-  const [validChip, setValidChip] = useState(false);
 
     const [idAparelho, setIdAparelho]= useState('')
 
@@ -77,12 +79,13 @@ function ModalEditCHip(props) {
 
   return (
     <div>
+   
       <Button className='botaoEditar' size='sm' onClick={toggle}>
         Editar
       </Button>
 
       <Modal isOpen={modal} toggle={toggle} external={externalCloseBtn}>
-        <ModalHeader>Editar Aparelhos</ModalHeader>
+        <ModalHeader>Editar Ht</ModalHeader>
         <ModalBody>
         <Form>
 
@@ -119,7 +122,7 @@ function ModalEditCHip(props) {
         />
         {emptyevalue && listaChip.nserie==='' ? <Alert color='danger'>Coloque o número de serie</Alert> :''}
 
-        {validChip && listaChip.nserie.length<20 &&  listaChip.nserie.length>0 ? <Alert color='danger'>número de serie inválido</Alert> :''}
+        {validChip && listaChip.nserie.length<20 &&  listaChip.nserie.length>0 ? <Alert color='danger'>número de serie inválido, são necessários 20 digitos!</Alert> :''}
       </FormGroup>
     </Col>
     </Row>
