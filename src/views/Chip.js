@@ -207,10 +207,10 @@ function Pesquisa(e){
                     
          
                         <div className="OrganizarBotoes">
-                         <ModalEditChip data= {chips}/>
+                         <ModalEditChip data= {chip}/>
                           <ModalExcluir 
                           title='chip'
-                          func={() => excluirChip(chips.id)} />
+                          func={() => excluirChip(chip.id)} />
                         </div>
 
 

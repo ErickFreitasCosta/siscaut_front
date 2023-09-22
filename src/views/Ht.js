@@ -238,6 +238,7 @@ async function excluirHt(id){
                 </Row>
               </CardHeader>
               <Table className="align-items-center table-flush" responsive>
+                
                 <thead className="thead-light">
                   <tr>
                     <th scope="col">Número de série </th>
@@ -247,8 +248,10 @@ async function excluirHt(id){
                     <th scope="col">Ações</th>
                   </tr>
                 </thead>
+                <tbody>
                   {ht.map((hts)=>{
                     return(
+                      
                       <tr key={hts.id}>
 
                       <th scope="row">{hts.nserie}</th>
@@ -273,9 +276,11 @@ async function excluirHt(id){
                         </div>
                     </td>
                       </tr>
+                      
 
                     )
                   })}
+                  </tbody>
                 {/* <tbody>
                   <tr>
                     <th scope="row">Nilson</th>
@@ -312,6 +317,7 @@ async function excluirHt(id){
                  
                  
                 </tbody> */}
+               
               </Table>
             </Card>
           </Col>
