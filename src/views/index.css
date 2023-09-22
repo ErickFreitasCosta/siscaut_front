@@ -83,9 +83,20 @@
     border-radius: 5px;
     outline: none; /* Remove a borda de foco padrão */
     font-size: 16px;
-    width: 100%;
+    width: 30%;
     /* Outros estilos, como cores, margens, etc., podem ser personalizados aqui */
   }
+  .divADICIONAR input[type="search"]:focus {
+    /* Ocupa o espaço disponível na div */
+   padding: 10px;
+   border: none;
+   border-radius: 5px;
+   outline: none; /* Remove a borda de foco padrão */
+   font-size: 16px;
+   transition: 6s;
+   width: 100%;
+   /* Outros estilos, como cores, margens, etc., podem ser personalizados aqui */
+ }
   
   /* Estilo para o botão (se necessário) */
   .divADICIONAR button {

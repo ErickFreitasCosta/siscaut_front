@@ -23,6 +23,7 @@ import {doc, setDoc, Collection, addDoc, collection, onSnapshot, updateDoc, dele
 import { useEffect, useState } from "react";
 import { Card, CardBody, CardTitle, Container, Row, Col } from "reactstrap";
 import Aparelho from "views/Cautelar";
+import Foto from "../../assets/img/brand/icons8-roteador-wi-fi-50.png"
 
 
 
@@ -40,6 +41,7 @@ const Header = () => {
   // QUANTIDADE NA TELA
   const [Chips,setChips] = useState([])
   const [modem,setModem] = useState([])
+  const [ht,setHt] = useState([])
 
   //////////////////////////////////
 
@@ -116,6 +118,27 @@ const Header = () => {
 
   },[])
 
+  useEffect(()=>{
+    async function loadHt(){
+      const unsub = onSnapshot(collection(db,'Ht'), (snapshot)=>{
+        let listaModem = [];
+
+        snapshot.forEach((doc)=>{
+          listaModem.push({
+            id: doc.id,
+            imei1: doc.data().imei1,
+            imei2: doc.data().imei2,
+            marca: doc.data().marca,
+            modelo: doc.data().modelo
+          })
+        })
+        setHt(listaModem);
+      });
+
+    }
+      loadHt();
+
+  },[])
 
 
 
@@ -189,7 +212,7 @@ const Header = () => {
                         <span className="h1 font-weight-bold mb-0"> 
 
                         {/* <h1> {Chips.length}</h1> */}
-                        ?
+                        <h1> {ht.length}</h1>
                         
                          </span>
                       </div>
@@ -242,6 +265,8 @@ const Header = () => {
                   </CardBody>
                 </Card>
               </Col>
+
+
               <Col lg="6" xl="2">
                 <Card className="card-stats mb-4 mb-xl-0">
                   <CardBody>
@@ -261,50 +286,17 @@ const Header = () => {
                       </div>
                       <Col className="col-auto">
                         <div className="icon icon-shape bg-info text-white rounded-circle shadow">
-                          <i className="fas fa fa-wifi" />
+                          <img src={Foto} style={{width:"39px"}}/>
                         </div>
                       </Col>
                       
                     </Row>
-                    {/* <p className="mt-3 mb-0 text-muted text-sm">
-                      <span className="text-success mr-2">
-                        <i className="fas fa-arrow-up" /> 12%
-                      </span>{" "}
-                      <span className="text-nowrap">Since last month</span>
-                    </p> */}
+                 
                   </CardBody>
                 </Card>
               </Col>
 
-              {/* <Col lg="6" xl="2">
-                <Card className="card-stats mb-4 mb-xl-0">
-                  <CardBody>
-                    <Row>
-                      <div className="col">
-                        <CardTitle
-                          tag="h5"
-                          className="text-uppercase text-muted mb-0"
-                        >
-                          Relatório
-                        </CardTitle>
-                        <span className="h2 font-weight-bold mb-0">Abrir</span>
-                      </div>
-                      <Col className="col-auto">
-                        <div className="icon icon-shape bg-light text-white rounded-circle shadow">
-                          <i className="fas fa fa-file" />
-                        </div>
-                      </Col>
-                      
-                    </Row>
-                    <p className="mt-3 mb-0 text-muted text-sm">
-                      <span className="text-success mr-2">
-                        <i className="fas fa-arrow-up" /> 12%
-                      </span>{" "}
-                      <span className="text-nowrap">Since last month</span>
-                    </p>
-                  </CardBody>
-                </Card>
-              </Col> */}
+       
 
               
             </Row>

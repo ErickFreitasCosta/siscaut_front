@@ -151,7 +151,12 @@ async function excluirAparelho(id){
       aparelho.imei1.toLowerCase().includes(e.toLowerCase())
     );
     console.log(filteredAparelhos,"APARELJP")
-    setFilter(filteredAparelhos);
+    if (filteredAparelhos.length === 0) {
+      toast.error("Nenhum Aparelho foi encontrado");
+      
+    } else {
+      setFilter(filteredAparelhos);
+    }
   }
   // __________________________________________________________________________________________________________
   return (
