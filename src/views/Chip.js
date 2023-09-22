@@ -151,9 +151,11 @@ const Chip = (props) => {
                           <th scope="row">{chip.nserie}</th>
                           <th scope="row">{chip.linha}</th>
                           <td>
+
                             <div className="OrganizarBotoes">
                               <ModalEditChip data={chip} />
                               <ModalExcluir func={() => excluirChip(chip.id)} />
+
                             </div>
                           </td>
                         </tr>

@@ -51,12 +51,12 @@ const [modelo, setModelo] = useState('')
     async function editarPost(){
       const docRef = doc(db,'Ht',props.data.id)
       
-     /*  if ( !listaChip.nserie|| !listaChip.linha ){
+      if ( !listaHt.nserie|| !listaHt.base || !listaHt.marca || !listaHt.modelo ){
         setEmptyevalue(true)
       }else{
-        if(nserie.length<20){
-          setValidChip(true)
-        }else{ */
+        if(listaHt.nserie.length<20){
+          setValidHt(true)
+        }else{
 
         await updateDoc(docRef,{
             base: listaHt.base,
@@ -79,6 +79,8 @@ const [modelo, setModelo] = useState('')
 
         })
       }
+    }
+  }
     
   
 
@@ -88,7 +90,7 @@ const [modelo, setModelo] = useState('')
 
     }
   
-
+    console.log(listaHt.base)
 
   return (
     <div>
@@ -131,8 +133,8 @@ const [modelo, setModelo] = useState('')
                             value={listaHt.nserie}
                             onChange={e =>handleSobreescrever(e)}
                           />
-                          {emptyevalue && nserie ==='' ? <Alert color='danger'>Coloque o número de série.</Alert> :''}
-                          {validHt && nserie.length<20 &&  nserie.length>0 ? <Alert color='danger'>número de serie inválido, são necessários 20 digitos!</Alert> :''}
+                          {emptyevalue && listaHt.nserie ==='' ? <Alert color='danger'>Coloque o número de série.</Alert> :''}
+                          {validHt && listaHt.nserie.length<20 &&  listaHt.nserie.length>0 ? <Alert color='danger'>número de serie inválido, são necessários 20 digitos!</Alert> :''}
                         </FormGroup>
                       </Col>
 
@@ -164,7 +166,7 @@ const [modelo, setModelo] = useState('')
                             <option value='Marca 2'>Marca 2</option>
                             <option value='Marca 3'>Marca 3</option>
                           </Input>
-                          {emptyevalue && marca ==='' ? <Alert color='danger'>Coloque a marca.</Alert> :''}
+                          {emptyevalue && listaHt.marca ==='' ? <Alert color='danger'>Coloque a marca.</Alert> :''}
                       </FormGroup>
 
 
@@ -190,7 +192,7 @@ const [modelo, setModelo] = useState('')
                             value={listaHt.modelo}
                             onChange={e =>handleSobreescrever(e)}
                           />
-                        {emptyevalue && modelo ==='' ? <Alert color='danger'>Coloque o modelo.</Alert> :''}
+                        {emptyevalue && listaHt.modelo ==='' ? <Alert color='danger'>Coloque o modelo.</Alert> :''}
                         </FormGroup>
                       </Col>
 
@@ -231,14 +233,25 @@ const [modelo, setModelo] = useState('')
 
                             <Col lg="6">
 
-                            <CustomInput type="radio" id="exampleCustomRadio" onChange={(e)=> setBase (e.target.value)} name="customRadio" label="SIM"  />
+                            <CustomInput type="radio" id="exampleCustomRadio" /* onChange={(e)=> setBase (e.target.value)} */ name="customRadio" label="SIM" 
+                            checked={listaHt.base === "Sim"} // Verifica se listaHt.base é igual a "SIM" para marcar o radio button
+                            onChange={() => setListaHt({ ...listaHt, base: "Sim" })} // Atualiza o estado listaHt.base quando o radio "SIM" é selecionado
+                            />
                             </Col>
                             <Col lg="3">
 
-                            <CustomInput type="radio" id="exampleCustomRadio2" onChange={(e)=> setBase (e.target.value)} name="customRadio" label="NÃO" value="Não" />
+                            <CustomInput type="radio" id="exampleCustomRadio2" 
+                             name="customRadio" label="NÃO" 
+                             checked={listaHt.base === "Não"} // Verifica se listaHt.base é igual a "NÃO" para marcar o radio button
+                             onChange={() => setListaHt({ ...listaHt, base: "Não" })} // Atualiza o estado listaHt.base quando o radio "NÃO" é selecionado 
+                                              />
                             </Col>
-                            {emptyevalue && base ==='' ? <Alert color='danger'>Coloque se ele possuí ou não base.</Alert> :''}
                             </Row>
+
+
+
+
+
                             
 
 
