@@ -15,7 +15,6 @@ import {db} from '../../firebase'
 import {doc, setDoc, Collection, addDoc, collection, onSnapshot, updateDoc, deleteDoc} from 'firebase/firestore'
 
 import { ToastContainer, toast } from 'react-toastify';
-
   import 'react-toastify/dist/ReactToastify.css';
 
 
@@ -60,7 +59,7 @@ function Modall(args) {
       nserie: nserie,
     })
     .then(()=>{
-      toast.success('Chip adicionado com sucesso')
+      toast.success('Chip foi adicionado com sucesso')
       setNserie('')
       setLinha('')
       setEmptyevalue(false)

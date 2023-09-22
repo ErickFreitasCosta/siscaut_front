@@ -85,7 +85,7 @@ function ModalEditCHip(props) {
       </Button>
 
       <Modal isOpen={modal} toggle={toggle} external={externalCloseBtn}>
-        <ModalHeader>Editar Aparelhos</ModalHeader>
+        <ModalHeader>Editar Ht</ModalHeader>
         <ModalBody>
         <Form>
 

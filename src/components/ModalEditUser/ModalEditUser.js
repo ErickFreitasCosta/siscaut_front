@@ -176,7 +176,23 @@ function ModalEditUser(props,renderizar,setRenderizar,filter,setFilter) {
                           >
                             Posto/Grad
                           </label>
-                          <Input
+                          <Input type="select" name="postgrad" id="SelectMarca" value={listaMilitar.postgrad} onChange={e =>handleSobreescrever(e)}>
+                            <option value=''>Escolha</option>
+                            <option value='Soldado'>Soldado</option>
+                            <option value='Cabo'>Cabo</option>
+                            <option value='3º Sargento'>3ª Sargento</option>
+                            <option value='2º Sargento'>2ª Sargento</option>
+                            <option value='1º Sargento'>1ª Sargento</option>
+                            <option value='Sub Tenente'>Sub Tenente</option>
+                            <option value='2º tenente'>2º tenente</option>
+                            <option value='1º tenente'>1º tenente</option>
+                            <option value='Capitão'>Capitão</option>
+                            <option value='Major'>Major</option>
+                            <option value='Tenente Coronel'>Tenente Coronel</option>
+                            <option value='Coronel'>Coronel</option>
+                          </Input>
+                          {emptyevalue && listaMilitar.postgrad==='' ? <Alert color='danger'>Coloque o Posto/Grad</Alert> :''}
+                          {/* <Input
                             className="form-control-alternative"
                             id="input-first-name"
                             placeholder="Posto/Grad"
@@ -185,7 +201,7 @@ function ModalEditUser(props,renderizar,setRenderizar,filter,setFilter) {
                             value={listaMilitar.postgrad}
                             onChange={e =>handleSobreescrever(e)}
                           />
-                          {emptyevalue && listaMilitar.postgrad==='' ? <Alert color='danger'>Coloque a unidade</Alert> :''}
+                          {emptyevalue && listaMilitar.postgrad==='' ? <Alert color='danger'>Coloque a unidade</Alert> :''} */}
                         </FormGroup>
                       </Col>
                     </Row>
@@ -242,7 +258,7 @@ function ModalEditUser(props,renderizar,setRenderizar,filter,setFilter) {
 
      
         <ModalFooter>
-          <Button color="success"  onClick={editarPost} func={() => (handleSobreescrever.aparelhos.id)} >
+          <Button color="success"  onClick={editarPost}  >
             Salvar
           </Button>{' '}
 

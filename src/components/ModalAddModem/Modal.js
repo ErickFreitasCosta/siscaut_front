@@ -117,7 +117,7 @@ function Modall(args) {
                             value={imei}
                             onChange={(e)=> setImei (e.target.value)}
                           />
-                          {emptyevalue && imei==='' ? <Alert color='danger'>Coloque o número de serie</Alert> :''}
+                          {emptyevalue && imei==='' ? <Alert color='danger'>Coloque o número de série</Alert> :''}
                           {validImei && imei.length<15 &&  imei.length>0 ? <Alert color='danger'>Imei inválido, são necessários 15 digitos!</Alert> :''}
                         </FormGroup>
                       </Col>
@@ -146,9 +146,10 @@ function Modall(args) {
                           <Label for="exampleSelect">Marca</Label>
                           <Input type="select" name="select" id="exampleSelect" value={marca} onChange={(e)=>setMarca(e.target.value)}>
                             <option value=''>Escolha</option>
-                            <option value='Claro'>Claro </option>
+                            <option value='Vivo'>Vivo </option>
+                            <option value='Claro'>Claro</option>
                           </Input>
-                          {emptyevalue && marca==='' ? <Alert color='danger'>Coloque o número de serie</Alert> :''}
+                          {emptyevalue && marca==='' ? <Alert color='danger'>Coloque a marca</Alert> :''}
                       </FormGroup>
 
                       </Col>
@@ -161,11 +162,11 @@ function Modall(args) {
                         <Label for="SelectMarca">Modelo</Label>
                           <Input type="select" name="select" id="SelectMarca" value={modelo} onChange={(e)=>setModelo(e.target.value)}>
                             <option value=''>Escolha</option>
-                            <option value='Marca 1'>Marca 1 </option>
-                            <option value='Marca 2'>Marca 2 </option>
+                            <option value='Modelo 1'>Modelo 1</option>
+                            <option value='Modelo 2'>Modelo 2</option>
                            
                           </Input>
-                          {emptyevalue && modelo==='' ? <Alert color='danger'>Coloque o número de serie</Alert> :''}
+                          {emptyevalue && modelo==='' ? <Alert color='danger'>Coloque o modelo</Alert> :''}
                         </FormGroup>
                       </Col>
                             </Row>
