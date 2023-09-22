@@ -36,6 +36,9 @@ import {
   Col,
 } from "reactstrap";
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 // core components
 import {
   chartOptions,
@@ -83,7 +86,7 @@ async function excluirMilitar(id){
   const excluDoc = doc(db, "Militares", id)
   await deleteDoc(excluDoc)
   .then(() =>{
-      alert("sucesso na exclusão " + id)
+      toast.error("O militar foi excluido permanentemente")
   })
 }
 ///////////////////////////////////////////////////////////////////////////////////////
@@ -124,6 +127,7 @@ async function excluirMilitar(id){
 
   return (
     <>
+    <ToastContainer/>
       <Header />
       {/* Page content */}
       <Container className="mt--7" fluid>

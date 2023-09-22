@@ -11,6 +11,8 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Card,
     Alert,
   Label } from 'reactstrap';
 
+  import { toast } from 'react-toastify';
+
   import {doc, setDoc, Collection, addDoc, collection, onSnapshot, updateDoc, deleteDoc} from 'firebase/firestore'
   import {db} from '../../firebase'
 
@@ -25,13 +27,27 @@ function Modall(args) {
     const [marca, setMarca] = useState('')
     const [modelo, setModelo] = useState('')
 
+    //////////////validação/////////////
+  const [emptyevalue, setEmptyevalue] = useState(false);
+  const [validImei, setValidImei] = useState(false);
+ //////////////////////////////////////////////// 
 
-  const toggle = () => setModal(!modal);
+  const toggle = () => {
+    setModal(!modal)
+    setEmptyevalue(false)
+    setValidImei(false) 
+  };
 
 
   /////////////////////////////////função handleAdd/////////////////////////////////////
 
   async function handleAdd(){
+
+    if ( !imei || !marca || !modelo ){
+      setEmptyevalue(true)
+    }else{if(imei.length<15){
+      setValidImei(true)
+    }else{
 
     await addDoc(collection(db,"Modem"),{
       imei: imei,
@@ -39,7 +55,8 @@ function Modall(args) {
       modelo:modelo,
     })
     .then(()=>{
-      console.log("conseguiu")
+      toast.success("O modem foi adicionado com sucesso")
+     
       setImei('')
       setModelo('')
       setMarca('')
@@ -47,8 +64,11 @@ function Modall(args) {
     })
     .catch((error)=>{
       console.log(error)
+      toast.error("ocorreu algum erro, tente novamente mais tarde")
   
     });
+      }
+    }
   } 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -88,11 +108,17 @@ function Modall(args) {
                             className="form-control-alternative"
                             /* defaultValue="lucky.jesse" */
                             id="input-imeiModem"
-                            placeholder="Nº de serie"
+                            placeholder="IMEI"
+                            onInput={(e) => {
+                              e.target.value = e.target.value.replace(/[^0-9]/g, '').slice(0, 15);
+                              setImei(e.target.value);
+                            }}
                             type="text"
                             value={imei}
                             onChange={(e)=> setImei (e.target.value)}
                           />
+                          {emptyevalue && imei==='' ? <Alert color='danger'>Coloque o número de série</Alert> :''}
+                          {validImei && imei.length<15 &&  imei.length>0 ? <Alert color='danger'>Imei inválido, são necessários 15 digitos!</Alert> :''}
                         </FormGroup>
                       </Col>
                       </Row>
@@ -120,8 +146,10 @@ function Modall(args) {
                           <Label for="exampleSelect">Marca</Label>
                           <Input type="select" name="select" id="exampleSelect" value={marca} onChange={(e)=>setMarca(e.target.value)}>
                             <option value=''>Escolha</option>
-                            <option value='Claro'>Claro </option>
+                            <option value='Vivo'>Vivo </option>
+                            <option value='Claro'>Claro</option>
                           </Input>
+                          {emptyevalue && marca==='' ? <Alert color='danger'>Coloque a marca</Alert> :''}
                       </FormGroup>
 
                       </Col>
@@ -134,10 +162,11 @@ function Modall(args) {
                         <Label for="SelectMarca">Modelo</Label>
                           <Input type="select" name="select" id="SelectMarca" value={modelo} onChange={(e)=>setModelo(e.target.value)}>
                             <option value=''>Escolha</option>
-                            <option value='Marca 1'>Marca 1 </option>
-                            <option value='Marca 2'>Marca 2 </option>
+                            <option value='Modelo 1'>Modelo 1</option>
+                            <option value='Modelo 2'>Modelo 2</option>
                            
                           </Input>
+                          {emptyevalue && modelo==='' ? <Alert color='danger'>Coloque o modelo</Alert> :''}
                         </FormGroup>
                       </Col>
                             </Row>

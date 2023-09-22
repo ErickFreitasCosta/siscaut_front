@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 
-function Example({args, func,renderizar,setRenderizar}) {
+
+function Example({args, func,renderizar,setRenderizar, title}) {
 
   const [modal, setModal] = useState(false);
 

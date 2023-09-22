@@ -45,6 +45,9 @@ import {
 
 //FirebsaeConfigs
 import {db} from '../firebase'
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
  
 import {doc, setDoc, Collection, addDoc, collection, onSnapshot, updateDoc, deleteDoc} from 'firebase/firestore'
 
@@ -95,7 +98,7 @@ async function excluirAparelho(id){
   const excluDoc = doc(db, "Aparelhos", id)
   await deleteDoc(excluDoc)
   .then(() =>{
-      alert("sucesso na exclusão " + id)
+    toast.error('O aparelho foi excluido permanentemente')
   })
   setRenderizar(!renderizar)
   setFilter([])
@@ -153,6 +156,7 @@ async function excluirAparelho(id){
   // __________________________________________________________________________________________________________
   return (
     <>
+    <ToastContainer/>
       <Header />
 
                                                 {/* CAMPO DE BUSCA */}
