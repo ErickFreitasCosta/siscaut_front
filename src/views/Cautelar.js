@@ -17,7 +17,7 @@
 */
 import {Link} from "react-router-dom";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 // node.js library that concatenates classes (strings)
 import classnames from "classnames";
 // javascipt plugin for creating charts
@@ -41,6 +41,13 @@ import {
   Col,
 } from "reactstrap";
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+import {db} from '../firebase'
+import {doc, setDoc, Collection, addDoc, collection, onSnapshot, updateDoc, deleteDoc, query,where , getDocs} from 'firebase/firestore'
+
+
 // core components
 import {
   chartOptions,
@@ -60,13 +67,62 @@ const Aparelho = (props) => {
     parseOptions(Chart, chartOptions());
   }
 
+  
+
+
+
+
   const toggleNavs = (e, index) => {
     e.preventDefault();
     setActiveNav(index);
     setChartExample1Data("data" + index);
   };
+
+  const [aparelhos,setAparelhos] = useState([])
+  const [renderizar ,setRenderizar] = useState(false)
+
+ /*  const cautelados = query(collection(db,"Aparelhos", where ("cautelado", "==", "false") )) */
+
+  /////////////////////////////////////////função de exibição///////////////////////////// 
+  useEffect(() => {
+    // Cria uma função para atualizar a lista de aparelhos com base nos dados do snapshot
+    function updateAparelhos(snapshot) {
+      let listaAparelhos = [];
+  
+      snapshot.forEach((doc) => {
+        listaAparelhos.push({
+          id: doc.id,
+          imei1: doc.data().imei1,
+          imei2: doc.data().imei2,
+          marca: doc.data().marca,
+          modelo: doc.data().modelo,
+          cautelado: doc.data().cautelado,
+        });
+      });
+  
+      setAparelhos(listaAparelhos);
+    }
+  
+    // Cria a consulta inicial
+    const q = query(
+      collection(db, 'Aparelhos'),
+      where('cautelado', '==', false)
+    );
+  
+    // Executa a consulta inicial e ouve as atualizações em tempo real
+    const unsub = onSnapshot(q, (snapshot) => {
+      updateAparelhos(snapshot);
+    });
+  
+    //  função de limpeza para interromper a observação quando o componente for desmontado
+    return () => unsub();
+  }, []); // 
+  
+  
+  
   return (
     <>
+    <ToastContainer/>
       <Header />
       {/* Page content */}
       <Container className="mt--7" fluid>
@@ -179,20 +235,49 @@ const Aparelho = (props) => {
                     <th scope="col">Modelo</th>
                     <th scope="col">Marcaa</th>
                     <th scope="col" className="ajeitar">IMEI</th>
+                    <th scope="col" className="ajeitar">IMEI 2</th>
                     <th scope="col">Ações</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
+                  {/* {<tr>
                     <th scope="row">S20</th>
                     <td>Samsung</td>
                     <td>340 123 432 234 785</td>
                     
                     <td>
-                        {/* ISSO É O BUTTON DE CAUTELAR DE APARELHOS */}
+                        ////SO É O BUTTON DE CAUTELAR DE APARELHOS
                         <Modall/>
                     </td>
-                  </tr>
+                  </tr>} */}
+
+{aparelhos.map((aparelhos) =>{
+                          /* setMarca(aparelhos.modelo) */
+                      
+                    return(
+                      <tr key={aparelhos.id}>
+                        <th scope="row">{aparelhos.modelo}</th>
+                        <th>{aparelhos.marca}</th>
+                        <th>{aparelhos.imei1}</th>
+                        <th>{aparelhos.imei2}</th>
+                        <td>
+                      <div> 
+
+                    
+         
+                        <div className="OrganizarBotoes">
+
+                        <Modall data={aparelhos}/>
+                          
+
+                        </div>
+
+
+                        </div>
+                    </td>
+                      </tr>
+                    )
+                   })}
               
                
                 

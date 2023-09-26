@@ -30,14 +30,15 @@ function Modall(args) {
 
     const [nserie, setNserie] = useState('')
     const [linha, setLinha] = useState('')
-    /* const [numero, setNumero] = useState('') */
+    const [numero, setNumero] = useState('')
 
    
   const toggle = () => {setModal(!modal)
                         setEmptyevalue(false)
                         setValidChip(false)
                         setNserie('')
-                        setLinha('');}
+                        setLinha('')
+                        setNumero('');}
 
                         
   /////////////////////////////////Função HandleAdd////////////////////////////
@@ -45,11 +46,11 @@ function Modall(args) {
   async function handleAdd(){
     
 
-    if ( !nserie|| !linha ){
+    if ( !nserie|| !linha || !numero ){
       setEmptyevalue(true)
     }
     else{
-     if(nserie.length<20){
+     if(nserie.length<20 || numero.length<11){
       setValidChip(true)
     }else{
 
@@ -57,11 +58,14 @@ function Modall(args) {
     await addDoc(collection(db,"Chip"),{
       linha: linha,
       nserie: nserie,
+      numero: numero,
+      cautelado: false,
     })
     .then(()=>{
       toast.success('Chip foi adicionado com sucesso')
       setNserie('')
       setLinha('')
+      setNumero('')
       setEmptyevalue(false)
       setValidChip(false)
       toggle()
@@ -131,6 +135,41 @@ function Modall(args) {
                         </FormGroup>
                       </Col>
                       </Row>
+                      
+
+                      <Row>
+                      <Col lg="12">
+
+                        <FormGroup>
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-NserieHT"
+                          >
+                            Número do telefone
+                          </label>
+                          <Input
+                            className="form-control-alternative"
+                            /* defaultValue="lucky.jesse" */
+                            onInput={(e) => {
+                              e.target.value = e.target.value.replace(/[^0-9]/g, '').slice(0, 11);
+                              setNumero(e.target.value);
+                            }}
+                            id="input-Modelonumero"
+                            placeholder="(00)00000-0000"
+                            value={numero}
+                            onChange={(e)=>setNumero(e.target.value)}
+                            type="text"
+                            maxLength={11}
+                          />
+                          
+                          {emptyevalue && numero==='' ? <Alert color='danger'>Coloque o número do telefone</Alert> :''}
+                          {validChip && numero.length<11 &&  numero.length>0 ? <Alert color='danger'>número de telefone inválido, são necessários 11 digitos!</Alert> :''}
+
+                        </FormGroup>
+                      </Col>
+                      </Row>
+
+
                       <Row>
                       <Col lg="12">
                         <FormGroup>

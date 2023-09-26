@@ -31,7 +31,8 @@ function ModalEditCHip(props) {
 
 
     const [linha,setLinha] = useState('');
-    const [nserie, setNserie] =   useState('')
+    const [nserie, setNserie] =   useState('');
+    const [numero, setNumero] = useState('');
 
     const [idAparelho, setIdAparelho]= useState('')
 
@@ -41,21 +42,25 @@ function ModalEditCHip(props) {
     async function editarPost(){
       const docRef = doc(db,'Chip',props.data.id)
       
-      if ( !listaChip.nserie|| !listaChip.linha ){
+      if ( !listaChip.nserie|| !listaChip.linha || !listaChip.numero ){
         setEmptyevalue(true)
+        console.log("parou aqui")
       }else{
-        if(nserie.length<20){
+        if(listaChip.nserie.length<20 || listaChip.numero.length<11){
           setValidChip(true)
+          console.log("parou aqui 2")
         }else{
         await updateDoc(docRef,{
             linha: listaChip.linha,
             nserie:listaChip.nserie,
+            numero: listaChip.numero
          
         })
         .then(()=>{
           toast.success('Chip alterado com sucesso')
             setLinha('')
             setNserie('')
+            setNumero('')
             toggle()
 
         })
@@ -126,6 +131,44 @@ function ModalEditCHip(props) {
       </FormGroup>
     </Col>
     </Row>
+
+
+    <Row>
+    <Col lg="12">
+
+      <FormGroup>
+        <label
+          className="form-control-label"
+          htmlFor="input-NserieHT"
+        >
+          Número do telefone
+        </label>
+        <Input
+          className="form-control-alternative"
+          /* defaultValue="lucky.jesse" */
+          id="input-ModelNumero"
+          placeholder="(00) 00000-0000"
+          onInput={(e) => {
+            e.target.value = e.target.value.replace(/[^0-9]/g, '').slice(0, 20);
+            setNserie(e.target.value);
+          }}
+          value={listaChip.numero}
+          name='numero'
+          onChange={e =>handleSobreescrever(e)}
+          type="text"
+          maxLength={11}
+          
+        />
+        {emptyevalue && listaChip.numero==='' ? <Alert color='danger'>Coloque o número do telefone</Alert> :''}
+
+        {validChip && listaChip.numero.length<11 &&  listaChip.numero.length>0 ? <Alert color='danger'>número de telfone inválido, são necessários 11 digitos!</Alert> :''}
+      </FormGroup>
+    </Col>
+    </Row>
+
+
+
+
     <Row>
     <Col lg="12">
       <FormGroup>
