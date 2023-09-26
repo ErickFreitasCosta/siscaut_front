@@ -49,14 +49,14 @@
     margin-bottom: 2%;
     width: 100%;
 }
-.botaoPesquisar{
+/* .botaoPesquisar{
     background-color: #007ad9;
     height: 43px;
     border: none;
-}
-.botaoPesquisar:hover{
+} */
+/* .botaoPesquisar:hover{
     background-color: #116FBF;
-}
+} */
 .busca{
     padding-left: 20%;
     width: 110px;
@@ -73,6 +73,7 @@
     padding: 10px;
     background-color: #f0f0f0; /* Cor de fundo da div */
     border-radius: 5px; /* Borda arredondada */
+    
   }
   
   /* Estilo para o input */
@@ -100,7 +101,7 @@
   
   /* Estilo para o botão (se necessário) */
   .divADICIONAR button {
-    background-color: #007bff; /* Cor de fundo do botão */
+    /* background-color: #007bff; Cor de fundo do botão */
     color: #fff; /* Cor do texto do botão */
     border: none;
     border-radius: 5px;
@@ -109,6 +110,9 @@
     cursor: pointer;
     /* Outros estilos do botão podem ser personalizados aqui */
   }
+
+
+
   .conteinerSearch{
     width: 100%;
   }
