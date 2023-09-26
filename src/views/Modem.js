@@ -322,6 +322,8 @@ import Modall from "components/ModalAddModem/Modal";
 import { ToastContainer, toast } from 'react-toastify';
 
 import './index.css'
+import ClientesPDF from "components/RepostPdf/ClientesModem";
+
 
 import {
   chartOptions,
@@ -330,14 +332,15 @@ import {
   chartExample2,
 } from "variables/charts.js";
 
+
+
 const Modem = (props) => {
   const [activeNav, setActiveNav] = useState(1);
   const [chartExample1Data, setChartExample1Data] = useState("data1");
-
   const [modens, setModens] = useState([]);
   const [renderizar, setRenderizar] = useState(false);
-
   const [filter, setFilter] = useState([]);
+  
 
   if (window.Chart) {
     parseOptions(Chart, chartOptions());
@@ -348,6 +351,7 @@ const Modem = (props) => {
     setActiveNav(index);
     setChartExample1Data("data" + index);
   };
+
 
   useEffect(() => {
     async function loadModens() {
@@ -368,6 +372,7 @@ const Modem = (props) => {
     loadModens();
   }, [renderizar]);
 
+
   async function excluirModem(id) {
     const excluDoc = doc(db, "Modem", id);
     await deleteDoc(excluDoc)
@@ -381,38 +386,49 @@ const Modem = (props) => {
       });
   }
 
-  function Pesquisa(e) {
-    console.log(e);
+  // function Pesquisa(e) {
+  //   console.log(e);
 
-    if (e.trim() === "") {
-      // Se a pesquisa estiver vazia, limpe o filtro
-      setFilter([]);
-    } else {
-      // Separe os números digitados pelo usuário
-      const numerosDigitados = e.split("").map(Number);
+  //   if (e.trim() === "") {
+  //     // Se a pesquisa estiver vazia, limpe o filtro
+  //     setFilter([]);
+  //   } else {
+  //     // Separe os números digitados pelo usuário
+  //     const numerosDigitados = e.split("").map(Number);
 
-      // Filtrar os modems que correspondem aos números digitados
-      const filteredModem = modens.filter((modem) => {
-        const imei = modem.imei.toLowerCase();
-        return numerosDigitados.every((numero) => imei.includes(numero.toString()));
-      });
+  //     // Filtrar os modems que correspondem aos números digitados
+  //     const filteredModem = modens.filter((modem) => {
+  //       const imei = modem.imei.toLowerCase();
+  //       return numerosDigitados.every((numero) => imei.includes(numero.toString()));
+  //     });
 
-      // Ordenar os modems de acordo com a ordem dos números digitados
-      filteredModem.sort((a, b) => {
-        const imeiA = a.imei.toLowerCase();
-        const imeiB = b.imei.toLowerCase();
-        return numerosDigitados.indexOf(Number(imeiA)) - numerosDigitados.indexOf(Number(imeiB));
-      });
+  //     // Ordenar os modems de acordo com a ordem dos números digitados
+  
 
-      console.log(filteredModem, "Modem");
+  //     console.log(filteredModem, "Modem");
 
-      if (filteredModem.length === 0) {
-        toast.error("Nenhum modem foi encontrado");
-      } else {
-        setFilter(filteredModem);
-      }
-    }
-  }
+  //     if (filteredModem.length === 0) {
+  //       toast.error("Nenhum modem foi encontrado");
+  //     } else {
+  //       setFilter(filteredModem);
+  //     }
+  //   }
+  // }
+
+  function Pesquisa(e){
+   console.log(e)
+   
+   const filteredAparelhos = modens.filter(Modem =>
+     Modem.imei.toLowerCase().includes(e.toLowerCase())
+   );
+   console.log(filteredAparelhos,"APARELJP")
+   if (filteredAparelhos.length === 0) {
+     toast.error("Nenhum Aparelho foi encontrado");
+     
+   } else {
+     setFilter(filteredAparelhos);
+   }
+ }
 
   return (
     <>
@@ -432,9 +448,14 @@ const Modem = (props) => {
                       <h3 className="mb-0">Modem</h3>
                       <input type="search" placeholder='Pesquisa por IMEI' onChange={(e) => Pesquisa(e.target.value)} />
                     </div>
-                  <div className="divADICIONAR" style={{justifyContent : "flex-end"}}>
-                    <Modall />
-                  </div>
+
+                    <div className="divADICIONAR btn" style={{justifyContent : "space-between"}}>
+                      <Modall />
+
+  {/* ////////////////////////////////////////////////////GERAR PDF */}
+                      <Button color="danger" onClick={(e) => ClientesPDF(modens)}><i class="far fa-file-pdf"></i> Gerar PDF</Button>{' '}
+                    </div>
+
                 </div>
 
                 </Row>

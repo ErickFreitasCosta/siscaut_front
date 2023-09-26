@@ -74,16 +74,8 @@ const Aparelho = (props) => {
   const [activeNav, setActiveNav] = useState(1);
   const [chartExample1Data, setChartExample1Data] = useState("data1");
 
-    const [modelo, setModelo] = useState('')
-    const [imei1, setImei1] =   useState('')
-    const [imei2, setImei2] = useState('')
-    const [marca, setMarca] = useState('')
-    
-    const [listaAparelho,setListaAparelho] = useState([])
-    const [aparelhos,setAparelhos] = useState([])
-    
-    const [idAparelho, setIdAparelho] = useState('')
 
+    const [aparelhos,setAparelhos] = useState([])
     const [renderizar ,setRenderizar] = useState(false)
 
   if (window.Chart) {
