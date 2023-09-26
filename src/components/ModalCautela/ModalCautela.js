@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Card,
     CardHeader,
     CardBody,
@@ -9,9 +9,14 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Card,
     Row,
     Col } from 'reactstrap';
 
+    import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+    import {doc, setDoc, Collection, addDoc, collection, onSnapshot, updateDoc, deleteDoc,query , where} from 'firebase/firestore'
+    import {db} from '../../firebase'
    
 
-function Modall(args) {
+function Modall(props) {
   const [modal, setModal] = useState(false);
 
   
@@ -21,8 +26,121 @@ function Modall(args) {
     const [marca, setMarca] = useState('')
     const [modelo, setModelo] = useState('')
 
+   
+
+
+    
+    const [militares, setMilitares] = useState ([]);
+    const [chip, setChip] = useState ([]);
+
+
+    const [idChip, setIdChip] = useState ('')
+    const [idMilitar, setIdMilitar] = useState ('')
+    const [nomeMilitar, setNomeMilitar] = useState ('')
+
+    
+
+    const [listaAparelhos, setListaAparelhos] = useState(props.data)
+    /* console.log(listaAparelhos) */
+
+
 
   const toggle = () => setModal(!modal);
+
+
+  /////////////////////////////////Militares/////////////////////////////////////
+  useEffect(()=>{
+    async function loadMilitares(){
+      const unsub = onSnapshot(collection(db,'Militares'), (snapshot)=>{
+        let listaMilitares = [];
+
+        snapshot.forEach((doc)=>{
+          listaMilitares.push({
+            id: doc.id,
+            nome: doc.data().nome,
+          })
+        })
+        setMilitares(listaMilitares);
+      });
+
+    }
+      loadMilitares();
+
+  },[])
+  ///////////////////////////////////////////////////////////////
+
+
+  /////////////////////////////////Chips/////////////////////////////////////
+  useEffect(()=>{
+
+    function loadChips(snapshot) {
+      let listaChips = [];
+  
+      snapshot.forEach((doc) => {
+        listaChips.push({
+          id: doc.id,
+          numero: doc.data().numero,
+        });
+      });
+  
+      setChip(listaChips);
+    }
+      
+    // Cria a consulta inicial
+    const q = query(
+      collection(db, 'Chip'),
+      where('cautelado', '==', false)
+    );
+
+      // Executa a consulta inicial e ouve as atualizações em tempo real
+    const unsub = onSnapshot(q, (snapshot) => {
+      loadChips(snapshot);
+    });
+
+    return () => unsub();
+  },[])
+  ////////////////////////////////////////////////////////////////////
+
+
+
+  /////////////////////////////////FUNÇÃO DE CAUTELA/////////////////////////////////////
+
+
+  async function HandleCautelar() {
+    const dataAtual = new Date();
+    try {
+      await addDoc(collection(db, "Cautelas"), {
+        aparelho: listaAparelhos.id,
+        chip: idChip,
+        militar: idMilitar,
+        data: {
+          dia: dataAtual.getDate(),
+          mes: dataAtual.getMonth() + 1,  
+          ano: dataAtual.getFullYear(),
+        },
+      });
+  
+      const docAparelho = doc(db, 'Aparelhos', props.data.id);
+      const docChip = doc(db, 'Chip', idChip);
+  
+      await updateDoc(docAparelho, {
+        cautelado: true,
+      });
+  
+      await updateDoc(docChip, {
+        cautelado: true,
+      });
+  
+      toast.success("Aparelho cautelado");
+      toggle();
+    } catch (error) {
+      // Trate erros aqui
+      console.error("Ocorreu um erro:", error);
+    }
+  }
+  
+  
+////////////////////////////////////////////////////////////////////////////
 
   return (
     <div>
@@ -30,7 +148,7 @@ function Modall(args) {
         Cautelar
       </Button>
 
-      <Modal isOpen={modal} toggle={toggle} {...args}>
+      <Modal isOpen={modal} toggle={toggle} {...props}>
         <ModalHeader toggle={toggle}>Cautela</ModalHeader>
         <ModalBody>
           
@@ -50,20 +168,23 @@ function Modall(args) {
                           >
                             Responsável
                           </label>
-                          <Input
-                            className="form-control-alternative"
-                            id="input-last-name"
-                            placeholder="Modelo"
-                            type="text"
-                          
-                          />
+                          <Input type="select" id="SelectResponsavel"
+                          value={idMilitar} onChange={(e)=>setIdMilitar(e.target.value)} >
+                            <option value=''>Escolha</option>
+                            {militares.map((militares)=>{
+                              
+                              return(
+                                
+                                <option key={militares.id} value={militares.id}>{militares.nome}</option>
+                              )
+                            })}
+                          </Input>
                         </FormGroup>
                       </Col>
 
 
-        
 
-                    <Col lg="10">
+                      <Col lg="10">
                         <FormGroup>
                           <label
                             className="form-control-label"
@@ -71,15 +192,25 @@ function Modall(args) {
                           >
                             Chip
                           </label>
-                          <Input
-                            className="form-control-alternative"
-                            id="input-last-name"
-                            placeholder="Modelo"
-                            type="text"
-                          
-                          />
+                          <Input type="select" id="SelectResponsavel" 
+                          value={idChip} onChange={(e)=>setIdChip(e.target.value)}>
+                            <option value=''>Escolha</option>
+                            {chip.map((chips)=>{
+                              return(
+                                <option key={chips.id} value={chips.id}>{chips.numero}</option>
+                              )
+                            })}
+                          </Input>
                         </FormGroup>
                       </Col>
+                      
+
+                            
+
+        
+
+                   
+
 
                     <Col lg="6">
                         <FormGroup>
@@ -95,6 +226,7 @@ function Modall(args) {
                             disabled
                             placeholder="Modelo"
                             type="text"
+                            value={listaAparelhos.modelo} 
                           
                           />
                         </FormGroup>
@@ -114,6 +246,7 @@ function Modall(args) {
                             className="form-control-alternative"
                             id="input-username"
                             disabled
+                            value={listaAparelhos.marca} 
                             placeholder="Marca"
                             type="text"
                             
@@ -132,6 +265,7 @@ function Modall(args) {
                             className="form-control-alternative"
                             id="input-email"
                             placeholder="IMEI"
+                            value={listaAparelhos.imei1} 
                             disabled
                             type="text"
                             
@@ -150,6 +284,7 @@ function Modall(args) {
                             className="form-control-alternative"
                             id="input-first-name"
                             disabled
+                            value={listaAparelhos.imei2} 
                             placeholder="IMEI"
                             type="text"
                             
@@ -165,7 +300,7 @@ function Modall(args) {
                 </Form>
         </ModalBody>
         <ModalFooter>
-          <Button color="success" onClick={toggle}>
+          <Button color="success" onClick={HandleCautelar}>
             Cautelar
           </Button>{/* {' '} */}
           <Button color="warning" onClick={toggle}>

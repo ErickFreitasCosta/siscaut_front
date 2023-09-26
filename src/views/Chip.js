@@ -68,6 +68,8 @@ const Chip = (props) => {
             id: doc.id,
             nserie: doc.data().nserie,
             linha: doc.data().linha,
+            numero: doc.data().numero,
+           
           });
         });
         setChip(listaChips);
@@ -140,6 +142,7 @@ const Chip = (props) => {
                   <tr>
                     <th scope="col">Número de Série</th>
                     <th scope="col">Linha</th>
+                    <th scope="col">Número do telefone</th>
                     <th scope="col">Ações</th>
                   </tr>
                 </thead>
@@ -150,6 +153,7 @@ const Chip = (props) => {
                         <tr key={chip.id}>
                           <th scope="row">{chip.nserie}</th>
                           <th scope="row">{chip.linha}</th>
+                          <th scope="row">{chip.numero}</th>
                           <td>
 
                             <div className="OrganizarBotoes">
@@ -169,6 +173,7 @@ const Chip = (props) => {
                         <tr key={chip.id}>
                           <th scope="row">{chip.nserie}</th>
                           <th scope="row">{chip.linha}</th>
+                          <th scope="row">{chip.numero}</th>
                           <td>
                             <div className="OrganizarBotoes">
                               <ModalEditChip data={chip} />

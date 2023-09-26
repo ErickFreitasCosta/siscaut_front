@@ -24,6 +24,7 @@ function ModalAdd(args) {
     const [imei1, setImei1] =   useState('')
     const [imei2, setImei2] = useState('')
     const [marca, setMarca] = useState('')
+   /*  const [cautelado, setCautelado] = useState('') */
 
  /////////////////////////// //validação
     const [emptyevalue, setEmptyevalue] = useState(false);
@@ -47,7 +48,7 @@ function ModalAdd(args) {
   /////////////////////////////////função handleAdd/////////////////////////////////////
 
   async function handleAdd(){
-
+   /*  setCautelado(false) */
     if ( !modelo|| !imei1 ||!imei2  || !marca ){
       setEmptyevalue(true)
     }else{ 
@@ -62,6 +63,7 @@ function ModalAdd(args) {
       imei2: imei2,
       marca:marca,
       modelo:modelo,
+      cautelado:false,
     })
     .then(()=>{
       toast.success('Aparelho adicionado com sucesso')
