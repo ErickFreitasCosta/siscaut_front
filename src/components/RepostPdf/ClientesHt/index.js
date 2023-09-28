@@ -2,13 +2,13 @@ import pdfMake from 'pdfmake/build/pdfmake'
 import pdfFonts from 'pdfmake/build/vfs_fonts'
 
 
-function ClientesPDF(Modens){
+function ClientesPDF(Ht){
 
     pdfMake.vfs = pdfFonts.pdfMake.vfs
 
     const reportTitle = [
         {
-            text : 'TERMO DO QUANTITATIVO DE MODENS ',alignment :'center',
+            text : 'TERMO DO QUANTITATIVO DE HT ',alignment :'center',
             fontSize : 15 ,
             bold : true,
             margin : [0 ,20, 0, 45] // esquerda ,cima ,direita ,baixo
@@ -20,11 +20,12 @@ function ClientesPDF(Modens){
     ]
 
     // dados q estou recebendo
-    const dados = Modens.map((Modem) =>{
+    const dados = Ht.map((hts) =>{
         return[
-            {text : Modem.modelo, fontSize :10 ,margin : [60, 2,10 ,2],},
-            {text : Modem.marca, fontSize :10,margin : [60, 2,10 ,2],},
-            {text : Modem.imei, fontSize :10 ,margin : [60, 2,10 ,2]}
+            {text : hts.base, fontSize :10,margin : [0, 2,10 ,2],},
+            {text : hts.marca, fontSize :10,margin : [0, 2,10 ,2],},
+            {text : hts.modelo, fontSize :10 ,margin : [0, 2,10 ,2]},
+            {text : hts.nserie, fontSize :10 ,margin : [0, 2,10 ,2]}
         ]
     })
 
@@ -55,13 +56,14 @@ function ClientesPDF(Modens){
         {
             table :{
                 headerRows : 1,
-                widths : [120 , 120,180] ,
-                // cabeçalho da tabela fixa
+                widths : ['*' , '*','*','*'] ,
+                // cabeçalho da tabela fixa  -  esquerda ,cima ,direita ,baixo
                 body : [
                     [
-                        {text : 'MODELO', style :'tableHeader',fontSize :10,margin : [60, 2,10 ,2],bold : true},
-                        {text : 'MARCA', style :'tableHeader',fontSize :10 ,margin : [60, 2,10 ,2],bold : true},
-                        {text : 'IMEI', style :'tableHeader',fontSize :10,margin : [90, 2,10 ,2],bold : true}
+                        {text : 'BASE', style :'tableHeader',fontSize :10 ,margin : [0, 2,10 ,2],bold : true},
+                        {text : 'MARCA', style :'tableHeader',fontSize :10 ,margin : [0, 2,10 ,2],bold : true},
+                        {text : 'MODELO', style :'tableHeader',fontSize :10,margin : [0, 2,10 ,2],bold : true},
+                        {text : 'NºSERIE', style :'tableHeader',fontSize :10,margin : [0, 2,10 ,2],bold : true}
                     ],
                     // pega tudo que tinha dentro do array e adiciona mais tabela dinamica
                     ...dados
@@ -70,7 +72,8 @@ function ClientesPDF(Modens){
 
             },
             layout : 'headerLineOnly',
-            margin : [60, 2,0 ,2],
+            // distancia da tabela
+            margin : [15, 2,0 ,8],
         }
         /// texto estático
 ,

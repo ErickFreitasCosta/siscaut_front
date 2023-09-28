@@ -386,34 +386,7 @@ const Modem = (props) => {
       });
   }
 
-  // function Pesquisa(e) {
-  //   console.log(e);
 
-  //   if (e.trim() === "") {
-  //     // Se a pesquisa estiver vazia, limpe o filtro
-  //     setFilter([]);
-  //   } else {
-  //     // Separe os números digitados pelo usuário
-  //     const numerosDigitados = e.split("").map(Number);
-
-  //     // Filtrar os modems que correspondem aos números digitados
-  //     const filteredModem = modens.filter((modem) => {
-  //       const imei = modem.imei.toLowerCase();
-  //       return numerosDigitados.every((numero) => imei.includes(numero.toString()));
-  //     });
-
-  //     // Ordenar os modems de acordo com a ordem dos números digitados
-  
-
-  //     console.log(filteredModem, "Modem");
-
-  //     if (filteredModem.length === 0) {
-  //       toast.error("Nenhum modem foi encontrado");
-  //     } else {
-  //       setFilter(filteredModem);
-  //     }
-  //   }
-  // }
 
   function Pesquisa(e){
    console.log(e)
