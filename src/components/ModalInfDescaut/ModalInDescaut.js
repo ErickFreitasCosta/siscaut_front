@@ -31,12 +31,17 @@ function Modall(props) {
 
     
     const [militares, setMilitares] = useState ([]);
-    const [chip, setChip] = useState ([]);
+    const [chip, setChip] = useState ('');
 
 
-    const [idChip, setIdChip] = useState ('')
+    const [idChip, setIdChip] = useState ("")
+    const [nunChip, setNunChip] = useState ('')
+
     const [idMilitar, setIdMilitar] = useState ('')
     const [nomeMilitar, setNomeMilitar] = useState ('')
+
+    
+    const [dadosComValores, setDadosComValores] = useState([]);
 
     
 
@@ -45,11 +50,92 @@ function Modall(props) {
 
 
 
-  const toggle = () => setModal(!modal);
+  const toggle = () => {
+    setModal(!modal)
+    
+  };
 
+  
+  
+    /* async function chipCautelado(){
+      try{
+    const q = query(
+      collection(db, 'Cautelas'),
+      where('aparelho', '==', props.data.id)
+    );
+  
+    const querySnapshot = await getDocs(q)
+    querySnapshot.forEach((doc) => {
+      // Para cada documento retornado pela consulta
+      const data = doc.data();
+      const valorDoCampo = doc.data().chip; // 'chip' é o nome do campo que você deseja recuperar
+      setIdChip(valorDoCampo);
+    });
+
+    if (idChip) {
+      getNumero();
+    }
+
+  } catch (error) {
+    console.error('Erro ao consultar documento:', error);
+  }
+  
+  } */
+
+  useEffect(()=>{    
+  async function chipCautelado() {
+    try {
+      const q = query(
+        collection(db, 'Cautelas'),
+        where('aparelho', '==', props.data.id)
+      );
+
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach((doc) => {
+        // Para cada documento retornado pela consulta
+        const data = doc.data();
+        const valorDoCampo = doc.data().chip; // 'chip' é o nome do campo que você deseja recuperar
+        setIdChip(valorDoCampo);
+      });
+
+      // Após definir idChip, você pode chamar getNumero() aqui
+      
+     
+    } catch (error) {
+      console.error('Erro ao consultar documento:', error);
+    }
+  }
+  chipCautelado();
+},[])
+  
+console.log(idChip)
+  async function getNumero() {
+    try {
+      const docRef = doc(db, 'Chip', idChip);
+      const docSnap = await getDoc(docRef);
+  
+      if (docSnap.exists()) {
+        // O documento existe
+        const numero = docSnap.data().numero;
+        setNunChip(numero);
+      } else {
+        // O documento não existe
+        console.log('O documento não foi encontrado.');
+      }
+    } catch (error) {
+      // Trate erros aqui
+      console.error('Erro ao obter o número:', error);
+    }
+  }
+
+  
+
+
+
+  
 
   /////////////////////////////////Militares/////////////////////////////////////
-  useEffect(()=>{
+  /* useEffect(()=>{
     async function loadMilitares(){
       try {
         const querySnapshot = await getDocs(collection(db, 'Militares'));
@@ -70,12 +156,12 @@ function Modall(props) {
     }
       loadMilitares();
   
-  },[])
+  },[]) */
   ///////////////////////////////////////////////////////////////
 
 
   /////////////////////////////////Chips/////////////////////////////////////
-  useEffect(()=>{
+  /* useEffect(()=>{
 
     function loadChips(snapshot) {
       let listaChips = [];
@@ -83,7 +169,7 @@ function Modall(props) {
       snapshot.forEach((doc) => {
         listaChips.push({
           id: doc.id,
-          numero: doc.data().numero,
+          aparelho: doc.data().numero,
         });
       });
   
@@ -102,7 +188,7 @@ function Modall(props) {
     });
 
     return () => unsub();
-  },[])
+  },[]) */
   ///////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -110,7 +196,7 @@ function Modall(props) {
   /////////////////////////////////FUNÇÃO DE CAUTELA/////////////////////////////////////
 
 
-  async function HandleCautelar() {
+  /* async function HandleCautelar() {
     const dataAtual = new Date();
     try {
       await addDoc(collection(db, "Cautelas"), {
@@ -141,7 +227,7 @@ function Modall(props) {
       // Trate erros aqui
       console.error("Ocorreu um erro:", error);
     }
-  }
+  } */
   
   
 ////////////////////////////////////////////////////////////////////////////
@@ -149,11 +235,11 @@ function Modall(props) {
   return (
     <div>
       <Button size="sm"color="success" onClick={toggle}>
-        Cautelar
+        Informações
       </Button>
 
       <Modal isOpen={modal} toggle={toggle} {...props}>
-        <ModalHeader toggle={toggle}>Cautela</ModalHeader>
+        <ModalHeader toggle={toggle}>Informações</ModalHeader>
         <ModalBody>
           
           
@@ -175,13 +261,8 @@ function Modall(props) {
                           <Input type="select" id="SelectResponsavel"
                           value={idMilitar} onChange={(e)=>setIdMilitar(e.target.value)} >
                             <option value=''>Escolha</option>
-                            {militares.map((militares)=>{
-                              
-                              return(
-                                
-                                <option key={militares.id} value={militares.id}>{militares.nome}</option>
-                              )
-                            })}
+                            
+                          
                           </Input>
                         </FormGroup>
                       </Col>
@@ -197,13 +278,9 @@ function Modall(props) {
                             Chip
                           </label>
                           <Input type="select" id="SelectResponsavel" 
-                          value={idChip} onChange={(e)=>setIdChip(e.target.value)}>
-                            <option value=''>Escolha</option>
-                            {chip.map((chips)=>{
-                              return(
-                                <option key={chips.id} value={chips.id}>{chips.numero}</option>
-                              )
-                            })}
+                          /* value='{idChip}'  *//* onChange='{(e)=>setIdChip(e.target.value)}' */>
+                            <option value=''>{nunChip}</option>
+                            
                           </Input>
                         </FormGroup>
                       </Col>
@@ -304,7 +381,7 @@ function Modall(props) {
                 </Form>
         </ModalBody>
         <ModalFooter>
-          <Button color="success" onClick={HandleCautelar}>
+          <Button color="success" onClick={toggle}>
             Cautelar
           </Button>{/* {' '} */}
           <Button color="warning" onClick={toggle}>

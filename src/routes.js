@@ -32,6 +32,7 @@ import Ht from "views/Ht"
 import Chip from "views/Chip"
 import Modem from "views/Modem"
 import Cautelar from "views/Cautelar"
+import Descautelar from "views/Descautelar"
 
 
 
@@ -88,6 +89,13 @@ var routes = [
   name: "Cautelar Aparelho",
   icon: "fas fa-solid fa-file-lines text-green",
   component: <Cautelar/>,
+  layout: "/admin",
+},
+{
+  path: "/Descautelar",
+  name: "Descautelar Aparelho",
+  icon: "fas fa-solid fa-file-lines text-green",
+  component: <Descautelar/>,
   layout: "/admin",
 },
   /* {
