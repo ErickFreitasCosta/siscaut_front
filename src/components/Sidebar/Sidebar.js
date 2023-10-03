@@ -81,10 +81,14 @@ const Sidebar = (props) => {
             <i className={prop.icon} />
             {prop.name}
           </NavLink>
+
+         
         </NavItem>
       );
     });
   };
+
+  
 
   const { bgColor, routes, logo } = props;
   let navbarBrandProps;
@@ -200,9 +204,11 @@ const Sidebar = (props) => {
             </Row>
           </div>
 
-          <Nav navbar>{createLinks(routes)}</Nav>
+          <Nav navbar>{createLinks(routes)} </Nav>
           {/* Divider */}
           <hr className="my-3" />
+          
+          
           
          
         </Collapse>

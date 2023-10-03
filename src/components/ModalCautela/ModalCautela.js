@@ -112,16 +112,17 @@ function Modall(props) {
 
   async function HandleCautelar() {
     const dataAtual = new Date();
+
+
+    /* const dataFormatada = `${dia}/${mes}/${ano}`; */
+
     try {
       await addDoc(collection(db, "Cautelas"), {
         aparelho: listaAparelhos.id,
         chip: idChip,
         militar: idMilitar,
-        data: {
-          dia: dataAtual.getDate(),
-          mes: dataAtual.getMonth() + 1,  
-          ano: dataAtual.getFullYear(),
-        },
+        data:  dataAtual.toISOString(),
+        cautela:true,
       });
   
       const docAparelho = doc(db, 'Aparelhos', props.data.id);
@@ -307,6 +308,7 @@ function Modall(props) {
           <Button color="success" onClick={HandleCautelar}>
             Cautelar
           </Button>{/* {' '} */}
+          
           <Button color="warning" onClick={toggle}>
             Cancelar
           </Button>
