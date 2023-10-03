@@ -33,6 +33,7 @@ import Chip from "views/Chip"
 import Modem from "views/Modem"
 import Cautelar from "views/Cautelar"
 import Descautelar from "views/Descautelar"
+import Devolucoes from 'views/Devoluções'
 
 
 
@@ -92,21 +93,21 @@ var routes = [
   layout: "/admin",
 },
 {
-  path: "/Descautelar",
-  name: "Descautelar Aparelho",
-  icon: "fas fa-solid fa-file-lines text-green",
+  path: "/Cautelados",
+  name: "Aparelhos Cautelados",
+  icon: "fas fa-solid fa-file-lines text-red",
   component: <Descautelar/>,
   layout: "/admin",
 },
-  /* {
+  
   {
-    path: "/Cautela",
-    name: "Descautelar Aparelho",
-    icon: "fas fa-solid fa-file-lines text-red",
-    component: <Cautelar/>,
+    path: "/Devoluções",
+    name: "Devoluções",
+    icon: "fas fa-solid fa-file-lines text-blue",
+    component: <Devolucoes/>,
     layout: "/admin",
   },
-
+/* 
   {
     path: "/Cautela",
     name: "Cautelar modem",
