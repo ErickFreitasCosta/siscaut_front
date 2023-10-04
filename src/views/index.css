@@ -28,6 +28,12 @@
     border: 1px solid #ED990B;
 }
 
+.centralizar_load{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+   
+}
 
 
 
