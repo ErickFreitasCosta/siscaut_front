@@ -322,7 +322,8 @@ import Modall from "components/ModalAddModem/Modal";
 import { ToastContainer, toast } from 'react-toastify';
 
 import './index.css'
-import ClientesPDF from "components/RepostPdf/ClientesModem";
+// import ClientesPDF from "components/RepostPdf/ClientesModem";
+import ClientesPDF from "components/RepostPdf/ClientesModem copy";
 
 
 import {

@@ -9,33 +9,15 @@ import 'react-toastify/dist/ReactToastify.css';
    
 
 function Modall(props) {
+
   const [modal, setModal] = useState(false);
-
+  const [idChip, setIdChip] = useState ("")
+  const [nunChip, setNunChip] = useState ('')
+  const [idMilitar, setIdMilitar] = useState ("")
+  const [nomeMilitar, setNomeMilitar] = useState ('')
+  const [listaAparelhos, setListaAparelhos] = useState(props.data)
   
-
-    
-
-   
-
-
-    
-  
-
-
-    const [idChip, setIdChip] = useState ("")
-    const [nunChip, setNunChip] = useState ('')
-
-    const [idMilitar, setIdMilitar] = useState ("")
-
-    
-    const [nomeMilitar, setNomeMilitar] = useState ('')
-    
-
-    const [listaAparelhos, setListaAparelhos] = useState(props.data)
     /* console.log(listaAparelhos) */
-
-
-
   const toggle = () => {
     setModal(!modal)
     
