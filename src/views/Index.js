@@ -21,22 +21,26 @@ import { chartOptions, parseOptions } from "variables/charts.js";
 
 const Index = (props) => {
   const [militares, setMilitares] = useState([]);
-  const [filter, setFilter] = useState('');
+  const [filter, setFilter] = useState([]);
+  const [renderizar, setRenderizar] = useState(false);
 
   if (window.Chart) {
     parseOptions(Chart, chartOptions());
   }
 
 
-
+ //////////////////////FUNÇÃO DE EXCLUir
   async function excluirMilitar(id) {
     const excluDoc = doc(db, "Militares", id);
     await deleteDoc(excluDoc)
       .then(() => {
         toast.error("O militar foi excluído permanentemente");
       });
+      setRenderizar(!renderizar)
+      setFilter([])
   }
 
+  /////////////////////FUNÇÃO DE EXIBIÇÃO
   useEffect(() => {
     async function loadMilitares() {
       const unsub = onSnapshot(collection(db, 'Militares'), (snapshot) => {
@@ -60,24 +64,43 @@ const Index = (props) => {
     }
     
     loadMilitares();
-  }, []); // Load data once on initial render
+  }, [renderizar]); // Load data once on initial render
 
-  useEffect(() => {
-    if (filter.trim() === "") {
-      return; // No need to filter when the input is empty
-    }
 
-    // Filter military personnel based on RG
-    const filteredMilitares = militares.filter((militar) =>
-      militar.rg.toLowerCase().includes(filter.toLowerCase())
+
+  // useEffect(() => {
+  //   if (filter.trim() === "") {
+  //     return; // No need to filter when the input is empty
+  //   }
+
+  //   // Filter military personnel based on RG
+  //   const filteredMilitares = militares.filter((militar) =>
+  //     militar.rg.toLowerCase().includes(filter.toLowerCase())
+  //   );
+
+  //   if (filteredMilitares.length === 0) {
+  //     toast.error("Nenhum militar foi encontrado");
+  //   }
+
+  //   setMilitares(filteredMilitares);
+  // }, [filter]);
+  function Pesquisa(e){
+    console.log(e)
+    
+    const filteredMilitares = militares.filter(militar =>
+      militar.rg.toLowerCase().includes(e.toLowerCase())
     );
-
+    console.log(filteredMilitares,"APARELJP")
     if (filteredMilitares.length === 0) {
-      toast.error("Nenhum militar foi encontrado");
+      toast.error("Nenhum Aparelho foi encontrado");
+      
+    } else {
+      setFilter(filteredMilitares);
     }
+  }
 
-    setMilitares(filteredMilitares);
-  }, [filter]);
+
+
 
   return (
     <>
@@ -98,8 +121,8 @@ const Index = (props) => {
                       <input
                         type="search"
                         placeholder='Pesquisa por RG'
-                        value={filter}
-                        onChange={(e) => setFilter(e.target.value)}
+                        
+                        onChange={(e) => Pesquisa(e.target.value)}
                       />
                     </div>
                     <div className="divADICIONAR" style={{justifyContent : "flex-end"}}>
@@ -120,6 +143,25 @@ const Index = (props) => {
                     <th scope="col">Ações</th>
                   </tr>
                 </thead>
+                {filter.length > 0 ?
+                <tbody>
+                  {filter.map((militar) => (
+                    <tr key={militar.id}>
+                      <th>{militar.nome}</th>
+                      <th>{militar.rg}</th>
+                      <th>{militar.postgrad}</th>
+                      <th>{militar.unidade}</th>
+                      <th>{militar.funcao}</th>
+                      <td>
+                        <div className="OrganizarBotoes">
+                          <ModalEditUser data={militar} />
+                          <ModalExcluir func={() => excluirMilitar(militar.id)} />
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+:
                 <tbody>
                   {militares.map((militar) => (
                     <tr key={militar.id}>
@@ -137,6 +179,7 @@ const Index = (props) => {
                     </tr>
                   ))}
                 </tbody>
+}
               </Table>
             </Card>
           </Col>
