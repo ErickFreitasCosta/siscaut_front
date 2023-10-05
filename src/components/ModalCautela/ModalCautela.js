@@ -121,7 +121,7 @@ function Modall(props) {
         aparelho: listaAparelhos.id,
         chip: idChip,
         militar: idMilitar,
-        data:  dataAtual.toISOString(),
+        date_caut:  dataAtual.toISOString(),
         cautela:true,
       });
   

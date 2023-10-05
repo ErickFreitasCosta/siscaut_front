@@ -14,7 +14,7 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Card,
     import 'react-toastify/dist/ReactToastify.css';
 
 
-    import {doc, setDoc, Collection, addDoc, collection, onSnapshot, updateDoc, deleteDoc} from 'firebase/firestore'
+    import {query, where, doc, setDoc, Collection, addDoc, collection, onSnapshot, updateDoc, deleteDoc, getDocs} from 'firebase/firestore'
     import {db} from '../../firebase'
 
    
@@ -34,14 +34,27 @@ function Modall(args) {
     const [postgrad, setPostgrad] = useState('')
 
 
-      /////////////////////////////////função handleAdd/////////////////////////////////////
+////////////////////////////////////////////////função handleAdd/////////////////////////////////////
 
   async function handleAdd(){
 
+    try{
+    const q = query(
+      collection(db, 'Militares'),
+      where('rg', '==', rg)
+    );
+    const querySnapshot = await getDocs(q);
+    const resultado = querySnapshot.docs;
+
     if ( !nome|| !funcao ||!rg  || !unidade || !postgrad ){
       setEmptyevalue(true)
-    }else{ if(rg.length<7){
+    }else{ if(rg.length<7  ){
       setValidRg(true)
+    }else{ if(resultado.length > 0){
+      toast.error("Este militar com este Rg já foi adicionado",{
+        position: "bottom-center"
+      })
+      console.log("aqui")
     }else{
 
     await addDoc(collection(db,"Militares"),{
@@ -65,8 +78,12 @@ function Modall(args) {
       toast.error("Ocorreu algum erro, tente novamente mais tarde")
   
     });
+  }
        }
     }
+  }catch{
+
+  }
   } 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -145,7 +162,7 @@ function Modall(args) {
                           />
                           {emptyevalue && rg==='' ? <Alert color='danger'>Coloque o rg</Alert> :''}
                           {validRg && rg.length<7 &&  rg.length>0 ? <Alert color='danger'>RG inválido, são necessários 7 digitos!</Alert> :''}
-
+                          
                         </FormGroup>
                       </Col>
                       <Col lg="6">
