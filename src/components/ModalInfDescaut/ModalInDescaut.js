@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter,  FormGroup,  Form,  Input,  Row, Col } from 'reactstrap';
-
+import './ModalDescaut.css'
     import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -246,7 +246,7 @@ async function getNomeMilitar() {
       const docAparelho = doc(db, 'Aparelhos', props.data.id);
       const docChip = doc(db, 'Chip', idChip);
 
-      ////////////////////////////////////Para fazer o update
+      ////////////////////////////////////Para fazer o update/////////////////////////////////
       const q = query(
         collection(db, 'Cautelas'),
         where('aparelho', '==', props.data.id));
@@ -274,6 +274,7 @@ async function getNomeMilitar() {
           // Faz o updateDoc aqui usando os dados e o ID do documento
           const docRef = doc(db, 'Cautelas', id);
           await updateDoc(docRef, {
+            date_devolu:  dataAtual.toISOString(),
             cautela:false,
           });
         });
@@ -452,7 +453,7 @@ async function getNomeMilitar() {
             Descautelar
           </Button>
           
-          <Button color="success" onClick={toggle}>
+          <Button className='btn_gerarPdf_Descaut' color="danger" onClick={toggle}>
           <i className="far fa-file-pdf"></i>   Gerar PDF
           </Button>
           {/* {' '} */}

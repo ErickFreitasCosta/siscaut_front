@@ -45,6 +45,8 @@ import {
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+import { format } from 'date-fns';
+
 import {db} from '../firebase'
 import {doc, setDoc, Collection, addDoc, collection, onSnapshot, updateDoc, deleteDoc, query,where , getDocs, getDoc } from 'firebase/firestore'
 
@@ -121,10 +123,15 @@ const Aparelho = (props) => {
             getDoc(docRefMilitar),
             getDoc(docRefAparelho),
           ]);
-    
+
+          // Formate a data usando o date-fns
+          const formattedDateCaut = format(Date.parse(cautela.date_caut), 'dd/MM/yyyy');
+          const formattedDateDevolu = format(Date.parse(cautela.date_devolu), 'dd/MM/yyyy');
+
           return {
             id: cautela.id,
-            date: cautela.data,
+            date_caut:formattedDateCaut,
+            date_devolu:formattedDateDevolu,
             numero: docSnapChip.data().numero,
             linha: docSnapChip.data().linha,
             nserie: docSnapChip.data().nserie,
@@ -161,6 +168,7 @@ const Aparelho = (props) => {
 
 
  console.log(cautInf)
+
 
   /////////////////////////////////////////função de exibição///////////////////////////// 
   /* useEffect(() => {
@@ -283,7 +291,7 @@ const Aparelho = (props) => {
           </Col> */}
         </Row>
         <Row className="mt-5">
-          <Col className="mb-5 mb-xl-0" xl="11">
+          <Col className="mb-5 mb-xl-0" xl="12">
             <Card className="shadow">
               <CardHeader className="border-0">
                 <Row className="align-items-center">
@@ -317,7 +325,7 @@ const Aparelho = (props) => {
                     <th scope="col" className="ajeitar">Número</th>
                     <th scope="col" className="ajeitar">Data cautela</th>
                     <th scope="col" className="ajeitar">Data Devolução</th>
-                    <th scope="col">Ações</th>
+                    <th scope="col" className="ajeitar">Ações</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -342,8 +350,8 @@ const Aparelho = (props) => {
                         <th scope="row">{infcauts.modelo}</th>
                         <th scope="row">{infcauts.imei1}</th>
                         <th scope="row">{infcauts.numero}</th>
-                        <th scope="row">{infcauts.date}</th>
-
+                        <th scope="row">{infcauts.date_caut}</th>
+                        <th scope="row">{infcauts.date_devolu}</th>
                         <td>
                       <div> 
 
@@ -351,7 +359,9 @@ const Aparelho = (props) => {
          
                         <div className="OrganizarBotoes">
 
-                       
+                        <Button size="sm" className='btn_gerarPdf_Descaut' color="danger" >
+          <i className="far fa-file-pdf"></i>   Gerar PDF
+          </Button>
                           
 
                         </div>

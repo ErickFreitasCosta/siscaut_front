@@ -8,13 +8,14 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Card,
     Container,
     Row,
     Col,
-    Alert } from 'reactstrap';
+    Alert,
+  Spinner } from 'reactstrap';
 
     import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
   
 
-    import {doc, setDoc, Collection, addDoc, collection, onSnapshot, updateDoc, deleteDoc} from 'firebase/firestore'
+    import {getDocs, query, where, doc, setDoc, Collection, addDoc, collection, onSnapshot, updateDoc, deleteDoc} from 'firebase/firestore'
     import {db} from '../../firebase'
 
 function ModalAdd(args) {
@@ -26,10 +27,13 @@ function ModalAdd(args) {
     const [marca, setMarca] = useState('')
    /*  const [cautelado, setCautelado] = useState('') */
 
- /////////////////////////// //validação
+ /////////////////////////// //validação////////////////
     const [emptyevalue, setEmptyevalue] = useState(false);
     const [validImei, setValidImei] = useState(false);
-//////////////////////////
+////////////////////////////////////////////////////////
+
+const [loadingAdd, setLoadingAdd] = useState(false);
+
     
 
   const toggle = () => {
@@ -48,13 +52,25 @@ function ModalAdd(args) {
   /////////////////////////////////função handleAdd/////////////////////////////////////
 
   async function handleAdd(){
-   /*  setCautelado(false) */
+    setLoadingAdd(true)
+    const q = query(
+      collection(db, 'Aparelhos'),
+      where('imei1', '==', imei1)
+    );
+    const querySnapshot = await getDocs(q);
+    const resultado = querySnapshot.docs;
+    try{
     if ( !modelo|| !imei1 ||!imei2  || !marca ){
       setEmptyevalue(true)
     }else{ 
       if(imei1.length<15 ||imei2.length<15){
        
         setValidImei(true)
+      }else{if(resultado.length > 0){
+        toast.error("Já existe um aparelho com este primeiro imei",{
+          position: "bottom-center"
+        })
+        console.log("aqui")
       }else{  
     
 
@@ -65,21 +81,22 @@ function ModalAdd(args) {
       modelo:modelo,
       cautelado:false,
     })
-    .then(()=>{
-      toast.success('Aparelho adicionado com sucesso')
+    
+    toast.success('Aparelho adicionado com sucesso')
       setImei1('')
       setImei2('')
       setModelo('')
       setMarca('')
       toggle()
-    })
-    .catch((error)=>{
-      toast.error('Erro ao adicionar aparelho')
-      console.log(error)
-  
-    });
+    
+  }
       }
     }
+  }catch (error){
+    toast.error('Erro ao adicionar aparelho')
+  console.log(error)}finally {
+    setLoadingAdd(false)
+  }
   } 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -207,7 +224,7 @@ function ModalAdd(args) {
 
         <ModalFooter>
           <Button color="success" onClick={handleAdd}>
-            Salvar
+          {loadingAdd ?<><Spinner size='sm' color="primary"></Spinner> <span>Salvando</span></> :'Salvar'}
           </Button>{' '}
           <Button color="warning" onClick={toggle}>
             Cancelar
