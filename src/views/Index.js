@@ -14,7 +14,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { doc, deleteDoc, collection, onSnapshot } from 'firebase/firestore';
 import { db } from '../firebase';
 import Header from "components/Headers/Header.js";
-import Modall from "components/ModalAddUser/Modal";
+import ModalAddMilitar from "components/ModalAddUser/Modal";
 import ModalExcluir from '../components/ModalExcluir/ModalExcluir';
 import ModalEditUser from '../components/ModalEditUser/ModalEditUser';
 import { chartOptions, parseOptions } from "variables/charts.js";
@@ -40,7 +40,7 @@ const Index = (props) => {
       setFilter([])
   }
 
-  /////////////////////FUNÇÃO DE EXIBIÇÃO
+  /////////////////////FUNÇÃO DE EXIBIÇÃO 
   useEffect(() => {
     async function loadMilitares() {
       const unsub = onSnapshot(collection(db, 'Militares'), (snapshot) => {
@@ -126,7 +126,7 @@ const Index = (props) => {
                       />
                     </div>
                     <div className="divADICIONAR" style={{justifyContent : "flex-end"}}>
-                      <Modall/>
+                      <ModalAddMilitar/>
                     </div>
                   </div>
 

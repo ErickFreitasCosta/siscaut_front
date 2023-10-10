@@ -15,7 +15,6 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import {Link} from "react-router-dom";
 
 import { useState, useEffect } from "react";
 // node.js library that concatenates classes (strings)
@@ -25,35 +24,32 @@ import Chart from "chart.js";
 // react plugin used to create charts
 import { Line, Bar } from "react-chartjs-2";
 // reactstrap components
-import './index.css'
+import "./index.css";
 import {
   Button,
   Card,
   CardHeader,
-  CardBody,
-  NavItem,
-  NavLink,
-  Nav,
-  Progress,
   Table,
   Container,
   Row,
   Col,
 } from "reactstrap";
 
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import {ToastContainer} from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-import {db} from '../firebase'
-import {doc, setDoc, Collection, addDoc, collection, onSnapshot, updateDoc, deleteDoc, query,where , getDocs} from 'firebase/firestore'
-
+import { db } from "../firebase";
+import {
+  collection,
+  onSnapshot,
+  query,
+  where,
+} from "firebase/firestore";
 
 // core components
 import {
   chartOptions,
   parseOptions,
-  chartExample1,
-  chartExample2,
 } from "variables/charts.js";
 
 import Header from "components/Headers/Header.js";
@@ -67,28 +63,23 @@ const Aparelho = (props) => {
     parseOptions(Chart, chartOptions());
   }
 
-  
-
-
-
-
   const toggleNavs = (e, index) => {
     e.preventDefault();
     setActiveNav(index);
     setChartExample1Data("data" + index);
   };
 
-  const [aparelhos,setAparelhos] = useState([])
-  const [renderizar ,setRenderizar] = useState(false)
+  const [aparelhos, setAparelhos] = useState([]);
+  const [renderizar, setRenderizar] = useState(false);
 
- /*  const cautelados = query(collection(db,"Aparelhos", where ("cautelado", "==", "false") )) */
 
-  /////////////////////////////////////////função de exibição///////////////////////////// 
+
+  /////////////////////////////////////////função de exibição/////////////////////////////
   useEffect(() => {
+
     // Cria uma função para atualizar a lista de aparelhos com base nos dados do snapshot
     function updateAparelhos(snapshot) {
       let listaAparelhos = [];
-  
       snapshot.forEach((doc) => {
         listaAparelhos.push({
           id: doc.id,
@@ -99,30 +90,28 @@ const Aparelho = (props) => {
           cautelado: doc.data().cautelado,
         });
       });
-  
+
       setAparelhos(listaAparelhos);
     }
-  
+
     // Cria a consulta inicial
     const q = query(
-      collection(db, 'Aparelhos'),
-      where('cautelado', '==', false)
+      collection(db, "Aparelhos"),
+      where("cautelado", "==", false)
     );
-  
+
     // Executa a consulta inicial e ouve as atualizações em tempo real
     const unsub = onSnapshot(q, (snapshot) => {
       updateAparelhos(snapshot);
     });
-  
+
     //  função de limpeza para interromper a observação quando o componente for desmontado
     return () => unsub();
-  }, []); // 
-  
-  
-  
+  }, []); //
+
   return (
     <>
-    <ToastContainer/>
+      <ToastContainer />
       <Header />
       {/* Page content */}
       <Container className="mt--7" fluid>
@@ -212,11 +201,7 @@ const Aparelho = (props) => {
                   <div className="col">
                     <h3 className="mb-0">Aparelhos</h3>
                   </div>
-                  <div> 
-      
-
-                   
-                  </div>
+                  <div></div>
                   {/* <div className="col text-right">
                     <Button
                       color="primary"
@@ -234,8 +219,12 @@ const Aparelho = (props) => {
                   <tr className="justificar">
                     <th scope="col">Modelo</th>
                     <th scope="col">Marcaa</th>
-                    <th scope="col" className="ajeitar">IMEI</th>
-                    <th scope="col" className="ajeitar">IMEI 2</th>
+                    <th scope="col" className="ajeitar">
+                      IMEI
+                    </th>
+                    <th scope="col" className="ajeitar">
+                      IMEI 2
+                    </th>
                     <th scope="col">Ações</th>
                   </tr>
                 </thead>
@@ -251,37 +240,25 @@ const Aparelho = (props) => {
                     </td>
                   </tr>} */}
 
-{aparelhos.map((aparelhos) =>{
-                          /* setMarca(aparelhos.modelo) */
-                      
-                    return(
+                  {aparelhos.map((aparelhos) => {
+                    /* setMarca(aparelhos.modelo) */
+
+                    return (
                       <tr key={aparelhos.id}>
                         <th scope="row">{aparelhos.modelo}</th>
                         <th>{aparelhos.marca}</th>
                         <th>{aparelhos.imei1}</th>
                         <th>{aparelhos.imei2}</th>
                         <td>
-                      <div> 
-
-                    
-         
-                        <div className="OrganizarBotoes">
-
-                        <Modall data={aparelhos}/>
-                          
-
-                        </div>
-
-
-                        </div>
-                    </td>
+                          <div>
+                            <div className="OrganizarBotoes">
+                              <Modall data={aparelhos} />
+                            </div>
+                          </div>
+                        </td>
                       </tr>
-                    )
-                   })}
-              
-               
-                
-                 
+                    );
+                  })}
                 </tbody>
               </Table>
             </Card>

@@ -42,14 +42,14 @@
 
 .divADICIONAR{
     display: flex;
-    align-items: end;
+    align-items: flex-end;
     
 }
 
 
 .campoBusca{
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     gap: 1%;
     
     margin-bottom: 2%;

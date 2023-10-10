@@ -57,7 +57,7 @@ const Chip = (props) => {
     setActiveNav(index);
     setChartExample1Data("data" + index);
   };
-
+/////////////////////////////////////////função de exibição/////////////////////////////
   useEffect(() => {
     async function loadChips() {
       const unsub = onSnapshot(collection(db, "Chip"), (snapshot) => {
@@ -77,7 +77,9 @@ const Chip = (props) => {
     }
     loadChips();
   }, [renderizar]);
+///////////////////////////////////////////////////////////////////////////////////////
 
+///////////////////////////////////////função excluir///////////////////////////////////
   async function excluirChip(id) {
     const excluDoc = doc(db, "Chip", id);
     await deleteDoc(excluDoc)
@@ -90,6 +92,7 @@ const Chip = (props) => {
         setFilter([]);
       });
   }
+  ///////////////////////////////////////////////////////////////////////////////////////
 
   ///////////////////////////////////////
   function Pesquisa(e) {

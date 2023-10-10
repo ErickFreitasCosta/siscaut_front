@@ -60,7 +60,7 @@ import {
 } from "variables/charts.js";
 
 import Header from "components/Headers/Header.js";
-import ModalAdd from "components/ModalAddAparelho/Modal";
+import ModalAddAparelho from "components/ModalAddAparelho/Modal";
 import ModalExcluir from 'components/ModalExcluir/ModalExcluir'
 import './index.css'
 import  ModalExample from 'components/ModalEditAparelho/ModalO'
@@ -182,7 +182,7 @@ async function excluirAparelho(id){
                     
                     <div className="divADICIONAR" style={{justifyContent : "flex-end"}}>
                     
-                        <ModalAdd/>
+                        <ModalAddAparelho/>
                     </div>
                   </div>
 
