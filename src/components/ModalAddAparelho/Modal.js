@@ -36,7 +36,7 @@ function ModalAddAparelho(args) {
   const [marca, setMarca] = useState("");
   
 
-  //State para loading
+  //State para loadind de adicionar
   const [loadingAdd, setLoadingAdd] = useState(false);
   
   const toggle = () => {
