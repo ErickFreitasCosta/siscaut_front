@@ -60,9 +60,9 @@ import {
 } from "variables/charts.js";
 
 import Header from "components/Headers/Header.js";
-import ModalInfDescaut from "components/ModalInfDescaut/ModalInDescaut";
 
-const Aparelho = (props) => {
+
+const DevolucoesAparelho = (props) => {
   const [activeNav, setActiveNav] = useState(1);
   const [chartExample1Data, setChartExample1Data] = useState("data1");
 
@@ -84,14 +84,33 @@ const Aparelho = (props) => {
   const [loading,setLoading] = useState(false)
   const [renderizar ,setRenderizar] = useState(false)
   
-  const [cautelas, setCautelas] = useState([])
+  const DecoluCollectionsRef = collection(db, "Devolucoes_aparelhos")
+  const [devolucoes, setDevolucoes] = useState([]);
 
-  const [cautInf, setCautInf] = useState([])
+  useEffect(() =>{
 
-  
+  async function loadDevolucoes(){
+    setLoading(true)
+    try{
+  const data = await getDocs(DecoluCollectionsRef)
+  const response = data.docs.map((doc) => ({ ...doc.data(), id: doc.id,
+    date_caut: format(Date.parse(doc.data().date_caut), 'dd/MM/yyyy'),
+        date_devolu: format(Date.parse(doc.data().date_devolu), 'dd/MM/yyyy')}))
+  setDevolucoes(response)
+  }catch (error) {
+    console.error('Erro ao buscar informações:', error);
+  } finally {
+    setLoading(false)
+  }
+
+  }
+
+  loadDevolucoes()
+},[])
+  console.log(devolucoes)
 
 
-  useEffect(() => {
+  /* useEffect(() => {
     async function getCautelados() {
       setLoading(true)
       try {
@@ -108,9 +127,9 @@ const Aparelho = (props) => {
     }
   
     getCautelados();
-  }, []);
+  }, []); */
   
-  useEffect(() => {
+  /* useEffect(() => {
     async function getInfCaut() {
       try {
         const listaPromises = cautelas.map(async (cautela) => {
@@ -160,14 +179,14 @@ const Aparelho = (props) => {
     if (cautelas.length > 0) {
       getInfCaut();
     }
-  }, [cautelas]);
+  }, [cautelas]); */
   
 
 
 
 
 
- console.log(cautInf)
+/*  console.log(cautInf) */
 
 
   /////////////////////////////////////////função de exibição///////////////////////////// 
@@ -340,7 +359,7 @@ const Aparelho = (props) => {
                     </td>
                   </tr>} */}
 
-{cautInf.map((infcauts) =>{
+{devolucoes.map((infcauts) =>{
                           /* setMarca(aparelhos.modelo) */
                       
                     return(
@@ -504,4 +523,4 @@ const Aparelho = (props) => {
   );
 };
 
-export default Aparelho;
+export default DevolucoesAparelho;

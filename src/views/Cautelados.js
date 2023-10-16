@@ -62,7 +62,7 @@ import {
 import Header from "components/Headers/Header.js";
 import ModalInfDescaut from "components/ModalInfDescaut/ModalInDescaut";
 
-const Aparelho = (props) => {
+const AparelhosCautelados = (props) => {
   /* const [activeNav, setActiveNav] = useState(1);
   const [chartExample1Data, setChartExample1Data] = useState("data1"); */
 
@@ -118,13 +118,12 @@ const Aparelho = (props) => {
   /////////////////////////////////////////////////////////////////////////////////////////
 
   ///////////////////////////////////////função excluir///////////////////////////////////
-  async function excluirCautela(id) {
+  async function desfazerCautela(id) {
  
 
  const q = query(
   collection(db, "Cautelas"),
   where("aparelho", "==", id),
-  where("cautela", "==", true)
 );
 const data = await getDocs(q);
 
@@ -152,7 +151,7 @@ await updateDoc(docChip, {
   cautelado: false,
 });
 
-toast.error("O chip foi excluído permanentemente");
+toast.error("Cautela desfeita");
     
       /*
       .catch((error) => {
@@ -313,7 +312,7 @@ toast.error("O chip foi excluído permanentemente");
                           <div>
                             <div className="OrganizarBotoes">
                               <ModalInfDescaut data={aparelhos} />
-                              <ModalExcluir func={() => excluirCautela(aparelhos.id)} />
+                              <ModalExcluir func={() => desfazerCautela(aparelhos.id)} />
                               
                             </div>
                           </div>
@@ -439,4 +438,4 @@ toast.error("O chip foi excluído permanentemente");
   );
 };
 
-export default Aparelho;
+export default AparelhosCautelados;
