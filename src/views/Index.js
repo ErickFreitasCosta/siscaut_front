@@ -56,7 +56,7 @@ const Index = (props) => {
             unidade: doc.data().unidade
           });
         });
-
+//
         setMilitares(listaMilitares);
       });
 
