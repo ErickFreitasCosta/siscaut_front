@@ -10,6 +10,7 @@ import {
   Input,
   Row,
   Col,
+  Spinner,
 } from "reactstrap";
 import "./ModalDescaut.css";
 import { ToastContainer, toast } from "react-toastify";
@@ -23,6 +24,8 @@ import {
   getDoc,
   getDocs,
   updateDoc,
+  addDoc,
+  deleteDoc,
 } from "firebase/firestore";
 import { db } from "../../firebase";
 
@@ -33,13 +36,11 @@ function Modall(props) {
   const [idMilitar, setIdMilitar] = useState("");
   const [nomeMilitar, setNomeMilitar] = useState("");
   const [listaAparelhos, setListaAparelhos] = useState(props.data);
-
+  const [loading,setLoading] = useState(false)
 
   const toggle = () => {
     setModal(!modal);
   };
-
-  
 
   ///////////////////////////////////////Pegar Número do Chip Cautelado/////////////////////////////////
 
@@ -109,7 +110,7 @@ function Modall(props) {
           setIdMilitar(valorDoCampo);
         });
 
-        // Após definir idChip, você pode chamar getNumero() aqui
+        // Após definir idMilitar, você pode chamar getNumero() aqui
 
         if (idMilitar) {
           getNomeMilitar();
@@ -142,15 +143,16 @@ function Modall(props) {
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  
-  
-
   /////////////////////////////////FUNÇÃO DE DESCAUTELA/////////////////////////////////////
 
   async function HandleDescautelar() {
+    setLoading(true)
+
+
     const dataAtual = new Date();
     const docAparelho = doc(db, "Aparelhos", props.data.id);
     const docChip = doc(db, "Chip", idChip);
+    const docMilitar = doc(db, "Militares", idMilitar);
 
     ////////////////////////////////////Para fazer o update/////////////////////////////////
     const q = query(
@@ -159,9 +161,9 @@ function Modall(props) {
     );
 
     const querySnapshot = await getDocs(q);
-    
+
     // Array para armazenar os dados que vão ser atualizados
-    let dadosParaUpdate = []; 
+    let dadosParaUpdate = [];
 
     querySnapshot.forEach((doc) => {
       // Obter os dados do documento
@@ -171,19 +173,29 @@ function Modall(props) {
       dadosParaUpdate.push({
         id: doc.id, // ID do documento
         dados: data, // Dados do documento
+        date_caut: doc.data().date_caut // pega o date_caut
       });
     });
-    /////////////////////////////////////////////////////////////
+    let datacautela;
+    let DocRefCaut
+    ////////////////////////////////////////////////////////////////////
+
+    const [docSnapChip, docSnapMilitar, docSnapAparelho] = await Promise.all([
+      getDoc(docChip),
+      getDoc(docMilitar),
+      getDoc(docAparelho)
+    ]);
     try {
       dadosParaUpdate.forEach(async (documento) => {
-        const { id, dados } = documento; // Desestrutura o objeto para obter o ID e os dados
+        const { id, dados, date_caut } = documento; // Desestrutura o objeto para obter o ID e os dados
 
         // Faz o updateDoc aqui usando os dados e o ID do documento
         const docRef = doc(db, "Cautelas", id);
-        await updateDoc(docRef, {
-          date_devolu: dataAtual.toISOString(),
+        /* await updateDoc(docRef, {
           cautela: false,
-        });
+        }); */
+        datacautela = date_caut;
+        DocRefCaut = docRef
       });
 
       await updateDoc(docAparelho, {
@@ -194,11 +206,36 @@ function Modall(props) {
         cautelado: false,
       });
 
+      await addDoc(collection(db, "Devolucoes_aparelhos"), {
+        numero: docSnapChip.data().numero,
+        linha: docSnapChip.data().linha,
+        nserie: docSnapChip.data().nserie,
+        funcao: docSnapMilitar.data().funcao,
+        nome: docSnapMilitar.data().nome,
+        postgrad: docSnapMilitar.data().postgrad,
+        rg: docSnapMilitar.data().rg,
+        unidade: docSnapMilitar.data().unidade,
+        imei1: docSnapAparelho.data().imei1,
+        imei2: docSnapAparelho.data().imei1,
+        marca: docSnapAparelho.data().marca,
+        modelo: docSnapAparelho.data().imei1,
+        date_devolu: dataAtual.toISOString(),
+        date_caut: datacautela,
+      });
+
+      await deleteDoc(DocRefCaut)
+
       toast.success("O aparelho foi descautelado ");
       toggle();
+      
     } catch (error) {
-      // Trate erros aqui
+      // erros
+      toast.error("occoreu um erro", error)
       console.error("Ocorreu um erro:", error);
+    }finally {
+      setLoading(false)
+      
+      
     }
   }
 
@@ -335,7 +372,10 @@ function Modall(props) {
         </ModalBody>
         <ModalFooter>
           <Button color="success" onClick={HandleDescautelar}>
-            Descautelar
+          {loading ? (<><Spinner size="sm" color="primary"></Spinner>{" "}<span>Descautelando</span></>) :
+            (
+              "Descautelar"
+            )}
           </Button>
 
           <Button
