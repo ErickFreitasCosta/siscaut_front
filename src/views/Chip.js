@@ -123,7 +123,7 @@ const Chip = (props) => {
                         <h3 className="mb-0">CHIP</h3>
                         <input
                           type="search"
-                          placeholder="Pesquisa por Imei"
+                          placeholder="Pesquisa por número de série"
                           onChange={(e) => Pesquisa(e.target.value)}
                         />
                       </div>

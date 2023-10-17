@@ -39,6 +39,13 @@ import Devolucoes from 'views/Devoluções'
 
 var routes = [
   {
+    path: "/login",
+    name: "Login",
+    icon: "ni ni-key-25 text-info",
+    component: <Login />,
+    layout: "/auth",
+  },
+  {
     path: "/index",
     name: "Painel",
     icon: "ni ni-tv-2 text-primary",
@@ -53,7 +60,7 @@ var routes = [
     component: <Index />,
     layout: "/admin",
   },
-
+  
   {
     path: "/createPhone",
     name: "Aparelho",
@@ -61,8 +68,8 @@ var routes = [
     component: <Aparelho />,
     layout: "/admin",
   },
-
-
+  
+  
   {
     path: "/createHT",
     name: "HT",
@@ -86,19 +93,19 @@ var routes = [
     layout: "/admin",
   },
   {
-  path: "/Cautela",
-  name: "Cautelar Aparelho",
-  icon: "fas fa-solid fa-file-lines text-green",
-  component: <Cautelar/>,
-  layout: "/admin",
-},
-{
-  path: "/Cautelados",
-  name: "Aparelhos Cautelados",
-  icon: "fas fa-solid fa-file-lines text-red",
-  component: <Descautelar/>,
-  layout: "/admin",
-},
+    path: "/Cautela",
+    name: "Cautelar Aparelho",
+    icon: "fas fa-solid fa-file-lines text-green",
+    component: <Cautelar/>,
+    layout: "/admin",
+  },
+  {
+    path: "/Cautelados",
+    name: "Aparelhos Cautelados",
+    icon: "fas fa-solid fa-file-lines text-red",
+    component: <Descautelar/>,
+    layout: "/admin",
+  },
   
   {
     path: "/Devoluções",
@@ -107,7 +114,14 @@ var routes = [
     component: <Devolucoes/>,
     layout: "/admin",
   },
-/* 
+  {
+    path: "/user-profile",
+    name: "User Profile",
+    icon: "ni ni-single-02 text-yellow",
+    component: <Profile />,
+    layout: "/admin",
+  },
+  /* 
   {
     path: "/Cautela",
     name: "Cautelar modem",
@@ -150,21 +164,7 @@ var routes = [
     component: <Maps />,
     layout: "/admin",
   },
-  {
-    path: "/user-profile",
-    name: "User Profile",
-    icon: "ni ni-single-02 text-yellow",
-    component: <Profile />,
-    layout: "/admin",
-  },
   
-  {
-    path: "/login",
-    name: "Login",
-    icon: "ni ni-key-25 text-info",
-    component: <Login />,
-    layout: "/auth",
-  },
   {
     path: "/register",
     name: "Register",
