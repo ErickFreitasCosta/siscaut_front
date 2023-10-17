@@ -182,6 +182,9 @@ function Modall(args) {
                           <Input type="select" name="select" id="SelectMarca" value={linha} onChange={(e)=>setLinha(e.target.value)}>
                             <option value=''>Escolha</option>
                             <option value='Vivo'>Vivo </option>
+
+
+                  
                           </Input>
 
 
