@@ -1,55 +1,167 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Card,
-    CardHeader,
-    CardBody,
-    FormGroup,
-    Form,
-    Input,
-    Container,
-    Row,
-    Col } from 'reactstrap';
-
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter,  FormGroup,  Form,  Input,  Row, Col } from 'reactstrap';
+import './ModalDescaut.css'
     import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-    import {doc, setDoc, Collection, addDoc, collection, onSnapshot, updateDoc, deleteDoc,query , where, getDoc, getDocs} from 'firebase/firestore'
+    import {doc, collection, query , where, getDoc, getDocs, updateDoc} from 'firebase/firestore'
     import {db} from '../../firebase'
    
 
 function Modall(props) {
+
   const [modal, setModal] = useState(false);
+  const [idChip, setIdChip] = useState ("")
+  const [nunChip, setNunChip] = useState ('')
+  const [idMilitar, setIdMilitar] = useState ("")
+  const [nomeMilitar, setNomeMilitar] = useState ('')
+  const [listaAparelhos, setListaAparelhos] = useState(props.data)
+  
+    /* console.log(listaAparelhos) */
+  const toggle = () => {
+    setModal(!modal)
+    
+  };
 
   
+  
+    /* async function chipCautelado(){
+      try{
+    const q = query(
+      collection(db, 'Cautelas'),
+      where('aparelho', '==', props.data.id)
+    );
+  
+    const querySnapshot = await getDocs(q)
+    querySnapshot.forEach((doc) => {
+      // Para cada documento retornado pela consulta
+      const data = doc.data();
+      const valorDoCampo = doc.data().chip; // 'chip' é o nome do campo que você deseja recuperar
+      setIdChip(valorDoCampo);
+    });
 
-    const [imei1, setImei1] = useState('')
-    const [imei2, setImei2] = useState('')
-    const [marca, setMarca] = useState('')
-    const [modelo, setModelo] = useState('')
+    if (idChip) {
+      getNumero();
+    }
 
-   
+  } catch (error) {
+    console.error('Erro ao consultar documento:', error);
+  }
+  
+  } */
+
+  ///////////////////////////////////////Pegar Número do Chip Cautelado/////////////////////////////////
+
+  useEffect(()=>{    
+  async function chipCautelado() {
+    try {
+      const q = query(
+        collection(db, 'Cautelas'),
+        where('aparelho', '==', props.data.id)
+      );
+
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach((doc) => {
+        // Para cada documento retornado pela consulta
+        
+        const valorDoCampo = doc.data().chip; // 'chip' é o nome do campo que você deseja recuperar
+        setIdChip(valorDoCampo);
+      });
+
+      // Após definir idChip, você pode chamar getNumero() aqui
+
+      if(idChip){
+      getNumero()
+      }
+     
+    } catch (error) {
+      console.error('Erro ao consultar documento:', error);
+    }
+  }
+  chipCautelado();
+},[modal])
+  
+
+  async function getNumero() {
+    try {
+      
+      const docRef = doc(db, 'Chip', idChip);
+      const docSnap = await getDoc(docRef);
+  
+      if (docSnap.exists()) {
+        // O documento existe
+        const numero = docSnap.data().numero;
+        setNunChip(numero);
+      } else {
+        // O documento não existe
+        console.log('O documento não foi encontrado.');
+      }
+    } catch (error) {
+      // Trate erros aqui
+      console.error('Erro ao obter o número:', error);
+    }
+  }
+/////////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////Pegar o nome do Militar//////////////////////////////
+  
+useEffect(()=>{    
+  async function NomeMilitar() {
+    try {
+      const q = query(
+        collection(db, 'Cautelas'),
+        where('aparelho', '==', props.data.id)
+      );
+
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach((doc) => {
+        // Para cada documento retornado pela consulta
+       
+        const valorDoCampo = doc.data().militar; // 'militar' é o nome do campo que você deseja recuperar
+        setIdMilitar(valorDoCampo);
+      });
+
+      // Após definir idChip, você pode chamar getNumero() aqui
+
+      if(idMilitar){
+      getNomeMilitar()
+      }
+     
+    } catch (error) {
+      console.error('Erro ao consultar documento:', error);
+    }
+  }
+  NomeMilitar();
+},[modal])   
+
+async function getNomeMilitar() {
+  try {
+    const docRef = doc(db, 'Militares', idMilitar);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      // O documento existe
+      const nome = docSnap.data().nome;
+      setNomeMilitar(nome);
+    } else {
+      // O documento não existe
+      console.log('O documento não foi encontrado.');
+    }
+  } catch (error) {
+    // Trate erros aqui
+    console.error('Erro ao obter o nome:', error);
+  }
+}
 
 
-    
-    const [militares, setMilitares] = useState ([]);
-    const [chip, setChip] = useState ([]);
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-    const [idChip, setIdChip] = useState ('')
-    const [idMilitar, setIdMilitar] = useState ('')
-    const [nomeMilitar, setNomeMilitar] = useState ('')
-
-    
-
-    const [listaAparelhos, setListaAparelhos] = useState(props.data)
-    /* console.log(listaAparelhos) */
-
-
-
-  const toggle = () => setModal(!modal);
 
 
   /////////////////////////////////Militares/////////////////////////////////////
-  useEffect(()=>{
+  /* useEffect(()=>{
     async function loadMilitares(){
       try {
         const querySnapshot = await getDocs(collection(db, 'Militares'));
@@ -70,12 +182,12 @@ function Modall(props) {
     }
       loadMilitares();
   
-  },[])
+  },[]) */
   ///////////////////////////////////////////////////////////////
 
 
   /////////////////////////////////Chips/////////////////////////////////////
-  useEffect(()=>{
+  /* useEffect(()=>{
 
     function loadChips(snapshot) {
       let listaChips = [];
@@ -83,7 +195,7 @@ function Modall(props) {
       snapshot.forEach((doc) => {
         listaChips.push({
           id: doc.id,
-          numero: doc.data().numero,
+          aparelho: doc.data().numero,
         });
       });
   
@@ -102,41 +214,64 @@ function Modall(props) {
     });
 
     return () => unsub();
-  },[])
+  },[]) */
   ///////////////////////////////////////////////////////////////////////////////////////
 
 
 
-  /////////////////////////////////FUNÇÃO DE CAUTELA/////////////////////////////////////
+  /////////////////////////////////FUNÇÃO DE DESCAUTELA/////////////////////////////////////
 
 
-  async function HandleCautelar() {
-    const dataAtual = new Date();
+  async function HandleDescautelar() {
 
-
-    /* const dataFormatada = `${dia}/${mes}/${ano}`; */
-
-    try {
-      await addDoc(collection(db, "Cautelas"), {
-        aparelho: listaAparelhos.id,
-        chip: idChip,
-        militar: idMilitar,
-        date_caut:  dataAtual.toISOString(),
-        cautela:true,
-      });
-  
+      const dataAtual = new Date();
       const docAparelho = doc(db, 'Aparelhos', props.data.id);
       const docChip = doc(db, 'Chip', idChip);
-  
+
+      ////////////////////////////////////Para fazer o update/////////////////////////////////
+      const q = query(
+        collection(db, 'Cautelas'),
+        where('aparelho', '==', props.data.id));
+
+      const querySnapshot = await getDocs(q);
+
+    let dadosParaUpdate = []; // Array para armazenar os dados que vão ser atualizados
+
+    querySnapshot.forEach((doc) => {
+      // Obter os dados do documento
+      const data = doc.data();
+
+      // Adiciona os dados ao array
+      dadosParaUpdate.push({
+        id: doc.id, // ID do documento
+        dados: data, // Dados do documento
+      });
+    });
+ /////////////////////////////////////////////////////////////     
+      try{
+
+        dadosParaUpdate.forEach(async (documento) => {
+          const { id, dados } = documento; // Desestrutura o objeto para obter o ID e os dados
+    
+          // Faz o updateDoc aqui usando os dados e o ID do documento
+          const docRef = doc(db, 'Cautelas', id);
+          await updateDoc(docRef, {
+            date_devolu:  dataAtual.toISOString(),
+            cautela:false,
+          });
+        });
+
+
+
       await updateDoc(docAparelho, {
-        cautelado: true,
+        cautelado: false,
       });
   
       await updateDoc(docChip, {
-        cautelado: true,
+        cautelado: false,
       });
   
-      toast.success("Aparelho cautelado");
+      toast.success("O aparelho foi descautelado ");
       toggle();
     } catch (error) {
       // Trate erros aqui
@@ -150,11 +285,11 @@ function Modall(props) {
   return (
     <div>
       <Button size="sm"color="success" onClick={toggle}>
-        Cautelar
+      <i className="fa-solid fa-circle-info"></i>
       </Button>
 
       <Modal isOpen={modal} toggle={toggle} {...props}>
-        <ModalHeader toggle={toggle}>Cautela</ModalHeader>
+        <ModalHeader toggle={toggle}>Informações</ModalHeader>
         <ModalBody>
           
           
@@ -173,16 +308,11 @@ function Modall(props) {
                           >
                             Responsável
                           </label>
-                          <Input type="select" id="SelectResponsavel"
-                          value={idMilitar} onChange={(e)=>setIdMilitar(e.target.value)} >
-                            <option value=''>Escolha</option>
-                            {militares.map((militares)=>{
-                              
-                              return(
-                                
-                                <option key={militares.id} value={militares.id}>{militares.nome}</option>
-                              )
-                            })}
+                          <Input type="select" id="SelectResponsavel" disabled
+                          /* value={idMilitar} onChange={(e)=>setIdMilitar(e.target.value)} */ >
+                            <option value=''>{nomeMilitar}</option>
+                            
+                          
                           </Input>
                         </FormGroup>
                       </Col>
@@ -197,14 +327,10 @@ function Modall(props) {
                           >
                             Chip
                           </label>
-                          <Input type="select" id="SelectResponsavel" 
-                          value={idChip} onChange={(e)=>setIdChip(e.target.value)}>
-                            <option value=''>Escolha</option>
-                            {chip.map((chips)=>{
-                              return(
-                                <option key={chips.id} value={chips.id}>{chips.numero}</option>
-                              )
-                            })}
+                          <Input type="select" id="SelectResponsavel" disabled
+                          /* value='{idChip}'  *//* onChange='{(e)=>setIdChip(e.target.value)}' */>
+                            <option value=''>{nunChip}</option>
+                            
                           </Input>
                         </FormGroup>
                       </Col>
@@ -305,12 +431,16 @@ function Modall(props) {
                 </Form>
         </ModalBody>
         <ModalFooter>
-          <Button color="success" onClick={HandleCautelar}>
-            Cautelar
-          </Button>{/* {' '} */}
+          <Button color="success" onClick={HandleDescautelar}>
+            Descautelar
+          </Button>
           
+          <Button className='btn_gerarPdf_Descaut' color="danger" onClick={toggle}>
+          <i className="far fa-file-pdf"></i>   Gerar PDF
+          </Button>
+          {/* {' '} */}
           <Button color="warning" onClick={toggle}>
-            Cancelar
+            Cancelar 
           </Button>
         </ModalFooter>
       </Modal>

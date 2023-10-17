@@ -65,15 +65,18 @@ const Admin = (props) => {
   return (
     <>
     
+    {/* IMAGEM DITEL */}
       <Sidebar
         {...props}
         routes={routes}
         logo={{
           innerLink: "/admin/index",
-          imgSrc: require("../assets/img/brand/ditel.png"),
+          imgSrc: require("../assets/img/brand/logoDitel.png"),
           imgAlt: "...",
           styles: {
             width: '100%',
+            
+            
          
           }
           

@@ -1,30 +1,5 @@
-/*!
-
-=========================================================
-* Argon Dashboard React - v1.2.3
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-import {Link} from "react-router-dom";
-
 import { useState, useEffect } from "react";
-// node.js library that concatenates classes (strings)
-import classnames from "classnames";
-// javascipt plugin for creating charts
 import Chart from "chart.js";
-// react plugin used to create charts
-import { Line, Bar } from "react-chartjs-2";
-// reactstrap components
 import {
   Button,
   Card,
@@ -38,34 +13,38 @@ import {
   Container,
   Row,
   Col,
+  Alert,
 } from "reactstrap";
-
-// core components
 import {
   chartOptions,
   parseOptions,
   chartExample1,
   chartExample2,
 } from "variables/charts.js";
-
 import Header from "components/Headers/Header.js";
 import Modall from "components/ModalAddChip/Modal";
-
 import ModalEditChip from "components/ModalEditChip/ModalEditChip";
-import ModalExcluir from 'components/ModalExcluir/ModalExcluir'
+import ModalExcluir from "components/ModalExcluir/ModalExcluir";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { db } from "../firebase";
+import {
+  doc,
+  setDoc,
+  Collection,
+  addDoc,
+  collection,
+  onSnapshot,
+  updateDoc,
+  deleteDoc,
+} from "firebase/firestore";
 
 
-import {db} from '../firebase'
- 
-import {doc, setDoc, Collection, addDoc, collection, onSnapshot, updateDoc, deleteDoc} from 'firebase/firestore'
 
-
-
-const Aparelho = (props) => {
-
-
-  const [chip, setChip ] = useState([])
-
+const Chip = (props) => {
+  const [filter, setFilter] = useState([]);
+  const [renderizar, setRenderizar] = useState(false);
+  const [chip, setChip] = useState([]);
   const [activeNav, setActiveNav] = useState(1);
   const [chartExample1Data, setChartExample1Data] = useState("data1");
 
@@ -79,344 +58,140 @@ const Aparelho = (props) => {
     setChartExample1Data("data" + index);
   };
 
-////////////////////////////////////////////função de exibição////////////////////////////////////////////
+  useEffect(() => {
+    async function loadChips() {
+      const unsub = onSnapshot(collection(db, "Chip"), (snapshot) => {
+        let listaChips = [];
 
-useEffect(()=>{
-  async function loadChips(){
-    const unsub = onSnapshot(collection(db,'Chip'), (snapshot)=>{
-      let listaChips = [];
-
-      snapshot.forEach((doc)=>{
-        listaChips.push({
-          id: doc.id,
-          nserie: doc.data().nserie,
-          linha: doc.data().linha,
-        })
-      })
-      setChip(listaChips);
-    });
-
-  }
+        snapshot.forEach((doc) => {
+          listaChips.push({
+            id: doc.id,
+            nserie: doc.data().nserie,
+            linha: doc.data().linha,
+            numero: doc.data().numero,
+           
+          });
+        });
+        setChip(listaChips);
+      });
+    }
     loadChips();
+  }, [renderizar]);
 
-},[])
-//////////////////////////////////////////////////////////////////////////////////////////////////////////
+  async function excluirChip(id) {
+    const excluDoc = doc(db, "Chip", id);
+    await deleteDoc(excluDoc)
+      .then(() => {
+        toast.error("O chip foi excluído permanentemente");
+      })
+      .catch((error) => {
+        toast.error("Algo deu errado, tente novamente mais tarde");
+        setRenderizar(!renderizar);
+        setFilter([]);
+      });
+  }
 
-///////////////////////////////////////função excluir///////////////////////////////////
-async function excluirChip(id){
-  /* alert("excluiu" + id) */
-  const excluDoc = doc(db, "Chip", id)
-  await deleteDoc(excluDoc)
-  .then(() =>{
-      alert("sucesso na exclusão " + id)
-  })
-}
-///////////////////////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////
+  function Pesquisa(e) {
+    console.log(e);
 
-
-
-
-
+    const filteredChip = chip.filter((chip) =>
+      chip.nserie.toLowerCase().includes(e.toLowerCase())
+    );
+    console.log(filteredChip, "Chip");
+    if (filteredChip.length === 0) {
+      toast.error("Nenhum chip foi encontrado");
+      
+    } else {
+      setFilter(filteredChip);
+    }
+  }
 
   return (
     <>
       <Header />
-      {/* Page content */}
       <Container className="mt--7" fluid>
-        <Row>
-          {/* <Col className="mb-5 mb-xl-0" xl="8">
-            <Card className="bg-gradient-default shadow">
-              <CardHeader className="bg-transparent">
-                <Row className="align-items-center">
-                  <div className="col">
-                    <h6 className="text-uppercase text-light ls-1 mb-1">
-                      Overview
-                    </h6>
-                    <h2 className="text-white mb-0">Sales value</h2>
-                  </div>
-                  <div className="col">
-                    <Nav className="justify-content-end" pills>
-                      <NavItem>
-                        <NavLink
-                          className={classnames("py-2 px-3", {
-                            active: activeNav === 1,
-                          })}
-                          href="#pablo"
-                          onClick={(e) => toggleNavs(e, 1)}
-                        >
-                          <span className="d-none d-md-block">Month</span>
-                          <span className="d-md-none">M</span>
-                        </NavLink>
-                      </NavItem>
-                      <NavItem>
-                        <NavLink
-                          className={classnames("py-2 px-3", {
-                            active: activeNav === 2,
-                          })}
-                          data-toggle="tab"
-                          href="#pablo"
-                          onClick={(e) => toggleNavs(e, 2)}
-                        >
-                          <span className="d-none d-md-block">Week</span>
-                          <span className="d-md-none">W</span>
-                        </NavLink>
-                      </NavItem>
-                    </Nav>
-                  </div>
-                </Row>
-              </CardHeader>
-              <CardBody>
-                Chart
-                <div className="chart">
-                  <Line
-                    data={chartExample1[chartExample1Data]}
-                    options={chartExample1.options}
-                    getDatasetAtEvent={(e) => console.log(e)}
-                  />
-                </div>
-              </CardBody>
-            </Card>
-          </Col> */}
-          {/* <Col xl="4">
-            <Card className="shadow">
-              <CardHeader className="bg-transparent">
-                <Row className="align-items-center">
-                  <div className="col">
-                    <h6 className="text-uppercase text-muted ls-1 mb-1">
-                      Performance
-                    </h6>
-                    <h2 className="mb-0">Total orders</h2>
-                  </div>
-                </Row>
-              </CardHeader>
-              <CardBody>
-                Chart
-                <div className="chart">
-                  <Bar
-                    data={chartExample2.data}
-                    options={chartExample2.options}
-                  />
-                </div>
-              </CardBody>
-            </Card>
-          </Col> */}
-        </Row>
+        <Row></Row>
         <Row className="mt-5">
           <Col className="mb-5 mb-xl-0" xl="10">
             <Card className="shadow">
               <CardHeader className="border-0">
                 <Row className="align-items-center">
-                  <div className="col">
-                    <h3 className="mb-0">Aparelhos</h3>
-                  </div>
-                  <div> 
-                    <Modall/>
 
-                   
+                <div className="conteinerSearch">
+                      <div className="col divADICIONAR">
+                        <h3 className="mb-0">CHIP</h3>
+                        <input
+                          type="search"
+                          placeholder="Pesquisa por número de série"
+                          onChange={(e) => Pesquisa(e.target.value)}
+                        />
+                      </div>
+
+                      <div className="divADICIONAR" style={{justifyContent : "flex-end"}}>
+                        <Modall />
+                      </div>
                   </div>
-                  {/* <div className="col text-right">
-                    <Button
-                      color="primary"
-                      href="#pablo"
-                      onClick={(e) => e.preventDefault()}
-                      size="sm"
-                    >
-                      See all
-                    </Button>
-                  </div> */}
+
+
+
                 </Row>
               </CardHeader>
               <Table className="align-items-center table-flush" responsive>
                 <thead className="thead-light">
                   <tr>
-                    <th scope="col">Numero de Série</th>
+                    <th scope="col">Número de Série</th>
                     <th scope="col">Linha</th>
+                    <th scope="col">Número do telefone</th>
                     <th scope="col">Ações</th>
-                    {/* <th scope="col">1º IMEI</th>
-                    <th scope="col">2º IMEI</th>
-                    <th scope="col">Ações</th> */}
                   </tr>
                 </thead>
-
-
-                <tbody>
-                {chip.map((chips)=>{
-                      return(
-                        <tr key={chips.id}>
-                          <th scope="row">{chips.nserie}</th>
-                          <th scope="row">{chips.linha}</th>
-
+                {filter.length > 0 ? (
+                  <tbody>
+                    {filter.map((chip) => {
+                      return (
+                        <tr key={chip.id}>
+                          <th scope="row">{chip.nserie}</th>
+                          <th scope="row">{chip.linha}</th>
+                          <th scope="row">{chip.numero}</th>
                           <td>
-                      <div> 
 
-                    
-         
-                        <div className="OrganizarBotoes">
-                         <ModalEditChip data= {chips}/>
-                          <ModalExcluir func={() => excluirChip(chips.id)} />
-                        </div>
+                            <div className="OrganizarBotoes">
+                              <ModalEditChip data={chip} />
+                              <ModalExcluir func={() => excluirChip(chip.id)} />
 
-
-                        </div>
-                    </td>
-
-
+                            </div>
+                          </td>
                         </tr>
-                      )
+                      );
                     })}
-
-
-                  {/* <tr>
-                    <th scope="row">Nilson Teste</th>
-                    <td>3,985</td>
-                    <td>319</td>
-                    <td>
-                      <i className="fas fa-arrow-down text-warning mr-3" />{" "}
-                      999999999
-                    </td>
-                  </tr> */}
-                 {/*  <tr>
-                    <th scope="row">Nilson Teste</th>
-                    <td>3,513</td>
-                    <td>294</td>
-                    <td>
-                      <i className="fas fa-arrow-down text-warning mr-3" />{" "}
-                      9999999
-                    </td>
-                  </tr> */}
-                 {/*  <tr>
-                    <th scope="row">Nilson Teste</th>
-                    <td>2,050</td>
-                    <td>147</td>
-                    <td>
-                      <i className="fas fa-arrow-up text-success mr-3" /> 999999
-                    </td>
-                  </tr> */}
-                 {/*  <tr>
-                    <th scope="row">Nilson Teste</th>
-                    <td>1,795</td>
-                    <td>190</td>
-                    <td>
-                      <i className="fas fa-arrow-down text-danger mr-3" />{" "}
-                      9999999
-                    </td>
-                  </tr> */}
-                </tbody>
+                  </tbody>
+                ) : (
+                  <tbody>
+                    {chip.map((chip) => {
+                      return (
+                        <tr key={chip.id}>
+                          <th scope="row">{chip.nserie}</th>
+                          <th scope="row">{chip.linha}</th>
+                          <th scope="row">{chip.numero}</th>
+                          <td>
+                            <div className="OrganizarBotoes">
+                              <ModalEditChip data={chip} />
+                              <ModalExcluir func={() => excluirChip(chip.id)} />
+                            </div>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                )}
               </Table>
             </Card>
           </Col>
-          {/* <Col xl="4">
-            <Card className="shadow">
-              <CardHeader className="border-0">
-                <Row className="align-items-center">
-                  <div className="col">
-                    <h3 className="mb-0">Social traffic</h3>
-                  </div>
-                  <div className="col text-right">
-                    <Button
-                      color="primary"
-                      href="#pablo"
-                      onClick={(e) => e.preventDefault()}
-                      size="sm"
-                    >
-                      See all
-                    </Button>
-                  </div>
-                </Row>
-              </CardHeader>
-              <Table className="align-items-center table-flush" responsive>
-                <thead className="thead-light">
-                  <tr>
-                    <th scope="col">Referral</th>
-                    <th scope="col">Visitors</th>
-                    <th scope="col" />
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row">Facebook</th>
-                    <td>1,480</td>
-                    <td>
-                      <div className="d-flex align-items-center">
-                        <span className="mr-2">60%</span>
-                        <div>
-                          <Progress
-                            max="100"
-                            value="60"
-                            barClassName="bg-gradient-danger"
-                          />
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Facebook</th>
-                    <td>5,480</td>
-                    <td>
-                      <div className="d-flex align-items-center">
-                        <span className="mr-2">70%</span>
-                        <div>
-                          <Progress
-                            max="100"
-                            value="70"
-                            barClassName="bg-gradient-success"
-                          />
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Google</th>
-                    <td>4,807</td>
-                    <td>
-                      <div className="d-flex align-items-center">
-                        <span className="mr-2">80%</span>
-                        <div>
-                          <Progress max="100" value="80" />
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Instagram</th>
-                    <td>3,678</td>
-                    <td>
-                      <div className="d-flex align-items-center">
-                        <span className="mr-2">75%</span>
-                        <div>
-                          <Progress
-                            max="100"
-                            value="75"
-                            barClassName="bg-gradient-info"
-                          />
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">twitter</th>
-                    <td>2,645</td>
-                    <td>
-                      <div className="d-flex align-items-center">
-                        <span className="mr-2">30%</span>
-                        <div>
-                          <Progress
-                            max="100"
-                            value="30"
-                            barClassName="bg-gradient-warning"
-                          />
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </Table>
-            </Card>
-          </Col> */}
         </Row>
       </Container>
     </>
   );
 };
 
-export default Aparelho;
+export default Chip;

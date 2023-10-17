@@ -7,10 +7,15 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Card,
     Input,
     Container,
     Row,
-    Col } from 'reactstrap';
+    Col,
+    Alert,
+  Spinner } from 'reactstrap';
+
+    import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
   
 
-    import {doc, setDoc, Collection, addDoc, collection, onSnapshot, updateDoc, deleteDoc} from 'firebase/firestore'
+    import {getDocs, query, where, doc, setDoc, Collection, addDoc, collection, onSnapshot, updateDoc, deleteDoc} from 'firebase/firestore'
     import {db} from '../../firebase'
 
 function ModalAdd(args) {
@@ -20,10 +25,21 @@ function ModalAdd(args) {
     const [imei1, setImei1] =   useState('')
     const [imei2, setImei2] = useState('')
     const [marca, setMarca] = useState('')
+   /*  const [cautelado, setCautelado] = useState('') */
 
-    console.log(modelo)
+ /////////////////////////// //validação////////////////
+    const [emptyevalue, setEmptyevalue] = useState(false);
+    const [validImei, setValidImei] = useState(false);
+////////////////////////////////////////////////////////
 
-  const toggle = () => setModal(!modal) 
+const [loadingAdd, setLoadingAdd] = useState(false);
+
+    
+
+  const toggle = () => {
+    setModal(!modal)
+    setEmptyevalue(false)
+  } 
 
 /*   const Add = () => args.Add()
   
@@ -36,25 +52,51 @@ function ModalAdd(args) {
   /////////////////////////////////função handleAdd/////////////////////////////////////
 
   async function handleAdd(){
+    setLoadingAdd(true)
+    const q = query(
+      collection(db, 'Aparelhos'),
+      where('imei1', '==', imei1)
+    );
+    const querySnapshot = await getDocs(q);
+    const resultado = querySnapshot.docs;
+    try{
+    if ( !modelo|| !imei1 ||!imei2  || !marca ){
+      setEmptyevalue(true)
+    }else{ 
+      if(imei1.length<15 ||imei2.length<15){
+       
+        setValidImei(true)
+      }else{if(resultado.length > 0){
+        toast.error("Já existe um aparelho com este primeiro imei",{
+          position: "bottom-center"
+        })
+        console.log("aqui")
+      }else{  
+    
 
     await addDoc(collection(db,"Aparelhos"),{
       imei1: imei1,
       imei2: imei2,
       marca:marca,
       modelo:modelo,
+      cautelado:false,
     })
-    .then(()=>{
-      console.log("conseguiu")
+    
+    toast.success('Aparelho adicionado com sucesso')
       setImei1('')
       setImei2('')
       setModelo('')
       setMarca('')
       toggle()
-    })
-    .catch((error)=>{
-      console.log(error)
-  
-    });
+    
+  }
+      }
+    }
+  }catch (error){
+    toast.error('Erro ao adicionar aparelho')
+  console.log(error)}finally {
+    setLoadingAdd(false)
+  }
   } 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -93,6 +135,8 @@ function ModalAdd(args) {
                   onChange={(e) => setModelo(e.target.value)}
                   />
 
+{emptyevalue && modelo==='' ? <Alert color='danger'>Coloque o modelo</Alert> :''}
+
                         </FormGroup>
                       </Col>
 
@@ -113,6 +157,7 @@ function ModalAdd(args) {
                             onChange={(e)=> setMarca(e.target.value)}
                            
                           />
+                          {emptyevalue && marca==='' ? <Alert color='danger'>Coloque a marca</Alert> :''}
                         </FormGroup>
                       </Col>
                       <Col lg="6">
@@ -126,11 +171,17 @@ function ModalAdd(args) {
                           <Input
                             className="form-control-alternative"
                             id="input-email"
+                            onInput={(e) => {
+                              e.target.value = e.target.value.replace(/[^0-9]/g, '').slice(0, 15);
+                              setImei1(e.target.value);
+                            }}
                             placeholder="IMEI"
                             type="text"
                             value={imei1}
                             onChange={(e)=> setImei1(e.target.value)}
                           />
+                          {emptyevalue && imei1==='' ? <Alert color='danger'>Coloque o primeiro imei</Alert> :''}
+                          {validImei && imei1.length<15 &&  imei1.length>0 ? <Alert color='danger'>Imei inválido, são necessários 15 digitos!</Alert> :''}
                         </FormGroup>
                       </Col>
                       <Col lg="6">
@@ -144,12 +195,18 @@ function ModalAdd(args) {
                           <Input
                             className="form-control-alternative"
                             id="input-first-name"
+                            onInput={(e) => {
+                              e.target.value = e.target.value.replace(/[^0-9]/g, '').slice(0, 15);
+                              setImei2(e.target.value);
+                            }}
                             placeholder="IMEI"
                             type="text"
                             value={imei2}
                             onChange={(e)=> setImei2(e.target.value)}
 
                           />
+                          {emptyevalue && imei2==='' ? <Alert color='danger'>Coloque o segundo imei</Alert> :''}
+                          {validImei && imei2.length<15 &&  imei2.length>0 ? <Alert color='danger'>Imei inválido, são necessários 15 digitos!</Alert> :''}
                         </FormGroup>
                       </Col>
                     </Row>
@@ -167,7 +224,7 @@ function ModalAdd(args) {
 
         <ModalFooter>
           <Button color="success" onClick={handleAdd}>
-            Adicionar
+          {loadingAdd ?<><Spinner size='sm' color="primary"></Spinner> <span>Salvando</span></> :'Salvar'}
           </Button>{' '}
           <Button color="warning" onClick={toggle}>
             Cancelar

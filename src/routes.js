@@ -32,10 +32,19 @@ import Ht from "views/Ht"
 import Chip from "views/Chip"
 import Modem from "views/Modem"
 import Cautelar from "views/Cautelar"
+import Descautelar from "views/Descautelar"
+import Devolucoes from 'views/Devoluções'
 
 
 
 var routes = [
+  {
+    path: "/login",
+    name: "Login",
+    icon: "ni ni-key-25 text-info",
+    component: <Login />,
+    layout: "/auth",
+  },
   {
     path: "/index",
     name: "Painel",
@@ -46,12 +55,12 @@ var routes = [
   
   {
     path: "/createUser",
-    name: "Usuário",
+    name: "Militares",
     icon: "ni ni-single-02 text-primary",
     component: <Index />,
     layout: "/admin",
   },
-
+  
   {
     path: "/createPhone",
     name: "Aparelho",
@@ -59,14 +68,22 @@ var routes = [
     component: <Aparelho />,
     layout: "/admin",
   },
-
-
+  
+  
   {
     path: "/createHT",
     name: "HT",
     icon: "fas fa fa-walkie-talkie text-primary",
     component: <Ht />,
     layout: "/admin",
+  },
+  {
+    path: "/createChip",
+    name: "Chip",
+    icon: "fas fa-sim-card text-primary",
+    component: <Chip/>,
+    layout: "/admin",
+    
   },
   {
     path: "/createModem",
@@ -76,14 +93,6 @@ var routes = [
     layout: "/admin",
   },
   {
-    path: "/createChip",
-    name: "Chip",
-    icon: "fas fa-sim-card text-primary",
-    component: <Chip/>,
-    layout: "/admin",
-  },
-
-  {
     path: "/Cautela",
     name: "Cautelar Aparelho",
     icon: "fas fa-solid fa-file-lines text-green",
@@ -91,13 +100,28 @@ var routes = [
     layout: "/admin",
   },
   {
-    path: "/Cautela",
-    name: "Descautelar Aparelho",
+    path: "/Cautelados",
+    name: "Aparelhos Cautelados",
     icon: "fas fa-solid fa-file-lines text-red",
-    component: <Cautelar/>,
+    component: <Descautelar/>,
     layout: "/admin",
   },
-
+  
+  {
+    path: "/Devoluções",
+    name: "Devoluções",
+    icon: "fas fa-solid fa-file-lines text-blue",
+    component: <Devolucoes/>,
+    layout: "/admin",
+  },
+  {
+    path: "/user-profile",
+    name: "User Profile",
+    icon: "ni ni-single-02 text-yellow",
+    component: <Profile />,
+    layout: "/admin",
+  },
+  /* 
   {
     path: "/Cautela",
     name: "Cautelar modem",
@@ -105,6 +129,7 @@ var routes = [
     component: <Cautelar/>,
     layout: "/admin",
   },
+
   {
     path: "/Cautela",
     name: "Descautelar modem",
@@ -113,25 +138,18 @@ var routes = [
     layout: "/admin",
   },
 
-  {
-    path: "/Cautela",
-    name: "Cautelar HT",
-    icon: "fas fa-solid fa-file-lines text-green",
-    component: <Cautelar/>,
-    layout: "/admin",
-  },
-
+  
   {
     path: "/Cautela",
     name: "Descautelar HT",
     icon: "fas fa-solid fa-file-lines text-red",
     component: <Cautelar/>,
     layout: "/admin",
-  },
+  }, */
   
-
-
-   /* {
+  
+  
+  /* {
     path: "/icons",
     name: "Icons",
     icon: "ni ni-planet text-blue",
@@ -146,21 +164,7 @@ var routes = [
     component: <Maps />,
     layout: "/admin",
   },
-  {
-    path: "/user-profile",
-    name: "User Profile",
-    icon: "ni ni-single-02 text-yellow",
-    component: <Profile />,
-    layout: "/admin",
-  },
   
-  {
-    path: "/login",
-    name: "Login",
-    icon: "ni ni-key-25 text-info",
-    component: <Login />,
-    layout: "/auth",
-  },
   {
     path: "/register",
     name: "Register",
@@ -168,13 +172,20 @@ var routes = [
     component: <Register />,
     layout: "/auth",
   } */
-  {
+  /*  {
     path: "/tables",
     name: "Cautelar",
     icon: "ni ni-bullet-list-67 text-red",
     component: <Tables />,
+    {
+      path: "/Cautela",
+      name: "Cautelar HT",
+      icon: "fas fa-solid fa-file-lines text-green",
+      component: <Cautelar/>,
+      layout: "/admin",
+    },
     layout: "/admin",
-  },
+  }, */
   
 ];
 export default routes;

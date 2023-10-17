@@ -12,11 +12,12 @@ function ModalEditCHip(props) {
 
   ////////////////validação////////////
   const [emptyevalue, setEmptyevalue] = useState(false);
-  const [validChip, setValidChip] = useState(false);
+  const [validImei, setValidImei] = useState(false);
 //////////////////////////////////////
 
   const toggle = () => {setModal(!modal)
-    setEmptyevalue(false)};
+    setEmptyevalue(false)
+    setValidImei(false)};
 
   const externalCloseBtn = (
     <button
@@ -31,36 +32,36 @@ function ModalEditCHip(props) {
 
 
     const [linha,setLinha] = useState('');
-    const [nserie, setNserie] =   useState('');
-    const [numero, setNumero] = useState('');
+    const [nserie, setNserie] =   useState('')
 
-    const [idAparelho, setIdAparelho]= useState('')
+    const [imei, setImei] = useState('')
+    const [marca, setMarca] = useState('')
+    const [modelo, setModelo] = useState('')
 
-    const [listaChip, setListaChip]= useState(props.data)
+    const [listaModem, setListaModem]= useState(props.data)
 
     //////////////////////HANDLE EDIT /////////////////////////////////////////
     async function editarPost(){
-      const docRef = doc(db,'Chip',props.data.id)
+      const docRef = doc(db,'Modem',props.data.id)
       
-      if ( !listaChip.nserie|| !listaChip.linha || !listaChip.numero ){
+      if ( !listaModem.imei|| !listaModem.marca || !listaModem.modelo){
+        console.log("campos vazios")
         setEmptyevalue(true)
-        console.log("parou aqui")
       }else{
-        if(listaChip.nserie.length<20 || listaChip.numero.length<11){
-          setValidChip(true)
-          console.log("parou aqui 2")
+        if(listaModem.imei.length<15){
+          console.log("imei incompleto")
+          setValidImei(true)
         }else{
         await updateDoc(docRef,{
-            linha: listaChip.linha,
-            nserie:listaChip.nserie,
-            numero: listaChip.numero
+            imei: listaModem.imei,
+            modelo:listaModem.modelo,
+            marca: listaModem.marca,
          
         })
         .then(()=>{
-          toast.success('Chip alterado com sucesso')
+          toast.success('Modem alterado com sucesso')
             setLinha('')
             setNserie('')
-            setNumero('')
             toggle()
 
         })
@@ -76,7 +77,7 @@ function ModalEditCHip(props) {
 
   //////////////////////////////////////////////////////////////////////////////////
     function handleSobreescrever(e){
-        setListaChip({...listaChip,[e.target.name] : e.target.value})
+        setListaModem({...listaModem,[e.target.name] : e.target.value})
 
     }
   
@@ -90,7 +91,7 @@ function ModalEditCHip(props) {
       </Button>
 
       <Modal isOpen={modal} toggle={toggle} external={externalCloseBtn}>
-        <ModalHeader>Editar Ht</ModalHeader>
+        <ModalHeader>Editar Aparelhos</ModalHeader>
         <ModalBody>
         <Form>
 
@@ -107,68 +108,30 @@ function ModalEditCHip(props) {
           className="form-control-label"
           htmlFor="input-NserieHT"
         >
-          Nº de Série
+          Imei
         </label>
         <Input
           className="form-control-alternative"
           /* defaultValue="lucky.jesse" */
           id="input-ModeloHt"
-          placeholder="Nº de série"
+          placeholder="Digite o Imei"
           onInput={(e) => {
-            e.target.value = e.target.value.replace(/[^0-9]/g, '').slice(0, 20);
+            e.target.value = e.target.value.replace(/[^0-9]/g, '').slice(0, 15);
             setNserie(e.target.value);
           }}
-          value={listaChip.nserie}
-          name='nserie'
+          value={listaModem.imei}
+          name='imei'
           onChange={e =>handleSobreescrever(e)}
           type="text"
-          maxLength={20}
+          maxLength={15}
           
         />
-        {emptyevalue && listaChip.nserie==='' ? <Alert color='danger'>Coloque o número de serie</Alert> :''}
+        {emptyevalue && listaModem.imei==='' ? <Alert color='danger'>Coloque o número do Imei</Alert> :''}
 
-        {validChip && listaChip.nserie.length<20 &&  listaChip.nserie.length>0 ? <Alert color='danger'>número de serie inválido, são necessários 20 digitos!</Alert> :''}
+        {validImei && listaModem.imei.length<15 &&  listaModem.imei.length>0 ? <Alert color='danger'>número de série inválido, são necessários 15 digitos!</Alert> :''}
       </FormGroup>
     </Col>
     </Row>
-
-
-    <Row>
-    <Col lg="12">
-
-      <FormGroup>
-        <label
-          className="form-control-label"
-          htmlFor="input-NserieHT"
-        >
-          Número do telefone
-        </label>
-        <Input
-          className="form-control-alternative"
-          /* defaultValue="lucky.jesse" */
-          id="input-ModelNumero"
-          placeholder="(00) 00000-0000"
-          onInput={(e) => {
-            e.target.value = e.target.value.replace(/[^0-9]/g, '').slice(0, 20);
-            setNserie(e.target.value);
-          }}
-          value={listaChip.numero}
-          name='numero'
-          onChange={e =>handleSobreescrever(e)}
-          type="text"
-          maxLength={11}
-          
-        />
-        {emptyevalue && listaChip.numero==='' ? <Alert color='danger'>Coloque o número do telefone</Alert> :''}
-
-        {validChip && listaChip.numero.length<11 &&  listaChip.numero.length>0 ? <Alert color='danger'>número de telfone inválido, são necessários 11 digitos!</Alert> :''}
-      </FormGroup>
-    </Col>
-    </Row>
-
-
-
-
     <Row>
     <Col lg="12">
       <FormGroup>
@@ -176,14 +139,15 @@ function ModalEditCHip(props) {
           className="form-control-label"
           htmlFor="Marca-Ht"
         >
-          Linha
+          Marca
         </label>
         
-        <Input type="select" name="linha" id="SelectMarca" value={listaChip.linha} onChange={e =>handleSobreescrever(e)}>
+        <Input type="select" name="marca" id="SelectMarca" value={listaModem.marca} onChange={e =>handleSobreescrever(e)}>
                             <option value=''>Escolha</option>
                             <option value='Vivo'>Vivo </option>
+                            <option value='Claro'>Claro</option>
                           </Input>
-                          {emptyevalue && listaChip.linha ==='' ? <Alert color='danger'>Coloque a linha</Alert> :''}
+                          {emptyevalue && listaModem.marca ==='' ? <Alert color='danger'>Coloque a marca</Alert> :''}
 
         
         
@@ -203,6 +167,42 @@ function ModalEditCHip(props) {
     
   </Row>
   
+  <Row>
+    <Col lg="12">
+      <FormGroup>
+        <label
+          className="form-control-label"
+          htmlFor="Marca-Ht"
+        >
+          Modelo
+        </label>
+        
+        <Input type="select" name="modelo" id="SelectMarca" value={listaModem.modelo} onChange={e =>handleSobreescrever(e)}>
+                            <option value=''>Escolha</option>
+                            <option value='Modelo 1'>Modelo 1</option>
+                            <option value='Modelo 2'>Modelo 2</option>
+                          </Input>
+                          {emptyevalue && listaModem.modelo ==='' ? <Alert color='danger'>Coloque o modelo</Alert> :''}
+
+        
+        
+        
+        {/* <Input
+          className="form-control-alternative"
+          id="Marca-Ht"
+          placeholder="Marca"
+          name='linha'
+           value={listaChip.linha} 
+          onChange={e =>handleSobreescrever(e)}
+          type="text"
+        /> */}
+      </FormGroup>
+    </Col>
+
+    
+  </Row>
+
+
 </div>
 
 </Form>

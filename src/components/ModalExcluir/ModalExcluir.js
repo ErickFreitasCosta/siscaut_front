@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
-function Example({args, func}) {
+
+
+function Example({args, func,renderizar,setRenderizar, title}) {
+
   const [modal, setModal] = useState(false);
 
   const toggle = () => setModal(!modal);
@@ -12,9 +15,9 @@ function Example({args, func}) {
         Excluir
       </Button>
       <Modal isOpen={modal} toggle={toggle} {...args}>
-        <ModalHeader toggle={toggle}>Modal title</ModalHeader>
+        <ModalHeader toggle={toggle}>Excluir {title}</ModalHeader>
         <ModalBody>
-         VOCÊ TEM CERTEZA QUE DESEJA EXCLUIR ?
+         VOCÊ TEM CERTEZA QUE DESEJA EXCLUIR PERMANENTEMENTE ?
         </ModalBody>
         <ModalFooter>
           <Button color="danger" onClick={func}>

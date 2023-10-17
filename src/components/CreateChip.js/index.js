@@ -55,7 +55,7 @@ const CreateChip = () => {
     <>
       {/* <UserHeader /> */}
       {/* Page content */}
-      <Container className="mt--7" fluid>
+      <Container className="mt--7"  fluid>
         <Row style={{marginTop: 50}}>
           {/* <Col className="order-xl-2 mb-5 mb-xl-0" xl="4">
            

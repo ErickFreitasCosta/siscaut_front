@@ -1,16 +1,27 @@
 import React, { useState } from 'react';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Input, FormGroup, Col, Row, Form } from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Input, FormGroup, Col, Row, Form, Alert 
+} from 'reactstrap';
 
 import {db} from '../../firebase';
 import {doc, updateDoc,addDoc,getDocs} from 'firebase/firestore'
 
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
-function ModalEditUser(props) {
+function ModalEditUser(props,renderizar,setRenderizar,filter,setFilter) {
   const [modal, setModal] = useState(false);
-  console.log('aqui',props)
+ 
 
-  const toggle = () => setModal(!modal);
+  /////////////////////////// //validação
+  const [emptyevalue, setEmptyevalue] = useState(false);
+  const [validRg, setValidRg] = useState(false);
+//////////////////////////
+
+  const toggle = () => {
+    setEmptyevalue(false);
+    setValidRg(false);
+    setModal(!modal)};
 
   const externalCloseBtn = (
     <button
@@ -26,15 +37,25 @@ function ModalEditUser(props) {
 
 
     const [listaMilitar, setListaMilitar]= useState(props.data)
-
     const [nome, setNome] = useState('')
-  const [funcao, setFuncao] = useState('')
-  const [rg, setRg] = useState('')
-  const [unidade, setUnidade] = useState('')
-  const [postgrad, setPostgrad] = useState('')
+    const [funcao, setFuncao] = useState('')
+    const [rg, setRg] = useState('')
+    const [unidade, setUnidade] = useState('')
+    const [postgrad, setPostgrad] = useState('')
+
+  
     
 
     async function editarPost(){
+
+      if ( !listaMilitar.nome|| !listaMilitar.funcao ||!listaMilitar.rg  || !listaMilitar.unidade || !listaMilitar.postgrad ){
+        setEmptyevalue(true)
+       
+      }else{
+        if(listaMilitar.rg.length<7){
+          setValidRg(true)
+          
+        }else{
 
         const docRef = doc(db,'Militares',props.data.id)
         await updateDoc(docRef,{
@@ -46,7 +67,7 @@ function ModalEditUser(props) {
          
         })
         .then(()=>{
-            console.log('Atualizado')
+            toast.success('Os dados do militar foram alterados com sucesso')
             setNome('')
             setFuncao('')
             setRg('')
@@ -54,16 +75,33 @@ function ModalEditUser(props) {
             setPostgrad('')
             toggle()
 
-        })
-        .catch(()=>{
-            console.log('Erro ao atualizar')
+            
+           
+          }
+          )
+        .catch((error)=>{
+            console.log(error)
+            toast.error('Ocorreu algum erro ao alterar os dados, tente novamente em alguns segundos')
 
         })
+       }
+      }   
     }
 
-    function handleSobreescrever(e){
-        setListaMilitar({...listaMilitar,[e.target.name] : e.target.value})
+    // function handleSobreescrever(e){
+    //     setListaMilitar({...listaMilitar,[e.target.name] : e.target.value})
+    //     setRenderizar(!renderizar)
+    //     setFilter([])
 
+    // }
+    function handleSobreescrever(e) {
+      const { name, value } = e.target;
+      // Atualize o estado `listaMilitar` com os novos valores.
+      setListaMilitar({ ...listaMilitar, [name]: value });
+      // Atualize o estado `props.data` para refletir as edições imediatamente.
+      /* props.data[name] = value; */
+      // Atualize o estado `renderizar` para forçar a renderização do componente.
+      /* setRenderizar(!renderizar); */
     }
 
 
@@ -101,6 +139,7 @@ function ModalEditUser(props) {
                             value={listaMilitar.nome}
                             onChange={e =>handleSobreescrever(e)}
                           />
+                          {emptyevalue && listaMilitar.nome==='' ? <Alert color='danger'>Coloque a unidade</Alert> :''}
                         </FormGroup>
                       </Col>
                       <Col lg="6">
@@ -115,11 +154,18 @@ function ModalEditUser(props) {
                             className="form-control-alternative"
                             id="input-email"
                             placeholder="000000"
+                            onInput={(e) => {
+                              e.target.value = e.target.value.replace(/[^0-9]/g, '').slice(0, 7);
+                              setRg(e.target.value);
+                            }}
                             name='rg'
                             type="text"
                             value={listaMilitar.rg}
                             onChange={e =>handleSobreescrever(e)}
                           />
+                          {emptyevalue && listaMilitar.rg==='' ? <Alert color='danger'>Coloque a unidade</Alert> :''}
+                          {validRg && rg.length<7 &&  rg.length>0 ? <Alert color='danger'>RG inválido, são necessários 7 digitos!</Alert> :''}
+                          
                         </FormGroup>
                       </Col>
                       <Col lg="6">
@@ -130,7 +176,23 @@ function ModalEditUser(props) {
                           >
                             Posto/Grad
                           </label>
-                          <Input
+                          <Input type="select" name="postgrad" id="SelectMarca" value={listaMilitar.postgrad} onChange={e =>handleSobreescrever(e)}>
+                            <option value=''>Escolha</option>
+                            <option value='Soldado'>Soldado</option>
+                            <option value='Cabo'>Cabo</option>
+                            <option value='3º Sargento'>3ª Sargento</option>
+                            <option value='2º Sargento'>2ª Sargento</option>
+                            <option value='1º Sargento'>1ª Sargento</option>
+                            <option value='Sub Tenente'>Sub Tenente</option>
+                            <option value='2º tenente'>2º tenente</option>
+                            <option value='1º tenente'>1º tenente</option>
+                            <option value='Capitão'>Capitão</option>
+                            <option value='Major'>Major</option>
+                            <option value='Tenente Coronel'>Tenente Coronel</option>
+                            <option value='Coronel'>Coronel</option>
+                          </Input>
+                          {emptyevalue && listaMilitar.postgrad==='' ? <Alert color='danger'>Coloque o Posto/Grad</Alert> :''}
+                          {/* <Input
                             className="form-control-alternative"
                             id="input-first-name"
                             placeholder="Posto/Grad"
@@ -139,6 +201,7 @@ function ModalEditUser(props) {
                             value={listaMilitar.postgrad}
                             onChange={e =>handleSobreescrever(e)}
                           />
+                          {emptyevalue && listaMilitar.postgrad==='' ? <Alert color='danger'>Coloque a unidade</Alert> :''} */}
                         </FormGroup>
                       </Col>
                     </Row>
@@ -159,7 +222,9 @@ function ModalEditUser(props) {
                             type="text"
                             value={listaMilitar.unidade}
                             onChange={e =>handleSobreescrever(e)}
+
                           />
+                          {emptyevalue && listaMilitar.unidade==='' ? <Alert color='danger'>Coloque a unidade</Alert> :''}
                         </FormGroup>
                       </Col>
                       <Col lg="6">
@@ -179,6 +244,7 @@ function ModalEditUser(props) {
                             value={listaMilitar.funcao}
                             onChange={e =>handleSobreescrever(e)}
                           />
+                          {emptyevalue && listaMilitar.funcao === '' ? <Alert color='danger'>Coloque a unidade</Alert> :''}
                         </FormGroup>
                       </Col>
                     </Row>
@@ -192,7 +258,7 @@ function ModalEditUser(props) {
 
      
         <ModalFooter>
-          <Button color="success"  onClick={editarPost}>
+          <Button color="success"  onClick={editarPost}  >
             Salvar
           </Button>{' '}
 
