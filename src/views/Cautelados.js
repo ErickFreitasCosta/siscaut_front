@@ -17,24 +17,19 @@
 */
 import { Link } from "react-router-dom";
 
+
 import { useState, useEffect } from "react";
 // node.js library that concatenates classes (strings)
-import classnames from "classnames";
+
 // javascipt plugin for creating charts
 import Chart from "chart.js";
 // react plugin used to create charts
-import { Line, Bar } from "react-chartjs-2";
+
 // reactstrap components
 import "./index.css";
 import {
-  Button,
   Card,
   CardHeader,
-  CardBody,
-  NavItem,
-  NavLink,
-  Nav,
-  Progress,
   Table,
   Container,
   Row,
@@ -43,51 +38,50 @@ import {
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ModalExcluir from "../components/ModalExcluir/ModalExcluir";
 
+//firebase functions
 import { db } from "../firebase";
 import {
-  doc,
-  setDoc,
-  Collection,
-  addDoc,
   collection,
   onSnapshot,
-  updateDoc,
-  deleteDoc,
   query,
   where,
   getDocs,
+  deleteDoc,
+  doc,
+  updateDoc,
 } from "firebase/firestore";
 
 // core components
 import {
   chartOptions,
   parseOptions,
-  chartExample1,
-  chartExample2,
 } from "variables/charts.js";
 
+//componentes
 import Header from "components/Headers/Header.js";
 import ModalInfDescaut from "components/ModalInfDescaut/ModalInDescaut";
 
-const Aparelho = (props) => {
-  const [activeNav, setActiveNav] = useState(1);
-  const [chartExample1Data, setChartExample1Data] = useState("data1");
+const AparelhosCautelados = (props) => {
+  /* const [activeNav, setActiveNav] = useState(1);
+  const [chartExample1Data, setChartExample1Data] = useState("data1"); */
 
   if (window.Chart) {
     parseOptions(Chart, chartOptions());
   }
 
-  const toggleNavs = (e, index) => {
+  /* const toggleNavs = (e, index) => {
     e.preventDefault();
     setActiveNav(index);
     setChartExample1Data("data" + index);
   };
-
+ */
   const [aparelhos, setAparelhos] = useState([]);
-  const [renderizar, setRenderizar] = useState(false);
+  /* const [renderizar, setRenderizar] = useState(false);
+  const[filter, setFilter] = useState() */
 
-  /*  const cautelados = query(collection(db,"Aparelhos", where ("cautelado", "==", "false") )) */
+  
 
   /////////////////////////////////////////função de exibição/////////////////////////////
   useEffect(() => {
@@ -121,7 +115,59 @@ const Aparelho = (props) => {
 
     //  função de limpeza para interromper a observação quando o componente for desmontado
     return () => unsub();
-  }, []); //
+  }, []); 
+  /////////////////////////////////////////////////////////////////////////////////////////
+
+  ///////////////////////////////////////função excluir///////////////////////////////////
+  async function desfazerCautela(id) {
+ 
+
+ const q = query(
+  collection(db, "Cautelas"),
+  where("aparelho", "==", id),
+);
+const data = await getDocs(q);
+
+const response = data.docs.map((doc) => {  
+  const idcaut = doc.id 
+  const idChip = doc.data().chip;
+  return { idcaut, idChip };
+  
+});
+
+
+const excluDocCaut = doc(db, "Cautelas", response[0].idcaut)
+
+const docAparelho = doc(db, 'Aparelhos', id);
+const docChip = doc(db, 'Chip', response[0].idChip);
+
+try{
+await deleteDoc(excluDocCaut)
+
+await updateDoc(docAparelho, {
+  cautelado: false,
+});
+
+await updateDoc(docChip, {
+  cautelado: false,
+});
+
+toast.error("Cautela desfeita");
+    
+      /*
+      .catch((error) => {
+        toast.error("Algo deu errado, tente novamente mais tarde");
+        setRenderizar(!renderizar);
+        setFilter([]);
+      }); */
+
+    }catch(error){
+      toast.error("Algo deu errado, tente novamente mais tarde");
+      console.log(error)
+    }
+
+  }
+  ///////////////////////////////////////////////////////////////////////////////////////
 
   return (
     <>
@@ -139,6 +185,16 @@ const Aparelho = (props) => {
                     <h3 className="mb-0">Aparelhos</h3>
                   </div>
                   <div></div>
+                  {/* <div className="col text-right">
+                    <Button
+                      color="primary"
+                      href="#pablo"
+                      onClick={(e) => e.preventDefault()}
+                      size="sm"
+                    >
+                      See all
+                    </Button>
+                  </div> */}
                 </Row>
               </CardHeader>
               <Table className="align-items-center table-flush" responsive>
@@ -156,6 +212,8 @@ const Aparelho = (props) => {
                   </tr>
                 </thead>
                 <tbody>
+                 
+
                   {aparelhos.map((aparelhos) => {
                     /* setMarca(aparelhos.modelo) */
 
@@ -169,6 +227,8 @@ const Aparelho = (props) => {
                           <div>
                             <div className="OrganizarBotoes">
                               <ModalInfDescaut data={aparelhos} />
+                              <ModalExcluir func={() => desfazerCautela(aparelhos.id)} />
+                              
                             </div>
                           </div>
                         </td>
@@ -185,4 +245,4 @@ const Aparelho = (props) => {
   );
 };
 
-export default Aparelho;
+export default AparelhosCautelados;

@@ -76,7 +76,7 @@ import {
 import Header from "components/Headers/Header.js";
 
 
-const Aparelho = (props) => {
+const DevolucoesAparelho = (props) => {
   const [activeNav, setActiveNav] = useState(1);
   const [chartExample1Data, setChartExample1Data] = useState("data1");
 
@@ -97,8 +97,33 @@ const Aparelho = (props) => {
 
   const [cautInf, setCautInf] = useState([]);
   
+  const DecoluCollectionsRef = collection(db, "Devolucoes_aparelhos")
+  const [devolucoes, setDevolucoes] = useState([]);
 
-  useEffect(() => {
+  useEffect(() =>{
+
+  async function loadDevolucoes(){
+    setLoading(true)
+    try{
+  const data = await getDocs(DecoluCollectionsRef)
+  const response = data.docs.map((doc) => ({ ...doc.data(), id: doc.id,
+    date_caut: format(Date.parse(doc.data().date_caut), 'dd/MM/yyyy'),
+        date_devolu: format(Date.parse(doc.data().date_devolu), 'dd/MM/yyyy')}))
+  setDevolucoes(response)
+  }catch (error) {
+    console.error('Erro ao buscar informações:', error);
+  } finally {
+    setLoading(false)
+  }
+
+  }
+
+  loadDevolucoes()
+},[])
+  console.log(devolucoes)
+
+
+  /* useEffect(() => {
     async function getCautelados() {
       setLoading(true);
       try {
@@ -118,9 +143,9 @@ const Aparelho = (props) => {
     }
 
     getCautelados();
-  }, []);
-
-  useEffect(() => {
+  }, []); */
+  
+  /* useEffect(() => {
     async function getInfCaut() {
 
       try {
@@ -177,10 +202,53 @@ const Aparelho = (props) => {
     if (cautelas.length > 0) {
       getInfCaut();
     }
-  }, [cautelas]);
+  }, [cautelas]); */
+  
 
   console.log(cautInf);
 
+
+
+
+/*  console.log(cautInf) */
+
+
+  /////////////////////////////////////////função de exibição///////////////////////////// 
+  /* useEffect(() => {
+    // Cria uma função para atualizar a lista de aparelhos com base nos dados do snapshot
+    function updateAparelhos(snapshot) {
+      let listaAparelhos = [];
+  
+      snapshot.forEach((doc) => {
+        listaAparelhos.push({
+          id: doc.id,
+          imei1: doc.data().imei1,
+          imei2: doc.data().imei2,
+          marca: doc.data().marca,
+          modelo: doc.data().modelo,
+        });
+      });
+  
+      setAparelhos(listaAparelhos);
+    }
+  
+    // Cria a consulta inicial
+    const q = query(
+      collection(db, 'Aparelhos'),
+      where('cautelado', '==', true)
+    );
+  
+    // Executa a consulta inicial e ouve as atualizações em tempo real
+    const unsub = onSnapshot(q, (snapshot) => {
+      updateAparelhos(snapshot);
+    });
+  
+    //  função de limpeza para interromper a observação quando o componente for desmontado
+    return () => unsub();
+  }, []); // 
+   */
+  
+  
   return (
     <>
       <ToastContainer />
@@ -225,10 +293,11 @@ const Aparelho = (props) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {cautInf.map((infcauts) => {
-                    /* setMarca(aparelhos.modelo) */
-
-                    return (
+                  
+                    {devolucoes.map((infcauts) =>{
+                          /* setMarca(aparelhos.modelo) */
+                      
+                    return(
                       <tr key={infcauts.id}>
                         {console.log(infcauts.id)}
                         {console.log(infcauts.nome)}
@@ -301,4 +370,4 @@ const Aparelho = (props) => {
   );
 };
 
-export default Aparelho;
+export default DevolucoesAparelho;
