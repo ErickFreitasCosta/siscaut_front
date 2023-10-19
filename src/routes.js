@@ -41,6 +41,13 @@ import DevolucoesAparelhos from 'views/Devoluções'
 
 var routes = [
   {
+    path: "/login",
+    name: "Login",
+    icon: "ni ni-key-25 text-info",
+    component: <Login />,
+    layout: "/auth",
+  },
+  {
     path: "/index",
     name: "Painel",
     icon: "ni ni-tv-2 text-primary",
@@ -55,7 +62,7 @@ var routes = [
     component: <Index />,
     layout: "/admin",
   },
-
+  
   {
     path: "/createPhone",
     name: "Aparelho",
@@ -63,8 +70,8 @@ var routes = [
     component: <Aparelho />,
     layout: "/admin",
   },
-
-
+  
+  
   {
     path: "/createHT",
     name: "HT",
@@ -94,13 +101,7 @@ var routes = [
   component: <CautelarAparelhos/>,
   layout: "/admin",
 },
-{
-  path: "/Cautelados",
-  name: "Aparelhos Cautelados",
-  icon: "fas fa-solid fa-file-lines text-red",
-  component: <AparelhosCautelados/>,
-  layout: "/admin",
-},
+
   
   {
     path: "/Devoluções",
@@ -109,7 +110,14 @@ var routes = [
     component: <DevolucoesAparelhos/>,
     layout: "/admin",
   },
-/* 
+  {
+    path: "/user-profile",
+    name: "User Profile",
+    icon: "ni ni-single-02 text-yellow",
+    component: <Profile />,
+    layout: "/admin",
+  },
+  /* 
   {
     path: "/Cautela",
     name: "Cautelar modem",
@@ -152,21 +160,7 @@ var routes = [
     component: <Maps />,
     layout: "/admin",
   },
-  {
-    path: "/user-profile",
-    name: "User Profile",
-    icon: "ni ni-single-02 text-yellow",
-    component: <Profile />,
-    layout: "/admin",
-  },
   
-  {
-    path: "/login",
-    name: "Login",
-    icon: "ni ni-key-25 text-info",
-    component: <Login />,
-    layout: "/auth",
-  },
   {
     path: "/register",
     name: "Register",
