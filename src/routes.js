@@ -42,8 +42,8 @@ import DevolucoesAparelhos from 'views/Devoluções'
 var routes = [
   {
     path: "/login",
-    name: "Login",
-    icon: "ni ni-key-25 text-info",
+    // name: "Login",
+    // icon: "ni ni-key-25 text-info"      ,
     component: <Login />,
     layout: "/auth",
   },
