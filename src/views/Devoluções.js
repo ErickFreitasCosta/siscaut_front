@@ -296,7 +296,7 @@ const DevolucoesAparelho = (props) => {
                   
                     {devolucoes.map((infcauts) =>{
                           /* setMarca(aparelhos.modelo) */
-                      
+                      {console.log('CONSOLE MAP',infcauts)}
                     return(
                       <tr key={infcauts.id}>
                         {console.log(infcauts.id)}
@@ -318,17 +318,19 @@ const DevolucoesAparelho = (props) => {
                                 color="danger"
                                 onClick={(e) =>
 
-                                  ClientesPDF({cautInf,
+                                  ClientesPDF({
                                     idClicked: infcauts.id,
 
                                     name: infcauts.nome,
                                     rg: infcauts.rg,
-                                    aparelho: infcauts.modelo,
-                                    imei: infcauts.imei,
+                                    modelo: infcauts.modelo,
+                                    imei1: infcauts.imei1,
+                                    imei2: infcauts.imei2,
                                     numero: infcauts.numero,
                                     data: infcauts.date_caut,
                                     data_des: infcauts.date_devolu,
                                     marca: infcauts.marca
+
                                     ,
 
 
