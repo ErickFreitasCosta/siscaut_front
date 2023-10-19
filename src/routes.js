@@ -98,16 +98,10 @@ var routes = [
   path: "/Cautela",
   name: "Cautelar Aparelho",
   icon: "fas fa-solid fa-file-lines text-green",
-  component: <Cautelar/>,
+  component: <CautelarAparelhos/>,
   layout: "/admin",
 },
-{
-  path: "/Cautelados",
-  name: "Aparelhos Cautelados",
-  icon: "fas fa-solid fa-file-lines text-red",
-  component: <Descautelar/>,
-  layout: "/admin",
-},
+
   
   {
     path: "/Devoluções",

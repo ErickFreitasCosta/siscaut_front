@@ -218,9 +218,6 @@ function Modall(args) {
                       >
                         <option value="">Escolha</option>
                         <option value="Vivo">Vivo </option>
-
-
-                  
                       </Input>
 
                       {/*  <Input
