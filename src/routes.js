@@ -42,11 +42,12 @@ import DevolucoesAparelhos from 'views/Devoluções'
 var routes = [
   {
     path: "/login",
-    name: "Login",
-    icon: "ni ni-key-25 text-info",
+    // name: "Login",
+    // icon: "ni ni-key-25 text-info"      ,
     component: <Login />,
     layout: "/auth",
-  },
+  }, 
+
   {
     path: "/index",
     name: "Painel",
@@ -99,6 +100,13 @@ var routes = [
   name: "Cautelar Aparelho",
   icon: "fas fa-solid fa-file-lines text-green",
   component: <CautelarAparelhos/>,
+  layout: "/admin",
+},
+{
+  path: "/aparelhosCautelados",
+  name: "Aparelhos Cautelados",
+  icon: "fas fa-solid fa-file-lines text-red"      ,
+  component: <AparelhosCautelados />,
   layout: "/admin",
 },
 

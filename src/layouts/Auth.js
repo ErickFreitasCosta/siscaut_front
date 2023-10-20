@@ -88,12 +88,13 @@ const Auth = (props) => {
             </svg>
           </div> */}
         </div>
+
         {/* Page content */}
         <Container className="mt--8 pb-5">
           <Row className="justify-content-center">
             <Routes>
+              <Route path="/" element={<Navigate to="/auth/login" replace />} />
               {getRoutes(routes)}
-              <Route path="*" element={<Navigate to="/auth/login" replace />} />
             </Routes>
           </Row>
         </Container>
