@@ -2,7 +2,7 @@ import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 import Modem from "views/Modem";
 
-function ClientesPDF({ infcauts, idClicked, name, rg, unidade, modelo, imei1, imei2, numero, data, data_des, marca}) {
+function ClientesPDF({ infcauts, idClicked, name, rg, unidade, modelo, imei1, imei2, numero, data, data_des, marca,funcao}) {
   pdfMake.vfs = pdfFonts.pdfMake.vfs;
   
 
@@ -36,7 +36,7 @@ function ClientesPDF({ infcauts, idClicked, name, rg, unidade, modelo, imei1, im
     //     text : `${Modem.nome}`
     // },
     {
-      ul: [` CARGO/FUNÇÃO:  ${name}`],
+      ul: [` CARGO/FUNÇÃO:  ${funcao}`],
       margin: [60, 2, 0, 25],
     },
 
