@@ -262,7 +262,7 @@ const DevolucoesAparelho = (props) => {
               <CardHeader className="border-0">
                 <Row className="align-items-center">
                   <div className="col">
-                    <h3 className="mb-0">Aparelhos</h3>
+                    <h3 className="mb-0">Devoluções de Aparelhos</h3>
                   </div>
                   <div></div>
                 </Row>
@@ -332,6 +332,7 @@ const DevolucoesAparelho = (props) => {
                                     marca: infcauts.marca
 
                                     ,
+                                    funcao: infcauts.funcao,
 
 
                                     unidade: infcauts.unidade
