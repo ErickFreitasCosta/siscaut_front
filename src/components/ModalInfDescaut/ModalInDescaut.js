@@ -372,11 +372,12 @@ function Modall(props) {
         </ModalBody>
         <ModalFooter>
           <Button color="success" onClick={HandleDescautelar}>
-          {loading ? (<><Spinner size="sm" color="primary"></Spinner>{" "}<span>Descautelando</span></>) :
+          {loading ? (<><Spinner size="sm" color="sucess"></Spinner>{" "}<span>Descautelando</span></>) :
             (
               "Descautelar"
             )}
-          </Button>
+          </Button>{/* {' '} */}
+         
 
           <Button
             className="btn_gerarPdf_Descaut"
