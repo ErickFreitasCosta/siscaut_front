@@ -2,22 +2,23 @@ import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 import Modem from "views/Modem";
 
-function ClientesPDF({ cautInf, idClicked, name, rg ,unidade ,aparelho,imei,numero,data,data_des,marca}) {
+function ClientesPDF({ infcauts, idClicked, name, rg, unidade, modelo, imei1, imei2, numero, data, data_des, marca,funcao}) {
   pdfMake.vfs = pdfFonts.pdfMake.vfs;
+  
 
-  const dados = cautInf.map((Modem) =>{
+  const dados = 
     
-      return[
+      [
        
-          {text :  aparelho, fontSize :10 ,margin : [0, 2,0 ,2]},
-          {text :   Modem.imei1, fontSize :10 ,margin : [0, 2,0 ,2]},
+          {text :  modelo, fontSize :10 ,margin : [0, 2,0 ,2]},
+          {text :   imei1, fontSize :10 ,margin : [0, 2,0 ,2]},
           {text :  numero, fontSize :10 ,margin : [0, 2,0 ,2]},
           {text :  marca, fontSize :10 ,margin : [0, 2,0 ,2]},
           {text :  data_des, fontSize :10 ,margin : [0, 2,0 ,2]}
-      ]
+      ];
 
-  })
-  console.log("CAUTINFO", cautInf);
+  
+
 
 
   // ISSO É
@@ -35,7 +36,7 @@ function ClientesPDF({ cautInf, idClicked, name, rg ,unidade ,aparelho,imei,nume
     //     text : `${Modem.nome}`
     // },
     {
-      ul: [` CARGO/FUNÇÃO:  ${name}`],
+      ul: [` CARGO/FUNÇÃO:  ${funcao}`],
       margin: [60, 2, 0, 25],
     },
 
@@ -49,7 +50,7 @@ function ClientesPDF({ cautInf, idClicked, name, rg ,unidade ,aparelho,imei,nume
     {
       table: {
         headerRows: 1,
-        widths: [70, 110, 110, 50,70],
+        widths: [85, 95, 110, 50,70],
         
         // cabeçalho da tabela fixa
         body: [
@@ -92,11 +93,11 @@ function ClientesPDF({ cautInf, idClicked, name, rg ,unidade ,aparelho,imei,nume
             },
           ],
           // pega tudo que tinha dentro do array e adiciona mais tabela dinamica
-          dados[0]
+          dados
         ],
       },
       layout: "headerLineOnly",
-      margin: [40, 2, 10, 2], //esquerda ,cima ,direita ,baixo
+      margin: [40, 2, 10,20], //esquerda ,cima ,direita ,baixo
       alignment: "center",
     },
     /// texto estático

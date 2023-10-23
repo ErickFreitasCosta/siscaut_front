@@ -57,7 +57,7 @@ const Chip = (props) => {
     setActiveNav(index);
     setChartExample1Data("data" + index);
   };
-
+/////////////////////////////////////////função de exibição/////////////////////////////
   useEffect(() => {
     async function loadChips() {
       const unsub = onSnapshot(collection(db, "Chip"), (snapshot) => {
@@ -69,6 +69,7 @@ const Chip = (props) => {
             nserie: doc.data().nserie,
             linha: doc.data().linha,
             numero: doc.data().numero,
+            cautelado: doc.data().cautelado,
            
           });
         });
@@ -77,19 +78,30 @@ const Chip = (props) => {
     }
     loadChips();
   }, [renderizar]);
+///////////////////////////////////////////////////////////////////////////////////////
 
-  async function excluirChip(id) {
+///////////////////////////////////////função excluir///////////////////////////////////
+  async function excluirChip(id, caut) {
     const excluDoc = doc(db, "Chip", id);
-    await deleteDoc(excluDoc)
-      .then(() => {
-        toast.error("O chip foi excluído permanentemente");
-      })
-      .catch((error) => {
-        toast.error("Algo deu errado, tente novamente mais tarde");
-        setRenderizar(!renderizar);
-        setFilter([]);
+
+    
+    //verifica se o Chip esta cautelado
+    if (caut === true) {
+      toast.error(
+        "Este Chip esta cautelado, não possivel excluir ele",
+        {
+          position: "bottom-center",
+        }
+      );
+    } else {
+      await deleteDoc(excluDoc).then(() => {
+        toast.error("O Chip foi excluido permanentemente");
       });
+      setRenderizar(!renderizar);
+      setFilter([]);
+    }
   }
+  ///////////////////////////////////////////////////////////////////////////////////////
 
   ///////////////////////////////////////
   function Pesquisa(e) {
@@ -177,7 +189,7 @@ const Chip = (props) => {
                           <td>
                             <div className="OrganizarBotoes">
                               <ModalEditChip data={chip} />
-                              <ModalExcluir func={() => excluirChip(chip.id)} />
+                              <ModalExcluir func={() => excluirChip(chip.id, chip.cautelado)} />
                             </div>
                           </td>
                         </tr>

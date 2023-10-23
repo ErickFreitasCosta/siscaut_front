@@ -31,20 +31,23 @@ import Aparelho from "views/aparelho"
 import Ht from "views/Ht"
 import Chip from "views/Chip"
 import Modem from "views/Modem"
-import Cautelar from "views/Cautelar"
-import Descautelar from "views/Descautelar"
-import Devolucoes from 'views/Devoluções'
+
+//aparelhos
+import CautelarAparelhos from "views/Cautelar"
+import AparelhosCautelados from "views/Cautelados"
+import DevolucoesAparelhos from 'views/Devoluções'
 
 
 
 var routes = [
   {
     path: "/login",
-    name: "Login",
-    icon: "ni ni-key-25 text-info",
+    // name: "Login",
+    // icon: "ni ni-key-25 text-info"      ,
     component: <Login />,
     layout: "/auth",
-  },
+  }, 
+
   {
     path: "/index",
     name: "Painel",
@@ -93,34 +96,35 @@ var routes = [
     layout: "/admin",
   },
   {
-    path: "/Cautela",
-    name: "Cautelar Aparelho",
-    icon: "fas fa-solid fa-file-lines text-green",
-    component: <Cautelar/>,
-    layout: "/admin",
-  },
-  {
-    path: "/Cautelados",
-    name: "Aparelhos Cautelados",
-    icon: "fas fa-solid fa-file-lines text-red",
-    component: <Descautelar/>,
-    layout: "/admin",
-  },
+  path: "/Cautela",
+  name: "Cautelar Aparelho",
+  icon: "fas fa-solid fa-file-lines text-green",
+  component: <CautelarAparelhos/>,
+  layout: "/admin",
+},
+{
+  path: "/aparelhosCautelados",
+  name: "Aparelhos Cautelados",
+  icon: "fas fa-solid fa-file-lines text-red"      ,
+  component: <AparelhosCautelados />,
+  layout: "/admin",
+},
+
   
   {
     path: "/Devoluções",
     name: "Devoluções",
     icon: "fas fa-solid fa-file-lines text-blue",
-    component: <Devolucoes/>,
+    component: <DevolucoesAparelhos/>,
     layout: "/admin",
   },
-  {
-    path: "/user-profile",
-    name: "User Profile",
-    icon: "ni ni-single-02 text-yellow",
-    component: <Profile />,
-    layout: "/admin",
-  },
+  // {
+  //   path: "/user-profile",
+  //   name: "User Profile",
+  //   icon: "ni ni-single-02 text-yellow",
+  //   component: <Profile />,
+  //   layout: "/admin",
+  // },
   /* 
   {
     path: "/Cautela",

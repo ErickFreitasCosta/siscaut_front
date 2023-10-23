@@ -272,10 +272,11 @@ const Login = () => {
 
     if (user) {
       console.log('Credenciais válidas. Faça o redirecionamento ou a ação desejada.');
-      navigate('/index');
+      navigate('/admin/index');
     } else {
       alert('Senha errada ou usuário não encontrado.');
       console.log('Credenciais inválidas.');
+      navigate('/auth/login');
     }
   };
 
@@ -290,6 +291,7 @@ const Login = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     checkCredentials(email, password);
+    console.log(handleSubmit,'AQUIIIII')
   };
 
   return (
@@ -354,9 +356,11 @@ const Login = () => {
                 </InputGroup>
               </FormGroup>
               <div className="text-center">
+
                 <Button className="my-4" color="primary" type="submit" onClick={handleSubmit}>
                   Entrar
                 </Button>
+
               </div>
             </Form>
           </CardBody>

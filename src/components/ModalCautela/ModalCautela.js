@@ -7,7 +7,9 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Card,
     Input,
     Container,
     Row,
-    Col } from 'reactstrap';
+    Col,
+  Alert,
+Spinner } from 'reactstrap';
 
     import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -21,7 +23,9 @@ function Modall(props) {
 
   
 
-    const [imei1, setImei1] = useState('')
+    const [emptyevalue, setEmptyevalue] = useState(false)
+    const [loadCautelar, setLoadCautelar]= useState(false)
+
     const [imei2, setImei2] = useState('')
     const [marca, setMarca] = useState('')
     const [modelo, setModelo] = useState('')
@@ -45,7 +49,9 @@ function Modall(props) {
 
 
 
-  const toggle = () => setModal(!modal);
+  const toggle = () => {setModal(!modal)
+    setEmptyevalue(false)
+  };
 
 
   /////////////////////////////////Militares/////////////////////////////////////
@@ -112,17 +118,23 @@ function Modall(props) {
 
   async function HandleCautelar() {
     const dataAtual = new Date();
+    setLoadCautelar(true)
 
 
     /* const dataFormatada = `${dia}/${mes}/${ano}`; */
 
     try {
+      if(idChip===""||idMilitar===""){
+        console.log("ui")
+        setEmptyevalue(true)
+        
+      }else{
       await addDoc(collection(db, "Cautelas"), {
         aparelho: listaAparelhos.id,
         chip: idChip,
         militar: idMilitar,
         date_caut:  dataAtual.toISOString(),
-        cautela:true,
+  
       });
   
       const docAparelho = doc(db, 'Aparelhos', props.data.id);
@@ -138,10 +150,16 @@ function Modall(props) {
   
       toast.success("Aparelho cautelado");
       toggle();
-    } catch (error) {
+    }
+    }
+     catch (error) {
       // Trate erros aqui
       console.error("Ocorreu um erro:", error);
+    }finally{
+      setLoadCautelar(false)
     }
+  
+
   }
   
   
@@ -184,6 +202,7 @@ function Modall(props) {
                               )
                             })}
                           </Input>
+                          {emptyevalue && idMilitar ==='' ? <Alert color='danger'>Coloque o responsável.</Alert> :''}
                         </FormGroup>
                       </Col>
 
@@ -206,6 +225,7 @@ function Modall(props) {
                               )
                             })}
                           </Input>
+                          {emptyevalue && idChip ==='' ? <Alert color='danger'>Coloque número.</Alert> :''}
                         </FormGroup>
                       </Col>
                       
@@ -306,7 +326,10 @@ function Modall(props) {
         </ModalBody>
         <ModalFooter>
           <Button color="success" onClick={HandleCautelar}>
-            Cautelar
+          {loadCautelar ? (<><Spinner size="sm" color="sucess"></Spinner>{" "}<span>Cautelando</span></>) :
+            (
+              "Cautelar"
+            )}
           </Button>{/* {' '} */}
           
           <Button color="warning" onClick={toggle}>

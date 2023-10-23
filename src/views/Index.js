@@ -11,10 +11,10 @@ import {
 } from "reactstrap";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { doc, deleteDoc, collection, onSnapshot } from 'firebase/firestore';
+import {getDocs, doc, deleteDoc, collection, onSnapshot, query, where } from 'firebase/firestore';
 import { db } from '../firebase';
 import Header from "components/Headers/Header.js";
-import Modall from "components/ModalAddUser/Modal";
+import ModalAddMilitar from "components/ModalAddUser/Modal";
 import ModalExcluir from '../components/ModalExcluir/ModalExcluir';
 import ModalEditUser from '../components/ModalEditUser/ModalEditUser';
 import { chartOptions, parseOptions } from "variables/charts.js";
@@ -31,16 +31,33 @@ const Index = (props) => {
 
  //////////////////////FUNÇÃO DE EXCLUir
   async function excluirMilitar(id) {
-    const excluDoc = doc(db, "Militares", id);
-    await deleteDoc(excluDoc)
+    const RefMilitar = doc(db, "Militares", id);
+    const q = query(collection(db, "Cautelas"), where("militar", "==", id));
+    const querySnapshot = await getDocs(q);
+   try{
+    if (querySnapshot.size > 0) {
+      toast.error(
+        "Este militar esta relacionado a uma ou mais cautelas, não é possível excluí-lo!",
+        {
+          position: "bottom-center",
+        }
+      );
+    } else {
+      await deleteDoc(RefMilitar)
       .then(() => {
         toast.error("O militar foi excluído permanentemente");
       });
       setRenderizar(!renderizar)
       setFilter([])
+    }
+  } catch(error){
+    console.error("Ocorreu um erro:", error);
+    toast.error("Algo deu errado, tente novamente mais tarde");
+  }
+   
   }
 
-  /////////////////////FUNÇÃO DE EXIBIÇÃO
+  /////////////////////FUNÇÃO DE EXIBIÇÃO 
   useEffect(() => {
     async function loadMilitares() {
       const unsub = onSnapshot(collection(db, 'Militares'), (snapshot) => {
@@ -56,7 +73,7 @@ const Index = (props) => {
             unidade: doc.data().unidade
           });
         });
-
+//
         setMilitares(listaMilitares);
       });
 
@@ -126,7 +143,7 @@ const Index = (props) => {
                       />
                     </div>
                     <div className="divADICIONAR" style={{justifyContent : "flex-end"}}>
-                      <Modall/>
+                      <ModalAddMilitar/>
                     </div>
                   </div>
 
