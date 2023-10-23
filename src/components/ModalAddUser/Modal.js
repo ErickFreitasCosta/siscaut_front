@@ -81,6 +81,7 @@ function ModalAddMilitar(args) {
               funcao: funcao,
               rg: rg,
               unidade: unidade,
+              
               postgrad: postgrad,
             });
 
