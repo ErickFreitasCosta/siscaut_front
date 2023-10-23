@@ -118,13 +118,13 @@ var routes = [
     component: <DevolucoesAparelhos/>,
     layout: "/admin",
   },
-  {
-    path: "/user-profile",
-    name: "User Profile",
-    icon: "ni ni-single-02 text-yellow",
-    component: <Profile />,
-    layout: "/admin",
-  },
+  // {
+  //   path: "/user-profile",
+  //   name: "User Profile",
+  //   icon: "ni ni-single-02 text-yellow",
+  //   component: <Profile />,
+  //   layout: "/admin",
+  // },
   /* 
   {
     path: "/Cautela",

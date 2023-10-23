@@ -67,7 +67,7 @@ function ModalAddMilitar(args) {
       if (!nome || !funcao || !rg || !unidade || !postgrad) {
         setEmptyevalue(true);
       } else {
-        if (rg.length < 7) {
+        if (rg.length < 5) {
           setValidRg(true);
         } else {
           if (resultado.length > 0) {
@@ -152,7 +152,7 @@ function ModalAddMilitar(args) {
                       onInput={(e) => {
                         e.target.value = e.target.value
                           .replace(/[^0-9]/g, "")
-                          .slice(0, 7);
+                          .slice(0, 5);
                         setRg(e.target.value);
                       }}
                       type="text"
@@ -162,7 +162,7 @@ function ModalAddMilitar(args) {
 
                     {emptyevalue && rg === "" ? (<Alert color="danger">Coloque o rg</Alert>) : ("")}
 
-                    {validRg && rg.length < 7 && rg.length > 0 ? (<Alert color="danger"> RG inválido, são necessários 7 digitos!</Alert>) : ("")}
+                    {validRg && rg.length < 5 && rg.length > 0 ? (<Alert color="danger"> RG inválido, são necessários 5 digitos!</Alert>) : ("")}
 
                   </FormGroup>
                 </Col>
