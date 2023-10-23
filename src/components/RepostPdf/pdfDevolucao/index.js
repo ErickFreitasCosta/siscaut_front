@@ -50,7 +50,7 @@ function ClientesPDF({ infcauts, idClicked, name, rg, unidade, modelo, imei1, im
     {
       table: {
         headerRows: 1,
-        widths: [70, 110, 110, 50,70],
+        widths: [85, 95, 110, 50,70],
         
         // cabeçalho da tabela fixa
         body: [
@@ -97,7 +97,7 @@ function ClientesPDF({ infcauts, idClicked, name, rg, unidade, modelo, imei1, im
         ],
       },
       layout: "headerLineOnly",
-      margin: [40, 2, 10, 2], //esquerda ,cima ,direita ,baixo
+      margin: [40, 2, 10,20], //esquerda ,cima ,direita ,baixo
       alignment: "center",
     },
     /// texto estático
