@@ -8,7 +8,8 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Card,
     Container,
     Row,
     Col,
-  Alert, } from 'reactstrap';
+  Alert,
+Spinner } from 'reactstrap';
 
     import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -23,6 +24,8 @@ function Modall(props) {
   
 
     const [emptyevalue, setEmptyevalue] = useState(false)
+    const [loadCautelar, setLoadCautelar]= useState(false)
+
     const [imei2, setImei2] = useState('')
     const [marca, setMarca] = useState('')
     const [modelo, setModelo] = useState('')
@@ -115,6 +118,7 @@ function Modall(props) {
 
   async function HandleCautelar() {
     const dataAtual = new Date();
+    setLoadCautelar(true)
 
 
     /* const dataFormatada = `${dia}/${mes}/${ano}`; */
@@ -151,6 +155,8 @@ function Modall(props) {
      catch (error) {
       // Trate erros aqui
       console.error("Ocorreu um erro:", error);
+    }finally{
+      setLoadCautelar(false)
     }
   
 
@@ -320,7 +326,10 @@ function Modall(props) {
         </ModalBody>
         <ModalFooter>
           <Button color="success" onClick={HandleCautelar}>
-            Cautelar
+          {loadCautelar ? (<><Spinner size="sm" color="sucess"></Spinner>{" "}<span>Cautelando</span></>) :
+            (
+              "Cautelar"
+            )}
           </Button>{/* {' '} */}
           
           <Button color="warning" onClick={toggle}>

@@ -216,9 +216,9 @@ function Modall(props) {
         rg: docSnapMilitar.data().rg,
         unidade: docSnapMilitar.data().unidade,
         imei1: docSnapAparelho.data().imei1,
-        imei2: docSnapAparelho.data().imei1,
+        imei2: docSnapAparelho.data().imei2,
         marca: docSnapAparelho.data().marca,
-        modelo: docSnapAparelho.data().imei1,
+        modelo: docSnapAparelho.data().modelo,
         date_devolu: dataAtual.toISOString(),
         date_caut: datacautela,
       });
