@@ -227,7 +227,7 @@ function Modall(props) {
 
       toast.success("O aparelho foi descautelado ");
       toggle();
-      
+      //
     } catch (error) {
       // erros
       toast.error("occoreu um erro", error)
