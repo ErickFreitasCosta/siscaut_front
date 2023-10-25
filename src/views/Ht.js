@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /*!
 
 =========================================================
@@ -15,25 +16,25 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import {Link} from "react-router-dom";
+// import {Link} from "react-router-dom";
 
 import { useState, useEffect } from "react";
 // node.js library that concatenates classes (strings)
-import classnames from "classnames";
+// import classnames from "classnames";
 // javascipt plugin for creating charts
 import Chart from "chart.js";
 // react plugin used to create charts
-import { Line, Bar } from "react-chartjs-2";
+// import { Line, Bar } from "react-chartjs-2";
 // reactstrap components
 import {
   Button,
   Card,
   CardHeader,
-  CardBody,
-  NavItem,
-  NavLink,
-  Nav,
-  Progress,
+  // CardBody,
+  // NavItem,
+  // NavLink,
+  // Nav,
+  // Progress,
   Table,
   Container,
   Row,
@@ -48,15 +49,15 @@ import ModalExcluir from '../components/ModalExcluir/ModalExcluir'
 
 
 import {db} from '../firebase'
-  import {doc, setDoc, Collection, addDoc, collection, onSnapshot, updateDoc, deleteDoc} from 'firebase/firestore'
+  import {doc, collection, onSnapshot, deleteDoc} from 'firebase/firestore'
 
 
 // core components
 import {
   chartOptions,
   parseOptions,
-  chartExample1,
-  chartExample2,
+  // chartExample1,
+  // chartExample2,
 } from "variables/charts.js";
 
 import Header from "components/Headers/Header.js";
@@ -69,10 +70,10 @@ const Aparelho = (props) => {
 
 
     const [ht, setHt]= useState([])
-    const [renderizar, setRenderizar] = useState(false);
+    const [renderizar] = useState(false);
 
-    const [activeNav, setActiveNav] = useState(1);
-    const [chartExample1Data, setChartExample1Data] = useState("data1");
+    const [, setActiveNav] = useState(1);
+    const [, setChartExample1Data] = useState("data1");
 
   if (window.Chart) {
     parseOptions(Chart, chartOptions());

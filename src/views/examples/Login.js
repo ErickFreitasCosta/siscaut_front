@@ -413,7 +413,7 @@
 // export default Login;
 
 import React, { useEffect, useState } from "react";
-import { doc, deleteDoc, collection, onSnapshot } from 'firebase/firestore';
+import {  collection, onSnapshot } from 'firebase/firestore';
 import { db } from '../../firebase';
 import { useNavigate } from "react-router-dom";
 import {
@@ -427,7 +427,7 @@ import {
   InputGroupAddon,
   InputGroupText,
   InputGroup,
-  Row,
+  // Row,
   Col,
 } from "reactstrap";
 

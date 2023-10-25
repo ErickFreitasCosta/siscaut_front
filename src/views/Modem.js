@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 // /*!
 
 // =========================================================
@@ -289,20 +290,20 @@
 // };
 
 // export default Modem;
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import classnames from "classnames";
+// import classnames from "classnames";
 import Chart from "chart.js";
-import { Line, Bar } from "react-chartjs-2";
+// import { Line, Bar } from "react-chartjs-2";
 import {
   Button,
   Card,
   CardHeader,
-  CardBody,
-  NavItem,
-  NavLink,
-  Nav,
-  Progress,
+  // CardBody,
+  // NavItem,
+  // NavLink,
+  // Nav,
+  // Progress,
   Table,
   Container,
   Row,
@@ -329,15 +330,15 @@ import ClientesPDF from "components/RepostPdf/ClientesModem copy";
 import {
   chartOptions,
   parseOptions,
-  chartExample1,
-  chartExample2,
+  // chartExample1,
+  // chartExample2,
 } from "variables/charts.js";
 
 
 
 const Modem = (props) => {
-  const [activeNav, setActiveNav] = useState(1);
-  const [chartExample1Data, setChartExample1Data] = useState("data1");
+  const [, setActiveNav] = useState(1);
+  const [, setChartExample1Data] = useState("data1");
   const [modens, setModens] = useState([]);
   const [renderizar, setRenderizar] = useState(false);
   const [filter, setFilter] = useState([]);
