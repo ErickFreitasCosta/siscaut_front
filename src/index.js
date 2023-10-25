@@ -73,7 +73,7 @@ const ProtectedRoute = ({ element }) => {
 
 const App = () => {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/index.html">
       <Routes>
         <Route path="/" element={<Navigate to="/auth/Login" replace />} />
         <Route
