@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Card,
-    CardHeader,
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter, 
     CardBody,
     FormGroup,
     Form,
     Input,
-    Container,
     Row,
     Col,
   Label, 
@@ -13,9 +11,9 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Card,
   Alert} from 'reactstrap';
 
   import {db} from '../../firebase'
-  import {doc, setDoc, Collection, addDoc, collection, onSnapshot, updateDoc, deleteDoc} from 'firebase/firestore'
+  import { addDoc, collection } from 'firebase/firestore'
 
-  import { ToastContainer, toast } from 'react-toastify';
+  import { toast } from 'react-toastify';
   import 'react-toastify/dist/ReactToastify.css';
    
 

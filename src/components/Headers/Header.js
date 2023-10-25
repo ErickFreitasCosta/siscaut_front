@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/alt-text */
+/* eslint-disable no-unused-vars */
 /*!
 
 =========================================================
@@ -19,10 +21,10 @@
 
 // reactstrap components
 import { db } from "../../firebase";
-import {doc, setDoc, Collection, addDoc, collection, onSnapshot, updateDoc, deleteDoc} from 'firebase/firestore'
+import { collection, onSnapshot} from 'firebase/firestore'
 import { useEffect, useState } from "react";
 import { Card, CardBody, CardTitle, Container, Row, Col } from "reactstrap";
-import Aparelho from "views/Cautelar";
+// import Aparelho from "views/Cautelar";
 import Foto from "../../assets/img/brand/icons8-roteador-wi-fi-50.png"
 
 
@@ -33,10 +35,7 @@ import Foto from "../../assets/img/brand/icons8-roteador-wi-fi-50.png"
 
 const Header = () => {
   const [aparelhos,setAparelhos] = useState([])
-  const [modelo, setModelo] = useState('')
-  const [imei1, setImei1] =   useState('')
-  const [imei2, setImei2] = useState('')
-  const [marca, setMarca] = useState('')
+  
 
   // QUANTIDADE NA TELA
   const [Chips,setChips] = useState([])
@@ -45,8 +44,7 @@ const Header = () => {
 
   //////////////////////////////////
 
-  const [searchTerm, setSearchTerm] = useState('');
-  const [searchResult, setSearchResult] = useState([])
+  
 
 
 
@@ -70,6 +68,7 @@ const Header = () => {
         })
         setAparelhos(listaAparelhos);
       });
+      
 
     }
       loadAparelhos();

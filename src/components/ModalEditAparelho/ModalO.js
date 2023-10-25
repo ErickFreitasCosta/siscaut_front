@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Input, FormGroup, Col, Row, Form, Alert } from 'reactstrap';
 
 import {db} from '../../firebase';
-import {doc, updateDoc,addDoc,getDocs} from 'firebase/firestore'
+import {doc, updateDoc} from 'firebase/firestore'
 
-import { ToastContainer, toast } from 'react-toastify';
+import {  toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
@@ -37,12 +37,10 @@ function ModalExample(props) {
   );
 
 
-    const [modelo,setModelo] = useState('');
-    const [imei1, setImei1] =   useState('')
-    const [imei2, setImei2] = useState('')
-    const [marca, setMarca] = useState('')
-
-    const [idAparelho, setIdAparelho]= useState('')
+    const [,setModelo] = useState('');
+    const [, setImei1] =   useState('')
+    const [, setImei2] = useState('')
+    const [, setMarca] = useState('')
 
     const [listaAparelho, setListaAparelho]= useState(props.data)
     

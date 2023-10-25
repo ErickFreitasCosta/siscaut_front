@@ -1,41 +1,41 @@
+/* eslint-disable no-unused-vars */
 import { useState, useEffect } from "react";
 import Chart from "chart.js";
 import {
-  Button,
   Card,
   CardHeader,
-  CardBody,
-  NavItem,
-  NavLink,
-  Nav,
-  Progress,
+  // CardBody,
+  // NavItem,
+  // NavLink,
+  // Nav,
+  // Progress,
   Table,
   Container,
   Row,
   Col,
-  Alert,
+  // Alert,
 } from "reactstrap";
 import {
   chartOptions,
   parseOptions,
-  chartExample1,
-  chartExample2,
+  // chartExample1,
+  // chartExample2,
 } from "variables/charts.js";
 import Header from "components/Headers/Header.js";
 import Modall from "components/ModalAddChip/Modal";
 import ModalEditChip from "components/ModalEditChip/ModalEditChip";
 import ModalExcluir from "components/ModalExcluir/ModalExcluir";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { db } from "../firebase";
 import {
   doc,
-  setDoc,
-  Collection,
-  addDoc,
+  // setDoc,
+  // Collection,
+  // addDoc,
   collection,
   onSnapshot,
-  updateDoc,
+  // updateDoc,
   deleteDoc,
 } from "firebase/firestore";
 
@@ -45,8 +45,8 @@ const Chip = (props) => {
   const [filter, setFilter] = useState([]);
   const [renderizar, setRenderizar] = useState(false);
   const [chip, setChip] = useState([]);
-  const [activeNav, setActiveNav] = useState(1);
-  const [chartExample1Data, setChartExample1Data] = useState("data1");
+  const [, setActiveNav] = useState(1);
+  const [, setChartExample1Data] = useState("data1");
 
   if (window.Chart) {
     parseOptions(Chart, chartOptions());

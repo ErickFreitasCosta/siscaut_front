@@ -3,7 +3,7 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Input, FormGroup, C
 } from 'reactstrap';
 
 import {db} from '../../firebase';
-import {doc, updateDoc,addDoc,getDocs} from 'firebase/firestore'
+import {doc, updateDoc} from 'firebase/firestore'
 
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -37,11 +37,11 @@ function ModalEditUser(props,renderizar,setRenderizar,filter,setFilter) {
 
 
     const [listaMilitar, setListaMilitar]= useState(props.data)
-    const [nome, setNome] = useState('')
-    const [funcao, setFuncao] = useState('')
+    const [, setNome] = useState('')
+    const [, setFuncao] = useState('')
     const [rg, setRg] = useState('')
-    const [unidade, setUnidade] = useState('')
-    const [postgrad, setPostgrad] = useState('')
+    const [, setUnidade] = useState('')
+    const [, setPostgrad] = useState('')
 
   
     

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import {
   Button,
@@ -13,7 +14,7 @@ import {
   Spinner,
 } from "reactstrap";
 import "./ModalDescaut.css";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import {
@@ -35,7 +36,7 @@ function Modall(props) {
   const [nunChip, setNunChip] = useState("");
   const [idMilitar, setIdMilitar] = useState("");
   const [nomeMilitar, setNomeMilitar] = useState("");
-  const [listaAparelhos, setListaAparelhos] = useState(props.data);
+  const [listaAparelhos] = useState(props.data);
   const [loading,setLoading] = useState(false)
 
   const toggle = () => {
@@ -187,7 +188,7 @@ function Modall(props) {
     ]);
     try {
       dadosParaUpdate.forEach(async (documento) => {
-        const { id, dados, date_caut } = documento; // Desestrutura o objeto para obter o ID e os dados
+        const { id, date_caut } = documento; // Desestrutura o objeto para obter o ID e os dados
 
         // Faz o updateDoc aqui usando os dados e o ID do documento
         const docRef = doc(db, "Cautelas", id);

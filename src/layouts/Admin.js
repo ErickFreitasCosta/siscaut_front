@@ -25,7 +25,7 @@ import AdminFooter from "components/Footers/AdminFooter.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
 
 import routes from "routes.js";
-import Logo from '../assets/img/brand/ditel.png'
+// import Logo from '../assets/img/brand/ditel.png'
 import './index.css'
 
 const Admin = (props) => {

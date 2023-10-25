@@ -16,17 +16,17 @@
 
 */
 import Index from "views/Index.js";
-import Profile from "views/examples/Profile.js";
-import Maps from "views/examples/Maps.js";
-import Register from "views/examples/Register.js";
+// import Profile from "views/examples/Profile.js";
+// import Maps from "views/examples/Maps.js";
+// import Register from "views/examples/Register.js";
 import Login from "views/examples/Login.js";
-import Tables from "views/examples/Tables.js";
-import Icons from "views/examples/Icons.js";
-import CreateUser from "components/CreateUser.js";
-import CreateChip from "components/CreateChip.js";
-import CreatePhone from "components/CreatePhone.js";
-import CreateHt from "components/CreateHt.js";
-import CreateModem from "components/CreateModem.js";
+// import Tables from "views/examples/Tables.js";
+// import Icons from "views/examples/Icons.js";
+// import CreateUser from "components/CreateUser.js";
+// import CreateChip from "components/CreateChip.js";
+// import CreatePhone from "components/CreatePhone.js";
+// import CreateHt from "components/CreateHt.js";
+// import CreateModem from "components/CreateModem.js";
 import Aparelho from "views/aparelho"
 import Ht from "views/Ht"
 import Chip from "views/Chip"
