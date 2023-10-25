@@ -31,7 +31,7 @@ import Aparelho from "views/aparelho"
 import Ht from "views/Ht"
 import Chip from "views/Chip"
 import Modem from "views/Modem"
-
+ 
 //aparelhos
 import CautelarAparelhos from "views/Cautelar"
 import AparelhosCautelados from "views/Cautelados"
