@@ -23,6 +23,7 @@ import { Container } from "reactstrap";
 import AdminNavbar from "components/Navbars/AdminNavbar.js";
 import AdminFooter from "components/Footers/AdminFooter.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
+import Img from "../assets/img/brand/logoDitel.png"
 
 import routes from "routes.js";
 // import Logo from '../assets/img/brand/ditel.png'
@@ -71,7 +72,7 @@ const Admin = (props) => {
         routes={routes}
         logo={{
           innerLink: "/admin/index",
-          imgSrc: require("../assets/img/brand/logoDitel.png"),
+          imgSrc: Img,
           imgAlt: "...",
           styles: {
             width: '100%',
