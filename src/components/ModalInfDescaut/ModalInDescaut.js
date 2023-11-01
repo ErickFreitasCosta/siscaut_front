@@ -28,6 +28,7 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 import { db } from "../../firebase";
+import ClientesPDF from "components/RepostPdf/pdfAparelhosCaut/";
 
 function Modall(props) {
   const [modal, setModal] = useState(false);
@@ -37,6 +38,7 @@ function Modall(props) {
   const [nomeMilitar, setNomeMilitar] = useState("");
   const [listaAparelhos, setListaAparelhos] = useState(props.data);
   const [loading,setLoading] = useState(false)
+  const [aparelhos, setAparelhos]= useState([])
 
   const toggle = () => {
     setModal(!modal);
@@ -153,6 +155,8 @@ function Modall(props) {
     const docAparelho = doc(db, "Aparelhos", props.data.id);
     const docChip = doc(db, "Chip", idChip);
     const docMilitar = doc(db, "Militares", idMilitar);
+
+   
 
     ////////////////////////////////////Para fazer o update/////////////////////////////////
     const q = query(
@@ -370,6 +374,8 @@ function Modall(props) {
             {/* Address */}
           </Form>
         </ModalBody>
+
+
         <ModalFooter>
           <Button color="success" onClick={HandleDescautelar}>
           {loading ? (<><Spinner size="sm" color="primary"></Spinner>{" "}<span>Descautelando</span></>) :
@@ -378,13 +384,25 @@ function Modall(props) {
             )}
           </Button>
 
+
+                {/* AQUI */}
           <Button
             className="btn_gerarPdf_Descaut"
             color="danger"
-            onClick={toggle}
+            onClick={(e) =>
+
+              ClientesPDF({aparelhos
+          
+
+              })
+            }
           >
             <i className="far fa-file-pdf"></i> Gerar PDF
           </Button>
+
+
+
+
           {/* {' '} */}
           <Button color="warning" onClick={toggle}>
             Cancelar

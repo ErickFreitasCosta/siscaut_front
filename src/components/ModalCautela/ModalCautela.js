@@ -223,13 +223,7 @@ function Modall(props) {
                         </FormGroup>
                       </Col>
                       
-
-                            
-
-        
-
-                   
-
+                               
 
                     <Col lg="6">
                         <FormGroup>
