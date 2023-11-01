@@ -31,6 +31,7 @@ import Aparelho from "views/aparelho"
 import Ht from "views/Ht"
 import Chip from "views/Chip"
 import Modem from "views/Modem"
+import PainelAdm from "views/PainelAdm"
 
 //aparelhos
 import CautelarAparelhos from "views/Cautelar"
@@ -52,7 +53,7 @@ var routes = [
     path: "/index",
     name: "Painel",
     icon: "ni ni-tv-2 text-primary",
-    component: <Index />,
+    component: <PainelAdm />,
     layout: "/admin",
   },
   

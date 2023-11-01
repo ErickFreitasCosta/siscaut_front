@@ -68,7 +68,7 @@ const ProtectedRoute = ({ element }) => {
     setAuthenticated(true); // Apenas um exemplo, substitua esta linha com sua lógica real
   }, []);
 
-  return authenticated ? element : <Navigate to="/auth/Login" replace />;
+  return authenticated ? element : <Navigate to="/admin/index" replace />;
 };
 
 const App = () => {
