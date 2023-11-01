@@ -303,7 +303,7 @@ const DevolucoesAparelho = (props) => {
                         {console.log(infcauts.nome)}
                         <th scope="row">{infcauts.nome}</th>
                         <th scope="row">{infcauts.rg}</th>
-                        <th scope="row">{infcauts.modelo}</th>
+                        <th scope="row">{infcauts.post}</th>
                         <th scope="row">{infcauts.imei1}</th>
                         <th scope="row">{infcauts.numero}</th>
                         <th scope="row">{infcauts.date_caut}</th>
@@ -335,7 +335,9 @@ const DevolucoesAparelho = (props) => {
                                     funcao: infcauts.funcao,
 
 
-                                    unidade: infcauts.unidade
+                                    unidade: infcauts.unidade,
+                                    fiscal: infcauts.fiscal_devolu,
+                                    postgrad: infcauts.postgrad
 
                                   })
                                 }

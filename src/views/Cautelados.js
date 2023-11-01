@@ -152,7 +152,7 @@ await updateDoc(docChip, {
   cautelado: false,
 });
 
-toast.error("Cautela desfeita");
+toast.error("Cautela excluída");
     
       /*
       .catch((error) => {

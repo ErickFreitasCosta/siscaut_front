@@ -8,7 +8,8 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Card,
     Container,
     Row,
     Col,
-  Alert, } from 'reactstrap';
+  Alert,
+Spinner } from 'reactstrap';
 
     import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -23,6 +24,8 @@ function Modall(props) {
   
 
     const [emptyevalue, setEmptyevalue] = useState(false)
+    const [loadCautelar, setLoadCautelar]= useState(false)
+
     const [imei2, setImei2] = useState('')
     const [marca, setMarca] = useState('')
     const [modelo, setModelo] = useState('')
@@ -32,11 +35,13 @@ function Modall(props) {
 
     
     const [militares, setMilitares] = useState ([]);
+    const [fiscais, setFiscais] = useState ([]);
     const [chip, setChip] = useState ([]);
 
 
     const [idChip, setIdChip] = useState ('')
     const [idMilitar, setIdMilitar] = useState ('')
+    const [nomeFiscal, setNomeFiscal] = useState ('')
     const [nomeMilitar, setNomeMilitar] = useState ('')
 
     
@@ -77,6 +82,10 @@ function Modall(props) {
   ///////////////////////////////////////////////////////////////
 
 
+
+  
+
+
   /////////////////////////////////Chips/////////////////////////////////////
   useEffect(()=>{
 
@@ -106,7 +115,36 @@ function Modall(props) {
 
     return () => unsub();
   },[])
-  ///////////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////////
+
+
+
+   ///////////////////////////////// -Fiscais- /////////////////////////////////////
+   useEffect(()=>{
+    async function loadFiscais(){
+      try {
+        const querySnapshot = await getDocs(collection(db, 'fiscais_contrato'));
+  
+        let listaFiscais = [];
+        querySnapshot.forEach((doc) => {
+          listaFiscais.push({
+            id: doc.id,
+            nome: doc.data().nome,
+          });
+        });
+  
+        setFiscais(listaFiscais);
+      } catch (error) {
+        // Trate erros aqui
+        console.error("Ocorreu um erro:", error);
+      }
+    }
+    loadFiscais();
+  
+  },[])
+
+  console.log(fiscais)
+  ///////////////////////////////////////////////////////////////
 
 
 
@@ -115,6 +153,7 @@ function Modall(props) {
 
   async function HandleCautelar() {
     const dataAtual = new Date();
+    setLoadCautelar(true)
 
 
     /* const dataFormatada = `${dia}/${mes}/${ano}`; */
@@ -129,6 +168,7 @@ function Modall(props) {
         aparelho: listaAparelhos.id,
         chip: idChip,
         militar: idMilitar,
+        fiscal_caut: nomeFiscal,
         date_caut:  dataAtual.toISOString(),
   
       });
@@ -151,6 +191,8 @@ function Modall(props) {
      catch (error) {
       // Trate erros aqui
       console.error("Ocorreu um erro:", error);
+    }finally{
+      setLoadCautelar(false)
     }
   
 
@@ -222,12 +264,31 @@ function Modall(props) {
                           {emptyevalue && idChip ==='' ? <Alert color='danger'>Coloque número.</Alert> :''}
                         </FormGroup>
                       </Col>
+
+
+                      <Col lg="10">
+                        <FormGroup>
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-last-name"
+                          >
+                            Fiscal do contrato
+                          </label>
+                          <Input type="select" id="SelectResponsavel" 
+                          value={nomeFiscal} onChange={(e)=>setNomeFiscal(e.target.value)}>
+                            <option value=''>Escolha</option>
+                            {fiscais.map((fiscal)=>{
+                              return(
+                                <option key={fiscal.id} value={fiscal.nome}>{fiscal.nome}</option>
+                              )
+                            })}
+                          </Input>
+                          
+                        </FormGroup>
+                      </Col>
                       
 
-                            
-
-        
-
+                      
                    
 
 
@@ -320,7 +381,10 @@ function Modall(props) {
         </ModalBody>
         <ModalFooter>
           <Button color="success" onClick={HandleCautelar}>
-            Cautelar
+          {loadCautelar ? (<><Spinner size="sm" color="sucess"></Spinner>{" "}<span>Cautelando</span></>) :
+            (
+              "Cautelar"
+            )}
           </Button>{/* {' '} */}
           
           <Button color="warning" onClick={toggle}>
