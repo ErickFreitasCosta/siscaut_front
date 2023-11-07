@@ -39,14 +39,15 @@ import {
     FormGroup,
     Input,
     InputGroup,
+    Alert,
 
 } from "reactstrap";
 
 
 import { db } from '../firebase'
-import { doc, getDoc, Collection, addDoc, collection, onSnapshot, updateDoc, deleteDoc } from 'firebase/firestore'
+import { doc, getDoc, Collection, addDoc, collection, onSnapshot, updateDoc, deleteDoc, setDoc, getDocs,  } from 'firebase/firestore'
 
-
+// import Unidades from "../libs/unidades"
 
 
 // core components
@@ -69,9 +70,138 @@ const Index = (props) => {
 
     const [activeBtnFiscal, setActiveBtnFiscal] = useState(false);
     const [nomeFiscal, setNomeFiscal] = useState('')
-
-    const [activeBtnFiscalInte, setActiveBtnFiscalInte] = useState(false);
     const [nomeFiscalInte, setNomeFiscalInte] = useState('')
+
+/////////Para a função de adicionar Unidade////////
+    const [unidade, setUnidade] = useState('')
+ /////////Para armazenar as unidades////////
+    const [unidades, setUnidades] = useState([])
+//////////////////id da unidade para a função de exclusão//////////////////
+    const [idUnidade, setIdUnidade] = useState('')
+
+//////////////////para validação dos campos////////////////////////////
+const [EmptyValueExclu, setEmptyValueExclu] = useState(false)
+const [EmptyValueAddUni, setEmptyValueAddUni] = useState(false)
+const [EmptyValueFiscal, setEmptyValueFiscal] = useState(false)
+
+
+////////////////////////// Para atualizar o UseEffect de exibição das unidades///////////////////////////////////////////////
+        const [unidadesAtualizada, setUnidadesAtualizada] = useState(false)
+
+
+/////////////////////////////////////////////////////////////////////////////////////
+    const [activeBtnFiscalInte, setActiveBtnFiscalInte] = useState(false);
+    
+
+    
+
+   
+    // função criada para adicionar as unidades que foram pegas do banco de dados
+    // const unidadesArray = Unidades().getUnidades();
+    // async function criarUnidades() {
+    //     try {
+    //       const unidadesCollectionRef = collection(db, "Unidades"); // Referência da coleção "Unidades"
+      
+    //       unidadesArray.forEach(async (unidade) => {
+    //         await addDoc(unidadesCollectionRef, {
+    //           unidade: unidade.unidade,
+    //         });
+    //       });
+      
+    //       console.log("Unidades adicionadas com sucesso!");
+    //     } catch (error) {
+    //       console.error("Erro ao adicionar unidades:", error);
+    //     }
+    //   }
+
+
+
+    ////////////////////////////////////////////////////////////////Função handleAddUnidades////////////////////////////////////////////////////////////
+    async function  HandleAddUnidade(){
+        if(unidade===""){
+            setEmptyValueAddUni(true)
+        }else{
+
+        try{
+            const unidadesCollectionRef = collection(db, "Unidades");
+            await addDoc(unidadesCollectionRef, {
+                          unidade: unidade,
+                        });
+
+                        setEmptyValueAddUni(false)
+                        setUnidade("")
+                        toast.success("Unidade adicionada")
+
+        } catch (error) {
+            console.error("Erro ao adicionar unidades:" + error,)
+        }
+    }
+    }
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+    //////////////////////////////////////////////////////////Excluir Unidades //////////////////////////////////////////////////////////////////
+    async function excluirUnidade(id) {
+        if(!id){
+            setEmptyValueExclu(true)
+            
+        }else{
+
+
+        const excluDoc = doc(db, "Unidades", id);
+        try{
+        //verifica se o Chip esta cautelado
+          await deleteDoc(excluDoc).then(() => {
+            setIdUnidade("")
+            toast.error("Unidade Excluida");
+          });
+
+          setEmptyValueExclu(false)
+          
+ 
+        } catch (error){
+            console.log(error)
+
+        }
+    }
+      
+      }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+    ////////////////////////////////////////////////////////// Função de exibição das unidades//////////////////////////////////////////////////////////
+    useEffect(()=>{
+        async function loadUnidades(){
+            try {
+            
+                const unsub = onSnapshot(collection(db, "Unidades"), (snapshot) => {
+                  let listaUnidades = [];
+          
+                  snapshot.forEach((doc) => {
+                    listaUnidades.push({
+                        id: doc.id,
+                        unidade: doc.data().unidade,
+                     
+                    });
+                  });
+                  setUnidades(listaUnidades);
+                });
+              } catch (error) {
+            // Trate erros aqui
+            console.error("Ocorreu um erro:", error);
+          }
+        }
+        loadUnidades();
+      
+      },[])
+      //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
@@ -89,6 +219,9 @@ const Index = (props) => {
     const docRefFiscal = doc(db, 'fiscais_contrato', 'fiscal');
     const docRefFiscalInte = doc(db, 'fiscais_contrato', 'fiscal_interino');
 
+
+
+///////////////////////////////////////////////////////função de exibição dos nomes////////////////////////////////////
     useEffect(() => {
         async function loadName() {
             try {
@@ -118,12 +251,14 @@ const Index = (props) => {
         loadName();
     }, [])
 
-    console.log(nomeFiscal)
+    
 
 
-
+    ///////////////////////////////////////////////////////////////// Função de edição dos nomes///////////////////////////////////////////////////////////////////////////////
     async function HandleEditFiscal() {
-
+            if(!nomeFiscal || !nomeFiscalInte){
+                setEmptyValueFiscal(true)
+            }else{
         try {
             await updateDoc(docRefFiscal, {
                 nome: nomeFiscal,
@@ -137,9 +272,11 @@ const Index = (props) => {
         } catch (error) {
             toast.error("Nao foi possivel aterar o fiscal, tente novamente mais tarde!");
         } finally {
+            setEmptyValueFiscal(false)
             setActiveBtnFiscal(false);
             setActiveBtnFiscalInte(false);
         }
+    }
     }
 
     return (
@@ -147,8 +284,8 @@ const Index = (props) => {
             <ToastContainer />
             <Header />
             {/* Page content */}
-            <Container className="mt--7" fluid>
-                <Row>
+            <Container className="mt--5 " fluid>
+                <Row> 
                     {/* <Col className="mb-5 mb-xl-0" xl="8">
             <Card className="bg-gradient-default shadow">
               <CardHeader className="bg-transparent">
@@ -215,13 +352,6 @@ const Index = (props) => {
                                 </Row>
                             </CardHeader>
                             <CardBody>
-                                {/* Chart */}
-                                {/* <div className="chart">
-                  <Bar
-                    data={chartExample2.data}
-                    options={chartExample2.options}
-                  />
-                </div> */}
 
                                 <div>
                                     <Col className="mb-4" lg="12">
@@ -233,20 +363,22 @@ const Index = (props) => {
                                             Fiscal do Contrato
                                         </label>
                                         <InputGroup>
-                                            {activeBtnFiscal ? (<><Input value={nomeFiscal} onChange={(e) => setNomeFiscal(e.target.value)} />{" "}<Button onClick={(HandleEditFiscal)}>
+                                            {activeBtnFiscal ? (<><Input value={nomeFiscal} onChange={(e) => setNomeFiscal(e.target.value)} />{" "}<Button color="success" onClick={(HandleEditFiscal)}>
                                                 Salvar
                                             </Button></>) :
                                                 (
                                                     <>
                                                         <Input value={nomeFiscal} disabled />
 
-                                                        <Button onClick={() => setActiveBtnFiscal(true)}>
-                                                            Editar
+                                                        <Button color="warning" onClick={() => setActiveBtnFiscal(true)}>
+                                                            Alterar
                                                         </Button>
                                                     </>
                                                 )}
 
                                         </InputGroup>
+
+                                        {EmptyValueFiscal && nomeFiscal ===''? <Alert color='danger'>Você não colocou o fiscal do contrato</Alert> :''}
                                     </Col>
 
 
@@ -260,28 +392,98 @@ const Index = (props) => {
                                             Fiscal do Contrato interino
                                         </label>
                                         <InputGroup>
-                                            {activeBtnFiscalInte ? (<><Input value={nomeFiscalInte} onChange={(e) => setNomeFiscalInte(e.target.value)} />{" "}<Button onClick={HandleEditFiscal}>
+                                            {activeBtnFiscalInte ? (<><Input  value={nomeFiscalInte} onChange={(e) => setNomeFiscalInte(e.target.value)} />{" "}<Button color="success" onClick={HandleEditFiscal}>
                                                 Salvar
                                             </Button></>) :
                                                 (
                                                     <>
                                                         <Input value={nomeFiscalInte} disabled />
 
-                                                        <Button onClick={() => setActiveBtnFiscalInte(true)}>
-                                                            Editar
+                                                        <Button color="warning" onClick={() => setActiveBtnFiscalInte(true)}>
+                                                            Alterar
                                                         </Button>
                                                     </>
                                                 )}
 
                                         </InputGroup>
+                                        {EmptyValueFiscal && nomeFiscalInte ===''? <Alert color='danger'>Você não colocou o fiscal do contrato interino</Alert> :''}
                                     </Col>
                                 </div>
                             </CardBody>
                         </Card>
                     </Col>
+
+
+                    <Col xl="5">
+                        <Card className="shadow">
+                            <CardHeader className="bg-transparent">
+                                <Row className="align-items-center">
+                                    <div className="col">
+                                        <h6 className="text-uppercase text-muted ls-1 mb-1">
+                                            Painel
+                                        </h6>
+                                        <h2 className="mb-0">Adicionar/Remover Unidades</h2>
+                                    </div>
+                                </Row>
+                            </CardHeader>
+                            <CardBody>
+
+                                <div>
+                                    <Col className="mb-4" lg="12">
+                                    <label
+                                            className="form-control-label"
+                                            htmlFor="input-Fiscal"
+                                        >
+                                            Adicionar Unidade
+                                        </label>
+                                        <InputGroup>
+                                            <Input placeholder="Digite a unidade que você deseja adicionar" value={unidade} onChange={(e) => setUnidade(e.target.value)} />
+                                            <Button color="success" onClick={HandleAddUnidade}>
+                                                Adicionar
+                                            </Button>
+                                        </InputGroup>
+                                        {EmptyValueAddUni && unidade ===''? <Alert color='danger'>você não digitou a unidade.</Alert> :''}
+                                        
+                                    </Col>
+
+                                    <Col className="mb-4" lg="12">
+                                    <label
+                                            className="form-control-label"
+                                            htmlFor="input-Fiscal"
+                                        >
+                                            Remover Unidade
+                                        </label>
+
+                                        <InputGroup>
+                                            <Input type="select" value={idUnidade} onChange={(e) => setIdUnidade(e.target.value)}>
+                                                <option  value="" disabled  >
+                                                    escolha
+                                                </option>
+                                                {unidades.map((unidade)=>{
+                              return(
+                                <option key={unidade.id} value={unidade.id}>{unidade.unidade}</option>
+                              )
+                            })}
+                                            </Input>
+                                            <Button color="danger" onClick={() => excluirUnidade(idUnidade)}>
+                                                Remover
+                                            </Button>
+                                        </InputGroup>
+                                        {EmptyValueExclu && idUnidade ===''? <Alert color='danger'>você não selecionou uma unidade.</Alert> :''}
+                                        
+                                    </Col>
+
+
+
+                                    
+                                </div>
+                            </CardBody>
+                        </Card>
+                    </Col>
+
                 </Row>
                 <Row className="mt-5">
-                    <Col className="mb-5 mb-xl-0" xl="8">
+                    {/* <Col className="mb-5 mb-xl-0" xl="8">
                         <Card className="shadow">
                             <CardHeader className="border-0">
                                 <Row className="align-items-center">
@@ -464,7 +666,7 @@ const Index = (props) => {
                                 </tbody>
                             </Table>
                         </Card>
-                    </Col>
+                    </Col> */}
                 </Row>
             </Container>
         </>

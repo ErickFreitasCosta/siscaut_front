@@ -47,16 +47,16 @@ function ModalEditUser(props,renderizar,setRenderizar,filter,setFilter) {
     
 
     async function editarPost(){
-
+        console.log('foi clicado')
       if ( !listaMilitar.nome|| !listaMilitar.funcao ||!listaMilitar.rg  || !listaMilitar.unidade || !listaMilitar.postgrad ){
         setEmptyevalue(true)
        
       }else{
-        if(listaMilitar.rg.length<7){
+        if(listaMilitar.rg.length< 3){
           setValidRg(true)
           
         }else{
-
+          
         const docRef = doc(db,'Militares',props.data.id)
         await updateDoc(docRef,{
           nome: listaMilitar.nome,
@@ -74,15 +74,13 @@ function ModalEditUser(props,renderizar,setRenderizar,filter,setFilter) {
             setUnidade('')
             setPostgrad('')
             toggle()
-
             
-           
           }
           )
         .catch((error)=>{
             console.log(error)
             toast.error('Ocorreu algum erro ao alterar os dados, tente novamente em alguns segundos')
-
+            console.log("fez tudo")
         })
        }
       }   
@@ -164,7 +162,7 @@ function ModalEditUser(props,renderizar,setRenderizar,filter,setFilter) {
                             onChange={e =>handleSobreescrever(e)}
                           />
                           {emptyevalue && listaMilitar.rg==='' ? <Alert color='danger'>Coloque a unidade</Alert> :''}
-                          {validRg && rg.length<7 &&  rg.length>0 ? <Alert color='danger'>RG inválido, são necessários 7 digitos!</Alert> :''}
+                          {validRg && rg.length<3 &&  rg.length>0 ? <Alert color='danger'>RG inválido, números insuficientes!</Alert> :''}
                           
                         </FormGroup>
                       </Col>
