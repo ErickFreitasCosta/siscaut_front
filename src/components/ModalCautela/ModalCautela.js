@@ -143,7 +143,7 @@ function Modall(props) {
   
   },[])
 
-  console.log(fiscais)
+  
   ///////////////////////////////////////////////////////////////
 
 
@@ -159,8 +159,8 @@ function Modall(props) {
     /* const dataFormatada = `${dia}/${mes}/${ano}`; */
 
     try {
-      if(idChip===""||idMilitar===""){
-        console.log("ui")
+      if(idChip===""||idMilitar===""|| nomeFiscal===""){
+        
         setEmptyevalue(true)
         
       }else{
@@ -283,6 +283,7 @@ function Modall(props) {
                               )
                             })}
                           </Input>
+                          {emptyevalue && nomeFiscal ==='' ? <Alert color='danger'>Coloque o fiscal do contrato.</Alert> :''}
                           
                         </FormGroup>
                       </Col>
