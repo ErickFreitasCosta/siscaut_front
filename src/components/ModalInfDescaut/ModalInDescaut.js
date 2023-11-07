@@ -11,6 +11,7 @@ import {
   Row,
   Col,
   Spinner,
+  Alert,
 } from "reactstrap";
 import "./ModalDescaut.css";
 import { ToastContainer, toast } from "react-toastify";
@@ -41,6 +42,8 @@ function Modall(props) {
   const [listaAparelhos, setListaAparelhos] = useState(props.data);
   const [loading,setLoading] = useState(false)
   const [aparelhos, setAparelhos]= useState([])
+
+  const [emptyevalue,setEmptyevalue] = useState(false)
 
   const toggle = () => {
     setModal(!modal);
@@ -122,7 +125,6 @@ function Modall(props) {
   
   },[])
 
-  console.log(fiscais)
   ///////////////////////////////////////////////////////////////
 
 
@@ -182,7 +184,7 @@ function Modall(props) {
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  /////////////////////////////////FUNÇÃO DE DESCAUTELA/////////////////////////////////////
+  ///////////////////////////////////FUNÇÃO DE DESCAUTELA//////////////////////////////////////////
 
   async function HandleDescautelar() {
     setLoading(true)
@@ -192,9 +194,13 @@ function Modall(props) {
     const docAparelho = doc(db, "Aparelhos", props.data.id);
     const docChip = doc(db, "Chip", idChip);
     const docMilitar = doc(db, "Militares", idMilitar);
+<<<<<<< HEAD
 
    
 
+=======
+    
+>>>>>>> b0770db56f7d25a067170d51962c5fa143f6e8fa
     ////////////////////////////////////Para fazer o update/////////////////////////////////
     const q = query(
       collection(db, "Cautelas"),
@@ -227,6 +233,10 @@ function Modall(props) {
       getDoc(docAparelho)
     ]);
     try {
+      if(nomeFiscal===""){
+        
+        setEmptyevalue(true)
+      }else{
       dadosParaUpdate.forEach(async (documento) => {
         const { id, dados, date_caut } = documento; // Desestrutura o objeto para obter o ID e os dados
 
@@ -270,6 +280,7 @@ function Modall(props) {
       toast.success("O aparelho foi descautelado ");
       toggle();
       //
+    }
     } catch (error) {
       // erros
       toast.error("occoreu um erro", error)
@@ -279,6 +290,7 @@ function Modall(props) {
       
       
     }
+  
   }
 
   ////////////////////////////////////////////////////////////////////////////
@@ -356,6 +368,7 @@ function Modall(props) {
                               )
                             })}
                     </Input>
+                    {emptyevalue && nomeFiscal==='' ? <Alert color='danger'>Coloque o fiscal do contrato</Alert> :''}
                   </FormGroup>
                 </Col>
 
