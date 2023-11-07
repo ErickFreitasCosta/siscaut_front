@@ -2,12 +2,11 @@ import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 import Modem from "views/Modem";
 
-
-/////////////DEVOLUÇÕES
-
-function ClientesPDF({ infcauts, idClicked, name, rg, unidade, modelo, imei1, imei2, numero, data, data_des, marca,funcao}) {
+function ClientesPDF({ infcauts, idClicked, name, rg, unidade, modelo, imei1, imei2, numero, data, data_des, marca,funcao, fiscal, postgrad}) {
   pdfMake.vfs = pdfFonts.pdfMake.vfs;
   
+
+  /////////// DEVOLUÇÕES
 
   const dados = 
     
@@ -45,7 +44,7 @@ function ClientesPDF({ infcauts, idClicked, name, rg, unidade, modelo, imei1, im
 
     {
       text: [
-        `Eu, ${name} ,RG  ${rg}, declaro ter recebido o material abaixo descrito:`,
+        `Eu,${postgrad} ${name} ,RG  ${rg}, declaro ter recebido o material abaixo descrito:`,
       ],
       margin: [53, 2, 0, 25],
     },
@@ -173,7 +172,7 @@ function ClientesPDF({ infcauts, idClicked, name, rg, unidade, modelo, imei1, im
             { text: "", style: "tableHeader" },
           ],
           [
-            "FISCAL DO CONTRATO : ",
+            `FISCAL DO CONTRATO : ${fiscal} `,
 
             "USUÁRIO: \n \n Declaro pelo presente documento, que ficam sob minha responsabilidade os bens acima relacionados.\n\nDATA:          /         /   \n\nNOME:          \n\n ASSINATURA: ____________________________ \n",
           ],

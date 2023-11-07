@@ -36,6 +36,8 @@ function Modall(props) {
   const [nunChip, setNunChip] = useState("");
   const [idMilitar, setIdMilitar] = useState("");
   const [nomeMilitar, setNomeMilitar] = useState("");
+  const [fiscais, setFiscais] = useState([]);
+  const [nomeFiscal, setNomeFiscal] = useState("");
   const [listaAparelhos, setListaAparelhos] = useState(props.data);
   const [loading,setLoading] = useState(false)
   const [aparelhos, setAparelhos]= useState([])
@@ -93,6 +95,41 @@ function Modall(props) {
     }
   }
   /////////////////////////////////////////////////////////////////////////////////
+
+
+
+   ///////////////////////////////// -Fiscais- /////////////////////////////////////
+   useEffect(()=>{
+    async function loadFiscais(){
+      try {
+        const querySnapshot = await getDocs(collection(db, 'fiscais_contrato'));
+  
+        let listaFiscais = [];
+        querySnapshot.forEach((doc) => {
+          listaFiscais.push({
+            id: doc.id,
+            nome: doc.data().nome,
+          });
+        });
+  
+        setFiscais(listaFiscais);
+      } catch (error) {
+        // Trate erros aqui
+        console.error("Ocorreu um erro:", error);
+      }
+    }
+    loadFiscais();
+  
+  },[])
+
+  console.log(fiscais)
+  ///////////////////////////////////////////////////////////////
+
+
+
+
+
+
 
   ///////////////////////////////////////////Pegar o nome do Militar//////////////////////////////
 
@@ -220,9 +257,10 @@ function Modall(props) {
         rg: docSnapMilitar.data().rg,
         unidade: docSnapMilitar.data().unidade,
         imei1: docSnapAparelho.data().imei1,
-        imei2: docSnapAparelho.data().imei1,
+        imei2: docSnapAparelho.data().imei2,
         marca: docSnapAparelho.data().marca,
-        modelo: docSnapAparelho.data().imei1,
+        modelo: docSnapAparelho.data().modelo,
+        fiscal_devolu: nomeFiscal,
         date_devolu: dataAtual.toISOString(),
         date_caut: datacautela,
       });
@@ -256,7 +294,7 @@ function Modall(props) {
         <ModalBody>
           <Form>
             <h6 className="heading-small text-muted mb-4">
-              Cautela de Aparelho
+              Descautela de Aparelho
             </h6>
             <div className="pl-lg-1">
               <Row>
@@ -294,6 +332,29 @@ function Modall(props) {
                       /* value='{idChip}'  */
                     >
                       <option value="">{nunChip}</option>
+                    </Input>
+                  </FormGroup>
+                </Col>
+
+                <Col lg="10">
+                  <FormGroup>
+                    <label
+                      className="form-control-label"
+                      htmlFor="input-last-name"
+                    >
+                      Fiscal do Contrato
+                    </label>
+                    <Input
+                      type="select"
+                      id="SelectResponsavel"
+                      value={nomeFiscal} onChange={(e)=>setNomeFiscal(e.target.value)}
+                    >
+                      <option value=''>Escolha</option>
+                            {fiscais.map((fiscal)=>{
+                              return(
+                                <option key={fiscal.id} value={fiscal.nome}>{fiscal.nome}</option>
+                              )
+                            })}
                     </Input>
                   </FormGroup>
                 </Col>
@@ -378,11 +439,12 @@ function Modall(props) {
 
         <ModalFooter>
           <Button color="success" onClick={HandleDescautelar}>
-          {loading ? (<><Spinner size="sm" color="primary"></Spinner>{" "}<span>Descautelando</span></>) :
+          {loading ? (<><Spinner size="sm" color="sucess"></Spinner>{" "}<span>Descautelando</span></>) :
             (
               "Descautelar"
             )}
-          </Button>
+          </Button>{/* {' '} */}
+         
 
 
                 {/* AQUI */}

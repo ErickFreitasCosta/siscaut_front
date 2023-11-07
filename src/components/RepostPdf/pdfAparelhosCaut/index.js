@@ -1,6 +1,6 @@
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
-import ModallnDescaut from "../../../components/ModalInfDescaut/ModalInDescaut";
+import ModallnDescaut from "../../ModalInfDescaut/ModalInDescaut";
 
 
 /////////////DEVOLUÇÕES
@@ -10,6 +10,7 @@ function ClientesPDF({ infcauts, idClicked, name, rg, unidade, modelo, imei1, im
   
 
   const dados = 
+  
     
       [
        
@@ -19,7 +20,7 @@ function ClientesPDF({ infcauts, idClicked, name, rg, unidade, modelo, imei1, im
         //   {text :  quantidade, fontSize :10 ,margin : [0, 2,0 ,2]},
           
       ];
-
+      console.log('Nome',dados)
   
 
 
