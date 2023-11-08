@@ -30,6 +30,7 @@ function Modall(props) {
     const [marca, setMarca] = useState('')
     const [modelo, setModelo] = useState('')
 
+    
    
 
 

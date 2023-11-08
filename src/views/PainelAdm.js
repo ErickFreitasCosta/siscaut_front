@@ -285,7 +285,7 @@ const [EmptyValueFiscal, setEmptyValueFiscal] = useState(false)
             <Header />
             {/* Page content */}
             <Container className="mt--5 " fluid>
-                <Row> 
+                <Row className="justify-content-md-center"> 
                     {/* <Col className="mb-5 mb-xl-0" xl="8">
             <Card className="bg-gradient-default shadow">
               <CardHeader className="bg-transparent">

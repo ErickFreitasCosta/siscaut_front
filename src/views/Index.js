@@ -8,6 +8,9 @@ import {
   Container,
   Row,
   Col,
+  Pagination,
+  PaginationItem,
+  PaginationLink,
 } from "reactstrap";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -23,6 +26,25 @@ const Index = (props) => {
   const [militares, setMilitares] = useState([]);
   const [filter, setFilter] = useState([]);
   const [renderizar, setRenderizar] = useState(false);
+
+  ///////////////////////////prime react pagination///////////////////////
+
+  
+
+  ///////////////////////////////////////////////////////
+
+  
+  ///////////////////////paginação tentativa///////////////////////////
+  const [itens, setItens] = useState([])
+  const [itensPerPage, setItensPerPage] = useState(5)
+  const [currentPage, setCurrentPage] = useState(0)
+
+  const pages = Math.ceil(militares.length / itensPerPage)
+  const startIndex= currentPage * itensPerPage
+  const endIndex = startIndex + itensPerPage
+  const currentItens = militares.slice(startIndex, endIndex)
+////////////////////////////////////////////////////////////////////////
+
 
   if (window.Chart) {
     parseOptions(Chart, chartOptions());
@@ -180,7 +202,7 @@ const Index = (props) => {
                 </tbody>
 :
                 <tbody>
-                  {militares.map((militar) => (
+                  {currentItens.map((militar) => (
                     <tr key={militar.id}>
                       <th>{militar.nome}</th>
                       <th>{militar.rg}</th>
@@ -196,9 +218,85 @@ const Index = (props) => {
                     </tr>
                   ))}
                 </tbody>
-}
+} 
               </Table>
+              
+            
+
+
+
+            <Pagination className="pagination justify-content-center"
+            listClassName="justify-content-center">
+
+            <PaginationItem>
+    <PaginationLink
+      first
+      href="#page1"
+      onClick={() => setCurrentPage(0)}
+    >
+      
+    </PaginationLink>
+  </PaginationItem>
+
+
+            <PaginationItem>
+                <PaginationLink
+                  href={`#page${currentPage + 1}`}
+                  previous
+                  onClick={() => {
+                    if (currentPage > 0) {
+                      setCurrentPage(currentPage - 1);
+                    }
+                  }}
+                />
+              </PaginationItem>
+
+              {Array.from(Array(pages), (item, index) => {
+                const pageToShow = 5; // Número de páginas a serem exibidas
+                const firstPage = Math.max(0, currentPage - Math.floor(pageToShow / 2));
+                const lastPage = Math.min(pages - 1, firstPage + pageToShow - 1);
+
+                if (index >= firstPage && index <= lastPage) {
+                  return (
+                    <PaginationItem key={index} active={index === currentPage}>
+                      <PaginationLink
+                        href={`#page${currentPage + 1}`}
+                        onClick={() => setCurrentPage(index)}
+                      >
+                        {index + 1}
+                      </PaginationLink>
+                    </PaginationItem>
+                  );
+                }
+              })}
+
+
+              <PaginationItem>
+                <PaginationLink
+                  href={`#page${currentPage + 1}`}
+                  next
+                  onClick={() => {
+                    if (currentPage < pages - 1) {
+                      setCurrentPage(currentPage + 1);
+                    }
+                  }}
+                />
+              </PaginationItem>
+              <PaginationItem>
+    <PaginationLink
+      last
+      href={`#page${pages }`}
+      onClick={() => setCurrentPage(pages - 1)}
+    >
+      
+    </PaginationLink>
+  </PaginationItem>
+            </Pagination>
+
             </Card>
+
+
+
           </Col>
         </Row>
       </Container>
