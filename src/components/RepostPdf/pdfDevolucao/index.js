@@ -1,6 +1,6 @@
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
-import Modem from "views/Modem";
+
 
 function ClientesPDF({ infcauts, idClicked, name, rg, unidade, modelo, imei1, imei2, numero, data, data_des, marca,funcao, fiscal, postgrad}) {
   pdfMake.vfs = pdfFonts.pdfMake.vfs;

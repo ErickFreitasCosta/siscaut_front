@@ -1,11 +1,11 @@
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
-import ModallnDescaut from "../../ModalInfDescaut/ModalInDescaut";
+import user from "components/ModalInfDescaut/ModalInDescaut"
 
 
-/////////////DEVOLUÇÕES
+/////////////APARELHOS CAUTELADOS
 
-function ClientesPDF({ infcauts, idClicked, name, rg, unidade, modelo, imei1, imei2, numero, data, data_des, marca,funcao,quantidade}) {
+function UsuarioPDF({ infcauts, idClicked, name, rg, unidade, modelo, imei1, imei2, numero, data, marca,funcao,quantidade,props}) {
   pdfMake.vfs = pdfFonts.pdfMake.vfs;
   
 
@@ -14,9 +14,9 @@ function ClientesPDF({ infcauts, idClicked, name, rg, unidade, modelo, imei1, im
     
       [
        
-          {text :  modelo, fontSize :10 ,margin : [0, 2,0 ,2]},
-          {text :   marca, fontSize :10 ,margin : [0, 2,0 ,2]},
-          {text :  numero, fontSize :10 ,margin : [0, 2,0 ,2]},
+          {text :  props, fontSize :10 ,margin : [0, 2,0 ,2]},
+          {text :   props, fontSize :10 ,margin : [0, 2,0 ,2]},
+          {text :  props, fontSize :10 ,margin : [0, 2,0 ,2]},
         //   {text :  quantidade, fontSize :10 ,margin : [0, 2,0 ,2]},
           
       ];
@@ -204,4 +204,4 @@ function ClientesPDF({ infcauts, idClicked, name, rg, unidade, modelo, imei1, im
   return pdfMake.createPdf(pageDefinition).open();
 }
 
-export default ClientesPDF;
+export default UsuarioPDF;
