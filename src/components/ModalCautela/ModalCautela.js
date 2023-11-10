@@ -30,6 +30,7 @@ function Modall(props) {
     const [marca, setMarca] = useState('')
     const [modelo, setModelo] = useState('')
 
+    
    
 
 
@@ -86,7 +87,7 @@ function Modall(props) {
   
 
 
-  /////////////////////////////////Chips/////////////////////////////////////
+  /////////////////////////////////Chips//////////////////////////////////////
   useEffect(()=>{
 
     function loadChips(snapshot) {
