@@ -413,6 +413,7 @@ const [EmptyValueFiscal, setEmptyValueFiscal] = useState(false)
                         </Card>
                     </Col>
 
+                    
 
                     <Col xl="5">
                         <Card className="shadow">

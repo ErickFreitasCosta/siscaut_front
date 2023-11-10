@@ -41,6 +41,9 @@ import {
   FormGroup,
   Label,
   Input,
+  Pagination,
+  PaginationItem,
+  PaginationLink,
 } from "reactstrap";
 
 //FirebsaeConfigs
@@ -77,6 +80,14 @@ const Aparelho = (props) => {
 
     const [aparelhos,setAparelhos] = useState([])
     const [renderizar ,setRenderizar] = useState(false)
+
+    const [itensPerPage, setItensPerPage] = useState(5)
+  const [currentPage, setCurrentPage] = useState(0)
+
+  const pages = Math.ceil(aparelhos.length / itensPerPage)
+  const startIndex= currentPage * itensPerPage
+  const endIndex = startIndex + itensPerPage
+  const currentItens = aparelhos.slice(startIndex, endIndex)
 
   if (window.Chart) {
     parseOptions(Chart, chartOptions());
@@ -150,7 +161,7 @@ async function excluirAparelho(id){
       setFilter(filteredAparelhos);
     }
   }
-  // __________________________________________________________________________________________________________
+  // ____________________________________________________________________________________________________________
   return (
     <>
     <ToastContainer/>
@@ -242,7 +253,7 @@ async function excluirAparelho(id){
                 :
                 <tbody>
                    
-                   {aparelhos.map((aparelhos) =>{
+                   {currentItens.map((aparelhos) =>{
                           /* setMarca(aparelhos.modelo) */
                       
                     return(
@@ -277,6 +288,80 @@ async function excluirAparelho(id){
 }
 
               </Table>
+
+              <nav aria-label="Page navigation example">
+            <Pagination className="pagination justify-content-center bordaPagination"
+            listClassName="justify-content-center"  >
+
+            <PaginationItem>
+    <PaginationLink
+      first
+      
+      href="#page1"
+
+      onClick={() => setCurrentPage(0)}
+    >
+      
+    </PaginationLink>
+  </PaginationItem>
+
+
+            <PaginationItem>
+                <PaginationLink
+                  href={`#page${currentPage + 1}`}
+                  previous
+                  onClick={() => {
+                    if (currentPage > 0) {
+                      setCurrentPage(currentPage - 1);
+                    }
+                  }}
+                />
+              </PaginationItem>
+
+              {Array.from(Array(pages), (item, index) => {
+                const pageToShow = 5; // Número de páginas a serem exibidas
+                const firstPage = Math.max(0, currentPage - Math.floor(pageToShow / 2));
+                const lastPage = Math.min(pages - 1, firstPage + pageToShow - 1);
+
+                if (index >= firstPage && index <= lastPage) {
+                  return (
+                    <PaginationItem key={index} active={index === currentPage}>
+                      <PaginationLink
+                        href={`#page${currentPage + 1}`}
+                        onClick={() => setCurrentPage(index)}
+                      >
+                        {index + 1}
+                      </PaginationLink>
+                    </PaginationItem>
+                  );
+                }
+              })}
+
+
+              <PaginationItem>
+                <PaginationLink
+                  href={`#page${currentPage + 1}`}
+                  next
+                  onClick={() => {
+                    if (currentPage < pages - 1) {
+                      setCurrentPage(currentPage + 1);
+                    }
+                  }}
+                />
+              </PaginationItem>
+              <PaginationItem>
+    <PaginationLink
+      last
+      href={`#page${pages }`}
+      onClick={() => setCurrentPage(pages - 1)}
+    >
+      
+    </PaginationLink>
+  </PaginationItem>
+            </Pagination>
+            </nav>
+
+
             </Card>
           </Col>
          

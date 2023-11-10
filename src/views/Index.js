@@ -27,15 +27,10 @@ const Index = (props) => {
   const [filter, setFilter] = useState([]);
   const [renderizar, setRenderizar] = useState(false);
 
-  ///////////////////////////prime react pagination///////////////////////
-
   
-
-  ///////////////////////////////////////////////////////
 
   
   ///////////////////////paginação tentativa///////////////////////////
-  const [itens, setItens] = useState([])
   const [itensPerPage, setItensPerPage] = useState(5)
   const [currentPage, setCurrentPage] = useState(0)
 
@@ -224,14 +219,16 @@ const Index = (props) => {
             
 
 
-
-            <Pagination className="pagination justify-content-center"
-            listClassName="justify-content-center">
+              <nav aria-label="Page navigation example">
+            <Pagination className="pagination justify-content-center bordaPagination"
+            listClassName="justify-content-center"  >
 
             <PaginationItem>
     <PaginationLink
       first
+      
       href="#page1"
+
       onClick={() => setCurrentPage(0)}
     >
       
@@ -292,8 +289,10 @@ const Index = (props) => {
     </PaginationLink>
   </PaginationItem>
             </Pagination>
-
+            </nav>
             </Card>
+
+            
 
 
 
