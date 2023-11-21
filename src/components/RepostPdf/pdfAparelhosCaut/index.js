@@ -55,7 +55,7 @@ function UsuarioPDF({ modelo, marca, numero,  nome, rg, unidade, imei1, imei2, d
     {
       table: {
         headerRows: 1,
-        widths: [85, 95, 110, 50,70],
+        widths: [85, 95, 110, 85],
         
         // cabeçalho da tabela fixa
         body: [
