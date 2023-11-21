@@ -519,6 +519,7 @@ import {
 import { db } from "../../firebase";
 import ClientesPDF from "components/RepostPdf/pdfAparelhosCaut/";
 import UsuarioPDF from "components/RepostPdf/pdfAparelhosCaut/index";
+import { format } from "date-fns";
 
 function Modall(props) {
   const [modal, setModal] = useState(false);
@@ -526,6 +527,7 @@ function Modall(props) {
   const [nunChip, setNunChip] = useState("");
   const [idMilitar, setIdMilitar] = useState("");
   const [nomeMilitar, setNomeMilitar] = useState([]);
+  const [dataFiscal, setDataFiscal] = useState([]);
 
 
   const [fiscais, setFiscais] = useState([]);
@@ -546,6 +548,36 @@ function Modall(props) {
          setModal(!modal);
        };
 
+       ///////////////////////////////////////////////////Pega Data e Fiscal //////////////////////////////////////////////////////////////////
+
+       useEffect(() => {
+        async function PegaDataFiscal() {
+          try {
+            const q = query(
+              collection(db, "Cautelas"),
+              where("aparelho", "==", props.data.id)
+            );
+    
+            const querySnapshot = await getDocs(q);
+            querySnapshot.forEach((doc) => {
+              const valorDoCampoData = format(Date.parse(doc.data().date_caut), 'dd/MM/yyyy')
+              const valorDoCampoFiscal = doc.data().fiscal_caut;
+
+              const DataFiscal = {
+                data: valorDoCampoData,
+                fiscal: valorDoCampoFiscal
+              };
+
+              setDataFiscal(DataFiscal);
+            });
+    
+          } catch (error) {
+            console.error("Erro ao consultar documento:", error);
+          }
+        }
+        PegaDataFiscal();
+      }, [modal]);
+      console.log(dataFiscal.data)
        ////////////////////////////////////////////////////////pega o chip///////////////////////////////////////////////////
   useEffect(() => {
     async function chipCautelado() {
@@ -935,7 +967,9 @@ function Modall(props) {
               rg: nomeMilitar.rg,
               funcao: nomeMilitar.funcao,
               postgrad: nomeMilitar.postgrad,
-              unidade:nomeMilitar.unidade
+              unidade:nomeMilitar.unidade,
+              data: dataFiscal.data,
+              fiscal: dataFiscal
 
             })}
           >
