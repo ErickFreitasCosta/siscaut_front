@@ -438,7 +438,7 @@ const Modem = (props) => {
                       <Modall />
 
   {/* ////////////////////////////////////////////////////GERAR PDF */}
-                      <Button color="danger" onClick={(e) => ClientesPDF(modens)}><i className="far fa-file-pdf"></i> Gerar PDF</Button>{' '}
+                      {/* <Button color="danger" onClick={(e) => ClientesPDF(modens)}><i className="far fa-file-pdf"></i> Gerar PDF</Button>{' '} */}
                     </div>
 
                 </div>

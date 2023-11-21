@@ -176,7 +176,7 @@ function Pesquisa(e){
 
                   <div className="divADICIONAR btn" style={{justifyContent : "space-between"}}> 
                     <Modall/>
-                    <Button color="danger" onClick={(e) => ClientesPDF(ht)}><i class="far fa-file-pdf"></i> Gerar PDF</Button>{' '}
+                    {/* <Button color="danger" onClick={(e) => ClientesPDF(ht)}><i class="far fa-file-pdf"></i> Gerar PDF</Button>{' '} */}
                   </div>
                   </div>
             
