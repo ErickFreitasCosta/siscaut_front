@@ -525,7 +525,9 @@ function Modall(props) {
   const [idChip, setIdChip] = useState("");
   const [nunChip, setNunChip] = useState("");
   const [idMilitar, setIdMilitar] = useState("");
-  const [nomeMilitar, setNomeMilitar] = useState("");
+  const [nomeMilitar, setNomeMilitar] = useState([]);
+
+
   const [fiscais, setFiscais] = useState([]);
   const [nomeFiscal, setNomeFiscal] = useState("");
   const [listaAparelhos, setListaAparelhos] = useState(props.data);
@@ -544,6 +546,7 @@ function Modall(props) {
          setModal(!modal);
        };
 
+       ////////////////////////////////////////////////////////pega o chip///////////////////////////////////////////////////
   useEffect(() => {
     async function chipCautelado() {
       try {
@@ -584,6 +587,8 @@ function Modall(props) {
     }
   }
 
+  /////////////////////////////////////////////pega o número do militar/////////////////////////////////////////////////////////////
+
   useEffect(() => {
     async function NomeMilitar() {
       try {
@@ -615,7 +620,21 @@ function Modall(props) {
 
       if (docSnap.exists()) {
         const nome = docSnap.data().nome;
-        setNomeMilitar(nome);
+        const postgrad = docSnap.data().postgrad;
+        const funcao = docSnap.data().funcao;
+        const rg = docSnap.data().rg;
+        const unidade = docSnap.data().unidade;
+    
+        // Criar um objeto com as informações
+        const militarInfo = {
+          nome: nome,
+          postgrad: postgrad,
+          funcao: funcao,
+          rg: rg,
+          unidade: unidade
+        };
+
+        setNomeMilitar(militarInfo);
       } else {
         console.log("O documento não foi encontrado.");
       }
@@ -730,6 +749,8 @@ function Modall(props) {
     }
   }
 
+  console.log("nome:", nomeMilitar.unidade)
+
   return (
     <div>
       <Button size="sm" color="success" onClick={toggle}>
@@ -759,7 +780,7 @@ function Modall(props) {
                       disabled
                       value={formData.responsavel}
                     >
-                      <option value="">{nomeMilitar}</option>
+                      <option value="">{nomeMilitar.nome}</option>
                     </Input>
                   </FormGroup>
                 </Col>
@@ -904,7 +925,19 @@ function Modall(props) {
           <Button
             className="btn_gerarPdf_Descaut"
             color="danger"
-            onClick={() => ClientesPDF(formData)}
+            onClick={() => ClientesPDF({
+              marca:formData.marca, 
+              modelo: formData.modelo, 
+              imei1: formData.imei1, 
+              imei2: formData.imei2, 
+              numero: nunChip, 
+              nome: nomeMilitar.nome,
+              rg: nomeMilitar.rg,
+              funcao: nomeMilitar.funcao,
+              postgrad: nomeMilitar.postgrad,
+              unidade:nomeMilitar.unidade
+
+            })}
           >
             <i className="far fa-file-pdf"></i> Gerar PDF
           </Button>
