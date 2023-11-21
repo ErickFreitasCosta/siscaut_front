@@ -5,7 +5,7 @@ import user from "components/ModalInfDescaut/ModalInDescaut"
 
 /////////////APARELHOS CAUTELADOS
 
-function UsuarioPDF({ infcauts, idClicked, name, rg, unidade, modelo, imei1, imei2, numero, data, marca,funcao,quantidade,props}) {
+function UsuarioPDF({ modelo, marca, numero,  nome, rg, unidade, imei1, imei2, data,funcao,quantidade,props}) {
   pdfMake.vfs = pdfFonts.pdfMake.vfs;
   
 
@@ -14,10 +14,11 @@ function UsuarioPDF({ infcauts, idClicked, name, rg, unidade, modelo, imei1, ime
     
       [
        
-          {text :  props, fontSize :10 ,margin : [0, 2,0 ,2]},
-          {text :   props, fontSize :10 ,margin : [0, 2,0 ,2]},
-          {text :  props, fontSize :10 ,margin : [0, 2,0 ,2]},
-        //   {text :  quantidade, fontSize :10 ,margin : [0, 2,0 ,2]},
+          {text :  marca, fontSize :10 ,margin : [0, 2,0 ,2]},
+          {text :   modelo, fontSize :10 ,margin : [0, 2,0 ,2]},
+          {text :  imei1, fontSize :10 ,margin : [0, 2,0 ,2]},
+          {text :  numero, fontSize :10 ,margin : [0, 2,0 ,2]},
+          
           
       ];
       console.log('Nome',dados)
@@ -46,7 +47,7 @@ function UsuarioPDF({ infcauts, idClicked, name, rg, unidade, modelo, imei1, ime
 
     {
       text: [
-        `Eu, ${name} ,RG  ${rg}, declaro ter recebido o material abaixo descrito:`,
+        `Eu, ${nome} ,RG  ${rg}, declaro ter recebido o material abaixo descrito:`,
       ],
       margin: [53, 2, 0, 25],
     },
@@ -54,40 +55,44 @@ function UsuarioPDF({ infcauts, idClicked, name, rg, unidade, modelo, imei1, ime
     {
       table: {
         headerRows: 1,
-        widths: [85, 95, 110, 50],
+        widths: [85, 95, 110, 50,70],
         
         // cabeçalho da tabela fixa
         body: [
           [
      
             {
-              text: "Descrição",
+              text: "MARCA",
               style: "tableHeader",
               fontSize: 10,
               margin: [0, 0, 0, 0],
               bold: true,
             },
             {
-              text: "Modelo",
+              text: "MODELO",
               style: "tableHeader",
               fontSize: 10,
               margin: [0, 0, 0, 0],
               bold: true,
             },
             {
-              text: "N° Série",
+              text: "IMEI",
               style: "tableHeader",
               fontSize: 10,
               margin: [0, 0, 0, 0],
               bold: true,
             },
-            // {
-            //   text: "QTD",
-            //   style: "tableHeader",
-            //   fontSize: 10,
-            //   margin: [0, 0, 0, 0],
-            //   bold: true,
-            // },
+            {
+              text: "NÚMERO",
+              style: "tableHeader",
+              fontSize: 10,
+              margin: [0, 0, 0, 0],
+              bold: true,
+            },
+
+           
+
+          
      
           ],
           // pega tudo que tinha dentro do array e adiciona mais tabela dinamica
