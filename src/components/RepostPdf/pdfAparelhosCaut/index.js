@@ -5,7 +5,7 @@ import user from "components/ModalInfDescaut/ModalInDescaut"
 
 /////////////APARELHOS CAUTELADOS
 
-function UsuarioPDF({ modelo, marca, numero,  nome, rg, unidade, imei1, imei2, data,funcao,quantidade,props}) {
+function UsuarioPDF({ modelo, marca, numero,  nome, rg, unidade, imei1, imei2, data,fiscal, funcao,quantidade,props,}) {
   pdfMake.vfs = pdfFonts.pdfMake.vfs;
   
 
