@@ -104,9 +104,11 @@ function ClientesPDF({ infcauts, idClicked, name, rg, unidade, modelo, imei1, im
     },
     /// texto estático
     //INDENTAÇÃO CRIADA POR ERICK 29/09/2023
+
+    // DEVOLUÇÕES
     [
       {
-        text: "Pelo presente termo assumo total e inteira responsabilidade pelo equipamento acima ",
+        text: "Pelo prese termo assumo total e inteira responsabilidade pelo equipamento acima ",
         margin: [60, 0, 0, 0],
       },
       { text: "", margin: [194, 0, 0, 0] },
