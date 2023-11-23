@@ -217,7 +217,7 @@ function Modall(args) {
                         onChange={(e) => setLinha(e.target.value)}
                       >
                         <option value="">Escolha</option>
-                        <option value="Vivo">Vivo </option>
+                        <option value="Vivo">Claro </option>
                       </Input>
 
                       {/*  <Input

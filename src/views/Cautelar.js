@@ -129,6 +129,25 @@ const Aparelho = (props) => {
     //  função de limpeza para interromper a observação quando o componente for desmontado
     return () => unsub();
   }, []); // 
+
+  ///////////////////////////////////// FUNÇÃO PESQUISA  ////////////////////////////////////////////////
+  const [filter, setFilter] = useState([]);
+
+  function Pesquisa(e){
+   console.log(e)
+   
+   const filteredAparelhos = aparelhos.filter(aparelho =>
+     aparelho.imei1.toLowerCase().includes(e.toLowerCase())
+   );
+   console.log(filteredAparelhos,"APARELJP")
+   if (filteredAparelhos.length === 0) {
+     toast.error("Nenhum Aparelho foi encontrado");
+     
+   } else {
+     setFilter(filteredAparelhos);
+   }
+ }
+ // ____________________________________________________________________________________________________________
   
   
   

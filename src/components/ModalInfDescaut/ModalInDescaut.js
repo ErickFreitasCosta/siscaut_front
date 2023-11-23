@@ -577,7 +577,7 @@ function Modall(props) {
         }
         PegaDataFiscal();
       }, [modal]);
-      console.log(dataFiscal.data)
+      
        ////////////////////////////////////////////////////////pega o chip///////////////////////////////////////////////////
   useEffect(() => {
     async function chipCautelado() {
@@ -781,7 +781,7 @@ function Modall(props) {
     }
   }
 
-  console.log("nome:", nomeMilitar.unidade)
+  
 
   return (
     <div>
@@ -810,7 +810,7 @@ function Modall(props) {
                       type="select"
                       id="SelectResponsavel"
                       disabled
-                      value={formData.responsavel}
+                      value={nomeMilitar.nome}
                     >
                       <option value="">{nomeMilitar.nome}</option>
                     </Input>
@@ -831,7 +831,7 @@ function Modall(props) {
                       disabled
                       value={formData.chip}
                     >
-                      <option value="">{nunChip}</option>
+                      <option value={nunChip}>{nunChip}</option>
                     </Input>
                   </FormGroup>
                 </Col>
@@ -969,7 +969,7 @@ function Modall(props) {
               postgrad: nomeMilitar.postgrad,
               unidade:nomeMilitar.unidade,
               data: dataFiscal.data,
-              fiscal: dataFiscal
+              fiscal: dataFiscal.fiscal
 
             })}
           >

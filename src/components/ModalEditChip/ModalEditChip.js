@@ -181,7 +181,7 @@ function ModalEditCHip(props) {
         
         <Input type="select" name="linha" id="SelectMarca" value={listaChip.linha} onChange={e =>handleSobreescrever(e)}>
                             <option value=''>Escolha</option>
-                            <option value='Vivo'>Vivo </option>
+                            <option value='Vivo'>Claro </option>
                           </Input>
                           {emptyevalue && listaChip.linha ==='' ? <Alert color='danger'>Coloque a linha</Alert> :''}
 

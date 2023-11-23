@@ -176,6 +176,7 @@ function ModalEditUser(props,renderizar,setRenderizar,filter,setFilter) {
                           </label>
                           <Input type="select" name="postgrad" id="SelectMarca" value={listaMilitar.postgrad} onChange={e =>handleSobreescrever(e)}>
                             <option value=''>Escolha</option>
+                            <option value="Volutário Civil">Volutário Civil</option>
                             <option value='Soldado'>Soldado</option>
                             <option value='Cabo'>Cabo</option>
                             <option value='3º Sargento'>3ª Sargento</option>
