@@ -21,7 +21,7 @@ function UsuarioPDF({ modelo, marca, numero,  nome, rg, unidade, imei1, imei2, d
           
           
       ];
-      console.log('Nome',dados)
+       
   
 
 

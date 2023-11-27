@@ -47,7 +47,7 @@ function ModalEditUser(props,renderizar,setRenderizar,filter,setFilter) {
     
 
     async function editarPost(){
-        console.log('foi clicado')
+        
       if ( !listaMilitar.nome|| !listaMilitar.funcao ||!listaMilitar.rg  || !listaMilitar.unidade || !listaMilitar.postgrad ){
         setEmptyevalue(true)
        
@@ -80,7 +80,7 @@ function ModalEditUser(props,renderizar,setRenderizar,filter,setFilter) {
         .catch((error)=>{
             console.log(error)
             toast.error('Ocorreu algum erro ao alterar os dados, tente novamente em alguns segundos')
-            console.log("fez tudo")
+            
         })
        }
       }   

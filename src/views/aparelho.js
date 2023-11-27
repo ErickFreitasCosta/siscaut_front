@@ -148,7 +148,7 @@ async function excluirAparelho(id){
    const [filter, setFilter] = useState([]);
 
    function Pesquisa(e){
-    console.log(e)
+    
     
     const filteredAparelhos = aparelhos.filter(aparelho =>
       aparelho.imei1.toLowerCase().includes(e.toLowerCase())

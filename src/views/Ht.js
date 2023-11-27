@@ -139,7 +139,7 @@ async function excluirHt(id){
 const [filter, setFilter] = useState([]);
 
 function Pesquisa(e){
- console.log(e)
+ 
  
  const filteredHts = ht.filter(hts =>
    hts.nserie.toLowerCase().includes(e.toLowerCase())

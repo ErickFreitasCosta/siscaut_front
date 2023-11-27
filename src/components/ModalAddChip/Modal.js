@@ -70,7 +70,7 @@ function Modall(args) {
             toast.error("Já existe um chip com este número de série", {
               position: "bottom-center",
             });
-            console.log("aqui");
+            
           } else {
             await addDoc(collection(db, "Chip"), {
               linha: linha,
@@ -217,7 +217,7 @@ function Modall(args) {
                         onChange={(e) => setLinha(e.target.value)}
                       >
                         <option value="">Escolha</option>
-                        <option value="Vivo">Claro </option>
+                        <option value="Claro">Claro </option>
                       </Input>
 
                       {/*  <Input

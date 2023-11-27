@@ -132,7 +132,7 @@ const DevolucoesAparelho = (props) => {
 
   loadDevolucoes()
 },[])
-  console.log(devolucoes)
+ 
 
 
   /* useEffect(() => {
@@ -217,7 +217,7 @@ const DevolucoesAparelho = (props) => {
   }, [cautelas]); */
   
 
-  console.log(cautInf);
+
 
 
 
@@ -308,11 +308,10 @@ const DevolucoesAparelho = (props) => {
                   
                     {currentItens.map((infcauts) =>{
                           /* setMarca(aparelhos.modelo) */
-                      {console.log('CONSOLE MAP',infcauts)}
+                      
                     return(
                       <tr key={infcauts.id}>
-                        {console.log(infcauts.id)}
-                        {console.log(infcauts.nome)}
+                        
                         <th scope="row">{infcauts.nome}</th>
                         <th scope="row">{infcauts.rg}</th>
                         <th scope="row">{infcauts.post}</th>

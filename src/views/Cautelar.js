@@ -134,7 +134,7 @@ const Aparelho = (props) => {
   const [filter, setFilter] = useState([]);
 
   function Pesquisa(e){
-   console.log(e)
+   
    
    const filteredAparelhos = aparelhos.filter(aparelho =>
      aparelho.imei1.toLowerCase().includes(e.toLowerCase())
@@ -155,6 +155,9 @@ const Aparelho = (props) => {
     <>
     <ToastContainer/>
       <Header />
+
+      
+
       {/* Page content */}
       <Container className="mt--7" fluid>
         <Row>
@@ -240,13 +243,15 @@ const Aparelho = (props) => {
             <Card className="shadow">
               <CardHeader className="border-0">
                 <Row className="align-items-center">
-                  <div className="col">
-                    <h3 className="mb-0">Aparelhos</h3>
-                  </div>
-                  <div> 
-      
 
-                   
+
+                   <div className="conteinerSearch">
+                    <div className="col divADICIONAR">
+                      <h3 className="mb-0">Aparelhos</h3>
+                      <input type="search" placeholder='Pesquisa por Imei' onChange={(e) => Pesquisa(e.target.value)} />
+                     </div>
+                    
+                    
                   </div>
                   {/* <div className="col text-right">
                     <Button
@@ -270,19 +275,12 @@ const Aparelho = (props) => {
                     <th scope="col">Ações</th>
                   </tr>
                 </thead>
-                <tbody>
-                  {/* {<tr>
-                    <th scope="row">S20</th>
-                    <td>Samsung</td>
-                    <td>340 123 432 234 785</td>
-                    
-                    <td>
-                        ////SO É O BUTTON DE CAUTELAR DE APARELHOS
-                        <Modall/>
-                    </td>
-                  </tr>} */}
 
-{currentItens.map((aparelhos) =>{
+
+                {filter.length > 0 ? 
+                <tbody>
+                   
+                   {filter.map((aparelhos) =>{
                           /* setMarca(aparelhos.modelo) */
                       
                     return(
@@ -292,28 +290,65 @@ const Aparelho = (props) => {
                         <th>{aparelhos.imei1}</th>
                         <th>{aparelhos.imei2}</th>
                         <td>
-                      <div> 
-
-                    
-         
-                        <div className="OrganizarBotoes">
-
-                        <Modall data={aparelhos}/>
-                          
-
-                        </div>
+                          <div>
 
 
-                        </div>
-                    </td>
+
+                            <div className="OrganizarBotoes">
+
+                              <Modall data={aparelhos} />
+
+
+                            </div>
+
+
+                          </div>
+                        </td>
                       </tr>
                     )
                    })}
-              
-               
-                
-                 
+
+
                 </tbody>
+                :
+                <tbody>
+                   
+                   {currentItens.map((aparelhos) =>{
+                          /* setMarca(aparelhos.modelo) */
+                      
+                    return(
+                      <tr key={aparelhos.id}>
+                        <th scope="row">{aparelhos.modelo}</th>
+                        <th>{aparelhos.marca}</th>
+                        <th>{aparelhos.imei1}</th>
+                        <th>{aparelhos.imei2}</th>
+                        <td>
+                          <div>
+
+
+
+                            <div className="OrganizarBotoes">
+
+                              <Modall data={aparelhos} />
+
+
+                            </div>
+
+
+                          </div>
+                        </td>
+                      </tr>
+                    )
+                   })}
+
+
+                </tbody>
+
+}
+
+
+
+
               </Table>
 
               <nav aria-label="Page navigation example">

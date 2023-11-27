@@ -102,7 +102,7 @@ function ModalAddMilitar(args) {
             toast.error("Este militar com este Rg já foi adicionado", {
               position: "bottom-center",
             });
-            console.log("aqui");
+            
           } else {
             await addDoc(collection(db, "Militares"), {
               nome: nome,
