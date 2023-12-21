@@ -102,7 +102,7 @@ function ModalAddMilitar(args) {
             toast.error("Este militar com este Rg já foi adicionado", {
               position: "bottom-center",
             });
-            console.log("aqui");
+            
           } else {
             await addDoc(collection(db, "Militares"), {
               nome: nome,
@@ -212,6 +212,7 @@ function ModalAddMilitar(args) {
                       onChange={(e) => setPostgrad(e.target.value)}
                     >
                       <option value="">Escolha</option>
+                      <option value="Volutário Civil">Volutário Civil</option>
                       <option value="Soldado">Soldado</option>
                       <option value="Cabo">Cabo</option>
                       <option value="3º Sargento">3ª Sargento</option>

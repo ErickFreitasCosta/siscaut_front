@@ -119,12 +119,12 @@ const Index = (props) => {
   //   setMilitares(filteredMilitares);
   // }, [filter]);
   function Pesquisa(e){
-    console.log(e)
+   
     
     const filteredMilitares = militares.filter(militar =>
       militar.rg.toLowerCase().includes(e.toLowerCase())
     );
-    console.log(filteredMilitares,"APARELJP")
+   
     if (filteredMilitares.length === 0) {
       toast.error("Nenhum Aparelho foi encontrado");
       

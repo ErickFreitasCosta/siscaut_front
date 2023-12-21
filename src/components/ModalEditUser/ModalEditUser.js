@@ -47,7 +47,7 @@ function ModalEditUser(props,renderizar,setRenderizar,filter,setFilter) {
     
 
     async function editarPost(){
-        console.log('foi clicado')
+        
       if ( !listaMilitar.nome|| !listaMilitar.funcao ||!listaMilitar.rg  || !listaMilitar.unidade || !listaMilitar.postgrad ){
         setEmptyevalue(true)
        
@@ -80,7 +80,7 @@ function ModalEditUser(props,renderizar,setRenderizar,filter,setFilter) {
         .catch((error)=>{
             console.log(error)
             toast.error('Ocorreu algum erro ao alterar os dados, tente novamente em alguns segundos')
-            console.log("fez tudo")
+            
         })
        }
       }   
@@ -176,6 +176,7 @@ function ModalEditUser(props,renderizar,setRenderizar,filter,setFilter) {
                           </label>
                           <Input type="select" name="postgrad" id="SelectMarca" value={listaMilitar.postgrad} onChange={e =>handleSobreescrever(e)}>
                             <option value=''>Escolha</option>
+                            <option value="Volutário Civil">Volutário Civil</option>
                             <option value='Soldado'>Soldado</option>
                             <option value='Cabo'>Cabo</option>
                             <option value='3º Sargento'>3ª Sargento</option>

@@ -45,11 +45,11 @@ function ModalEditCHip(props) {
       const docRef = doc(db,'Modem',props.data.id)
       
       if ( !listaModem.imei|| !listaModem.marca || !listaModem.modelo){
-        console.log("campos vazios")
+        
         setEmptyevalue(true)
       }else{
         if(listaModem.imei.length<15){
-          console.log("imei incompleto")
+         
           setValidImei(true)
         }else{
         await updateDoc(docRef,{

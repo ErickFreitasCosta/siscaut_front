@@ -116,7 +116,7 @@ const Chip = (props) => {
 
   ///////////////////////////////////////
   function Pesquisa(e) {
-    console.log(e);
+    
 
     const filteredChip = chip.filter((chip) =>
       chip.nserie.toLowerCase().includes(e.toLowerCase())

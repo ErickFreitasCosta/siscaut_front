@@ -5,7 +5,7 @@ import user from "components/ModalInfDescaut/ModalInDescaut"
 
 /////////////APARELHOS CAUTELADOS
 
-function UsuarioPDF({ modelo, marca, numero,  nome, rg, unidade, imei1, imei2, data,fiscal, funcao,quantidade,props,}) {
+function UsuarioPDF({ modelo, marca, numero,  nome, rg, unidade, imei1, imei2, data,fiscal, funcao,quantidade,props,postgrad}) {
   pdfMake.vfs = pdfFonts.pdfMake.vfs;
   
 
@@ -21,7 +21,7 @@ function UsuarioPDF({ modelo, marca, numero,  nome, rg, unidade, imei1, imei2, d
           
           
       ];
-      console.log('Nome',dados)
+       
   
 
 
@@ -53,7 +53,7 @@ function UsuarioPDF({ modelo, marca, numero,  nome, rg, unidade, imei1, imei2, d
 
     {
       text: [
-        `Eu, ${nome} ,RG  ${rg}, declaro ter recebido o material abaixo descrito:`,
+        `Eu, ${postgrad} ${nome} ,RG  ${rg}, declaro ter recebido o material abaixo descrito:`,
       ],
       margin: [53, 2, 0, 25],
     },
@@ -145,7 +145,7 @@ function UsuarioPDF({ modelo, marca, numero,  nome, rg, unidade, imei1, imei2, d
             body: [
                 [{text: 'RECEBIMENTO', style: 'tableHeader',colSpan:2,alignment: 'center' ,bold :true}, {text: '', style: 'tableHeader'}],
                 [
-                    `FISCAL INTERINO :${fiscal}                    \n\nDATA:  ${data}   \n\nNOME: 1º TEN QOPM ADAM RAFAEL MAGALHÃES CARVALHO          \n\n ASSINATURA: ____________________________ \n` ,
+                    `                   \n\nDATA:  ${data}   \n\nNOME: ${fiscal}            \n\n ASSINATURA: ____________________________ \n` ,
 
                     `\n \n Declaro pelo presente documento, que ficam sob minha responsabilidade os bens acima relacionados.\n\nDATA:        ${data}   \n\nNOME:  ${nome}        \n\n ASSINATURA: ____________________________ \n`
                     
