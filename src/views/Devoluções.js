@@ -135,6 +135,29 @@ const DevolucoesAparelho = (props) => {
  
 
 
+///////////////////////////////////// FUNÇÃO PESQUISA  ////////////////////////////////////////////////
+const [filter, setFilter] = useState([]);
+
+function Pesquisa(e){
+ 
+ 
+ const filteredmilitar = devolucoes.filter(devolucoes =>
+  devolucoes.rg.toLowerCase().includes(e.toLowerCase())
+ );
+ console.log(filteredmilitar,"APARELJP")
+ if (filteredmilitar.length === 0) {
+   toast.error("Nenhum militar foi encontrado");
+   
+ } else {
+   setFilter(filteredmilitar);
+ }
+}
+// ____________________________________________________________________________________________________________
+
+
+
+
+
   /* useEffect(() => {
     async function getCautelados() {
       setLoading(true);
@@ -273,10 +296,13 @@ const DevolucoesAparelho = (props) => {
             <Card className="shadow">
               <CardHeader className="border-0">
                 <Row className="align-items-center">
-                  <div className="col">
-                    <h3 className="mb-0">Devoluções de Aparelhos</h3>
+                <div className="conteinerSearch">
+                    <div className="col divADICIONAR">
+                      <h3 className="mb-0">Devoluções de Aparelhos</h3>
+                      <input type="search" placeholder='Pesquisa por rg' onChange={(e) => Pesquisa(e.target.value)} />
+                     </div>
+    
                   </div>
-                  <div></div>
                 </Row>
               </CardHeader>
               <Table className="align-items-center table-flush" responsive>
@@ -304,9 +330,72 @@ const DevolucoesAparelho = (props) => {
                     </th>
                   </tr>
                 </thead>
+
+                {filter.length > 0 ? 
                 <tbody>
-                  
-                    {currentItens.map((infcauts) =>{
+                   
+                   {filter.map((infcauts) =>{
+                          /* setMarca(aparelhos.modelo) */
+                      
+                    return(
+                      <tr key={infcauts.id}>
+                        
+                      <th scope="row">{infcauts.nome}</th>
+                      <th scope="row">{infcauts.rg}</th>
+                      <th scope="row">{infcauts.post}</th>
+                      <th scope="row">{infcauts.imei1}</th>
+                      <th scope="row">{infcauts.numero}</th>
+                      <th scope="row">{infcauts.date_caut}</th>
+                      <th scope="row">{infcauts.date_devolu}</th>
+                      <td>
+                        
+                        <div>
+                          <div className="OrganizarBotoes">
+                            <Button
+                              size="sm"
+                              className="btn_gerarPdf_Descaut"
+                              color="danger"
+                              onClick={(e) =>
+
+                                ClientesPDF({
+                                  idClicked: infcauts.id,
+
+                                  name: infcauts.nome,
+                                  rg: infcauts.rg,
+                                  modelo: infcauts.modelo,
+                                  imei1: infcauts.imei1,
+                                  imei2: infcauts.imei2,
+                                  numero: infcauts.numero,
+                                  data: infcauts.date_caut,
+                                  data_des: infcauts.date_devolu,
+                                  marca: infcauts.marca
+
+                                  ,
+                                  funcao: infcauts.funcao,
+
+
+                                  unidade: infcauts.unidade,
+                                  fiscal: infcauts.fiscal_devolu,
+                                  postgrad: infcauts.postgrad
+
+                                })
+                              }
+                            >
+                              <i className="far fa-file-pdf"></i> Gerar PDF
+                            </Button>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                    )
+                   })}
+
+
+                </tbody>
+                :
+                <tbody>
+                   
+                   {currentItens.map((infcauts) =>{
                           /* setMarca(aparelhos.modelo) */
                       
                     return(
@@ -361,7 +450,17 @@ const DevolucoesAparelho = (props) => {
                       </tr>
                     );
                   })}
+
                 </tbody>
+
+}
+
+
+
+
+
+
+               
               </Table>
               {loading ? (
                 <div className="centralizar_load">
