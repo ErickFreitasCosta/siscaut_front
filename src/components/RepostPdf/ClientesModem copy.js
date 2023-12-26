@@ -74,7 +74,7 @@ function  ClientesPDF(
 					[
 						'FISCAL DO CONTRATO : ',
 
-						'USUÁRIO: \n \n Declaro pelo presente documento, que ficam sob minha responsabilidade os bens acima relacionados.\n\nDATA:          /         /   \n\nNOME:          \n\n ASSINATURA: ____________________________ \n'
+						'USUÁRIO: \n \n Declaro pelo presente documento, que ficam sob minha responsabilidade os bens acima relacionados.\n\nDATA:          /         /   \n\nNOME:          \n\n ASSINATURA: __________________________________ \n'
 						
 					]
 				]

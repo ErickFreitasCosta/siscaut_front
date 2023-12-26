@@ -125,7 +125,7 @@ function UsuarioPDF({ modelo, marca, numero,  nome, rg, unidade, imei1, imei2, d
         },
         [{text: 'Reconheço que o aparelho e a linha telefônica são de exclusividade da função de ',margin : [60, 0,0 ,0]}, {text: '' ,margin : [194, 0,0 ,0]}],
         {
-            text : [' CHEFE DA xxxxxxxxxxxxxxxxxxx devendo ser repassado ao meu substituto no ato de sua nomeação e informado a Departamento Geral de Administração (DGA) para que seja elaborado novo Termo de Responsabilidade de Usuário de Telefonia.'],margin : [30, 0,0 ,10],alignment: 'justify', textIndent : 1
+            text : [` CHEFE DA  ${funcao} devendo ser repassado ao meu substituto no ato de sua nomeação e informado a Departamento Geral de Administração (DGA) para que seja elaborado novo Termo de Responsabilidade de Usuário de Telefonia.`],margin : [30, 0,0 ,10],alignment: 'justify', textIndent : 1
         },
 
 
