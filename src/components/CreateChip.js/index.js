@@ -41,9 +41,9 @@ const CreateChip = () => {
   const [ndeserie, setNdeserie] = useState('')
   const [linha, setLinha] = useState('')
 
-  function HandleChip() {
+  // function HandleChip() {
     
-  }
+  // }
 
 
   const navigation = useNavigate()

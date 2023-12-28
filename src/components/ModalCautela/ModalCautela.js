@@ -1,20 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Card,
-    CardHeader,
-    CardBody,
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter, 
     FormGroup,
     Form,
     Input,
-    Container,
     Row,
     Col,
   Alert,
 Spinner } from 'reactstrap';
 
-    import { ToastContainer, toast } from 'react-toastify';
+    import {  toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-    import {doc, setDoc, Collection, addDoc, collection, onSnapshot, updateDoc, deleteDoc,query , where, getDoc, getDocs} from 'firebase/firestore'
+    import {doc, addDoc, collection, onSnapshot, updateDoc ,query , where,  getDocs} from 'firebase/firestore'
     import {db} from '../../firebase'
    
 
@@ -30,6 +27,7 @@ function Modall(props) {
     const [marca, setMarca] = useState('')
     const [modelo, setModelo] = useState('')
 
+
     
    
 
@@ -42,12 +40,14 @@ function Modall(props) {
 
     const [idChip, setIdChip] = useState ('')
     const [idMilitar, setIdMilitar] = useState ('')
+
     const [nomeFiscal, setNomeFiscal] = useState ('')
     const [nomeMilitar, setNomeMilitar] = useState ('')
 
+
     
 
-    const [listaAparelhos, setListaAparelhos] = useState(props.data)
+    const [listaAparelhos] = useState(props.data)
     /* console.log(listaAparelhos) */
 
 

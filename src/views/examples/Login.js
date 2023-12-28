@@ -413,9 +413,10 @@
 // export default Login;
 
 import React, { useEffect, useState } from "react";
-import { doc, deleteDoc, collection, onSnapshot } from 'firebase/firestore';
+import {  collection, onSnapshot } from 'firebase/firestore';
 import { db } from '../../firebase';
 import { useNavigate } from "react-router-dom";
+import Img from "../../assets/img/brand/pm-pa.png";
 import {
   Button,
   Card,
@@ -427,7 +428,7 @@ import {
   InputGroupAddon,
   InputGroupText,
   InputGroup,
-  Row,
+  // Row,
   Col,
 } from "reactstrap";
 
@@ -504,7 +505,7 @@ const Login = () => {
                   <span className="btn-inner--icon">
                     <img
                       alt="..."
-                      src={require("../../assets/img/brand/pm-pa.png")}
+                      src={Img}
                       style={{ width: '30%' }}
                     />
                   </span>

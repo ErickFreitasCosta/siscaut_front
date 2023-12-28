@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-vars */
 /*!
 
 =========================================================
@@ -15,26 +17,26 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 
 import { useState, useEffect } from "react";
 // node.js library that concatenates classes (strings)
-import classnames from "classnames";
+// import classnames from "classnames";
 // javascipt plugin for creating charts
 import Chart from "chart.js";
 // react plugin used to create charts
-import { Line, Bar } from "react-chartjs-2";
+// import { Line, Bar } from "react-chartjs-2";
 // reactstrap components
 import "./index.css";
 import {
   Button,
   Card,
   CardHeader,
-  CardBody,
-  NavItem,
-  NavLink,
-  Nav,
-  Progress,
+  // CardBody,
+  // NavItem,
+  // NavLink,
+  // Nav,
+  // Progress,
   Table,
   Container,
   Row,
@@ -45,25 +47,25 @@ import {
   PaginationLink,
 } from "reactstrap";
 
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import { format } from "date-fns";
 
 import { db } from "../firebase";
 import {
-  doc,
-  setDoc,
-  Collection,
-  addDoc,
+  // doc,
+  // setDoc,
+  // Collection,
+  // addDoc,
   collection,
-  onSnapshot,
-  updateDoc,
-  deleteDoc,
-  query,
-  where,
+  // onSnapshot,
+  // updateDoc,
+  // deleteDoc,
+  // query,
+  // where,
   getDocs,
-  getDoc,
+  // getDoc,
 } from "firebase/firestore";
 
 import ClientesPDF from "components/RepostPdf/pdfDevolucao/index";
@@ -72,16 +74,16 @@ import ClientesPDF from "components/RepostPdf/pdfDevolucao/index";
 import {
   chartOptions,
   parseOptions,
-  chartExample1,
-  chartExample2,
+  // chartExample1,
+  // chartExample2,
 } from "variables/charts.js";
 
 import Header from "components/Headers/Header.js";
 
 
 const DevolucoesAparelho = (props) => {
-  const [activeNav, setActiveNav] = useState(1);
-  const [chartExample1Data, setChartExample1Data] = useState("data1");
+  const [, setActiveNav] = useState(1);
+  const [, setChartExample1Data] = useState("data1");
 
   if (window.Chart) {
     parseOptions(Chart, chartOptions());
@@ -397,7 +399,7 @@ function Pesquisa(e){
                    
                    {currentItens.map((infcauts) =>{
                           /* setMarca(aparelhos.modelo) */
-                      
+
                     return(
                       <tr key={infcauts.id}>
                         

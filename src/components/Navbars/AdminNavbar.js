@@ -22,18 +22,13 @@ import {
   DropdownItem,
   UncontrolledDropdown,
   DropdownToggle,
-  Form,
-  FormGroup,
-  InputGroupAddon,
-  InputGroupText,
-  Input,
-  InputGroup,
   Navbar,
   Nav,
   Container,
   Media,
 } from "reactstrap";
 import {useNavigate} from 'react-router-dom'
+import Img from "../../assets/img/brand/yo.jpg"
 
 const AdminNavbar = (props) => {
   const navigation = useNavigate()
@@ -63,7 +58,7 @@ const AdminNavbar = (props) => {
                   <span className="avatar avatar-sm rounded-circle">
                     <img
                       alt="..."
-                      src={require("../../assets/img/brand/yo.jpg")}
+                      src={Img}
                       style={{width: '120%', height: '110%'}}
                     />
                   </span>

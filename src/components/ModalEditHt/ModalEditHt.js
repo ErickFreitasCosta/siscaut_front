@@ -5,8 +5,8 @@ Label,
  } from 'reactstrap';
 
 import {db} from '../../firebase';
-import {doc, updateDoc,addDoc,getDocs} from 'firebase/firestore'
-import { ToastContainer, toast } from 'react-toastify';
+import {doc, updateDoc} from 'firebase/firestore'
+import {  toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
@@ -15,14 +15,12 @@ function ModalEditHt(props) {
 
   ////////////////validação////////////
   const [emptyevalue, setEmptyevalue] = useState(false);
-  const [validChip, setValidChip] = useState(false);
+ 
 //////////////////////////////////////
 
 
-const [nserie, setNserie] = useState('')
-const [base, setBase] = useState('')
-const [marca, setMarca] = useState('')
-const [modelo, setModelo] = useState('')  
+const [, setNserie] = useState('')
+
 
 
   const toggle = () => {setModal(!modal)
@@ -40,10 +38,10 @@ const [modelo, setModelo] = useState('')
   );
 
 
-    const [linha,setLinha] = useState('');
+    const [,setLinha] = useState('');
     const [validHt, setValidHt] =   useState('')
 
-    const [idAparelho, setIdAparelho]= useState('')
+   
 
     const [listaHt, setListaHt]= useState(props.data)
 

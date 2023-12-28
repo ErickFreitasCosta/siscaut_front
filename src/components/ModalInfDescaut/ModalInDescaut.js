@@ -487,6 +487,9 @@
 
 // export default Modall;
 
+
+/* eslint-disable react-hooks/exhaustive-deps */
+
 import React, { useEffect, useState } from "react";
 import {
   Button,
@@ -503,7 +506,7 @@ import {
   Alert,
 } from "reactstrap";
 import "./ModalDescaut.css";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {
   doc,
@@ -526,8 +529,18 @@ function Modall(props) {
   const [idChip, setIdChip] = useState("");
   const [nunChip, setNunChip] = useState("");
   const [idMilitar, setIdMilitar] = useState("");
+
   const [nomeMilitar, setNomeMilitar] = useState([]);
   const [dataFiscal, setDataFiscal] = useState([]);
+
+  const [nomeMilitar, setNomeMilitar] = useState("");
+  const [listaAparelhos] = useState(props.data);
+  const [loading,setLoading] = useState(false)
+
+  const toggle = () => {
+    setModal(!modal);
+  };
+
 
 
   const [fiscais, setFiscais] = useState([]);
@@ -732,6 +745,7 @@ function Modall(props) {
     ]);
 
     try {
+
       if (nomeFiscal === "") {
         setEmptyevalue(true);
       } else {
@@ -742,6 +756,19 @@ function Modall(props) {
           DocRefCaut = docRef;
         });
 
+      dadosParaUpdate.forEach(async (documento) => {
+        const { id, date_caut } = documento; // Desestrutura o objeto para obter o ID e os dados
+
+        // Faz o updateDoc aqui usando os dados e o ID do documento
+        const docRef = doc(db, "Cautelas", id);
+        /* await updateDoc(docRef, {
+          cautela: false,
+        }); */
+        datacautela = date_caut;
+        DocRefCaut = docRef
+      });
+
+
         await updateDoc(docAparelho, {
           cautelado: false,
         });
@@ -749,6 +776,7 @@ function Modall(props) {
         await updateDoc(docChip, {
           cautelado: false,
         });
+
 
         await addDoc(collection(db, "Devolucoes_aparelhos"), {
           numero: docSnapChip.data().numero,
@@ -767,6 +795,24 @@ function Modall(props) {
           date_devolu: dataAtual.toISOString(),
           date_caut: datacautela,
         });
+
+      await addDoc(collection(db, "Devolucoes_aparelhos"), {
+        numero: docSnapChip.data().numero,
+        linha: docSnapChip.data().linha,
+        nserie: docSnapChip.data().nserie,
+        funcao: docSnapMilitar.data().funcao,
+        nome: docSnapMilitar.data().nome,
+        postgrad: docSnapMilitar.data().postgrad,
+        rg: docSnapMilitar.data().rg,
+        unidade: docSnapMilitar.data().unidade,
+        imei1: docSnapAparelho.data().imei1,
+        imei2: docSnapAparelho.data().imei2,
+        marca: docSnapAparelho.data().marca,
+        modelo: docSnapAparelho.data().modelo,
+        date_devolu: dataAtual.toISOString(),
+        date_caut: datacautela,
+      });
+
 
         await deleteDoc(DocRefCaut);
 

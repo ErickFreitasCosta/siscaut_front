@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Input, FormGroup, Col, Row, Form,Alert } from 'reactstrap';
 
 import {db} from '../../firebase';
-import {doc, updateDoc,addDoc,getDocs} from 'firebase/firestore'
-import { ToastContainer, toast } from 'react-toastify';
+import {doc, updateDoc} from 'firebase/firestore'
+import {  toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
@@ -31,12 +31,10 @@ function ModalEditCHip(props) {
   );
 
 
-    const [linha,setLinha] = useState('');
-    const [nserie, setNserie] =   useState('')
+    const [,setLinha] = useState('');
+    const [, setNserie] =   useState('')
 
-    const [imei, setImei] = useState('')
-    const [marca, setMarca] = useState('')
-    const [modelo, setModelo] = useState('')
+   
 
     const [listaModem, setListaModem]= useState(props.data)
 
