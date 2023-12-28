@@ -77,16 +77,7 @@ function ClientesPDF(Ht){
         }
         /// texto estático
 ,
-        {
-            text : ['Pelo presente termo assumo total e inteira responsabilidade pelo equipamento acima recebido, bem como, a de mantê-lo a salvo de perda, furto ou dano por má utilização, excetuado o desgaste natural de tempo e uso obrigando-me, por fim, a devolvê-lo em perfeito estado de uso e conservação ao Departamento Geral de Administração da Polícia Militar do Pará.'],margin : [30, 0,0 ,5] ,alignment: 'justify'
-        },
-        {
-            text : ['A Polícia Militar do Estado do Pará através do Departamento Geral de Administração da PMPA e pelo Gestor do Contrato de Telefonia poderá, sob qualquer circunstância e em qualquer momento, solicitar informações de seu usuário, via esta linha telefônica, tendo o mesmo a obrigação de responder.'],margin : [30, 0,0 ,5],alignment: 'justify'
-        },
-        {
-            text : ['Reconheço que o aparelho e a linha telefônica são de exclusividade da função de  CHEFE DA SEÇÃO DE CONTROLE DA QUALIDADE DO DGA devendo ser repassado ao meu substituto no ato de sua nomeação e informado a Departamento Geral de Administração (DGA) para que seja elaborado novo Termo de Responsabilidade de Usuário de Telefonia.'],margin : [30, 0,0 ,5],alignment: 'justify'
-        },
-       
+        
 
     ]
 

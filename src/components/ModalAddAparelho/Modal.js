@@ -70,7 +70,7 @@ function ModalAddAparelho(args) {
             toast.error("Já existe um aparelho com este primeiro imei", {
               position: "bottom-center",
             });
-            console.log("aqui");
+            
           } else {
             await addDoc(collection(db, "Aparelhos"), {
               imei1: imei1,

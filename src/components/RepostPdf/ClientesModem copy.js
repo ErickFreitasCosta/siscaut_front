@@ -5,6 +5,7 @@ import pdfFonts from "pdfmake/build/vfs_fonts";
 function  ClientesPDF(
     Modens
 ) {
+  ///////////////////ESSE TÁ CERTO MODEM
 
   pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
@@ -59,27 +60,7 @@ function  ClientesPDF(
         }
         /// texto estático
 ,
-        //INDENTAÇÃO CRIADA POR ERICK 29/09/2023
-        [{text: 'Pelo presente termo assumo total e inteira responsabilidade pelo equipamento acima ',margin : [60, 0,0 ,0]}, {text: '' ,margin : [194, 0,0 ,0]}],
-        /////////
-
-        
-        {
-            text : ['recebido bem como, responsabilidade pelo equipamento acima recebido, bem como, a de mantê-lo a salvo de perda, furto ou dano por má utilização, excetuado o desgaste natural de tempo e uso obrigando-me, por fim, a devolvê-lo em perfeito estado de uso e conservação ao Departamento Geral de Administração da Polícia Militar do Pará.'],margin : [30, 0,0 ,5] ,alignment: 'justify'
-        },
-  
-        [{text: 'A Polícia Militar do Estado do Pará através do Departamento Geral de Administração',margin : [60, 0,0 ,0]}, {text: '' ,margin : [194, 0,0 ,0]}],
-        {
-            text : ['da  PMPA e pelo Gestor do Contrato de Telefonia poderá, sob qualquer circunstância e em qualquer momento, solicitar informações de seu usuário, via esta linha telefônica, tendo o mesmo a obrigação de responder.'],margin : [30, 0,0 ,5],alignment: 'justify'
-        },
-        [{text: 'Reconheço que o aparelho e a linha telefônica são de exclusividade da função de ',margin : [60, 0,0 ,0]}, {text: '' ,margin : [194, 0,0 ,0]}],
-        {
-            text : [' CHEFE DA xxxxxxxxxxxxxxxxxxx devendo ser repassado ao meu substituto no ato de sua nomeação e informado a Departamento Geral de Administração (DGA) para que seja elaborado novo Termo de Responsabilidade de Usuário de Telefonia.'],margin : [30, 0,0 ,10],alignment: 'justify', textIndent : 1
-        },
-
-
-
-        {text: '' ,alignment: 'justify'},
+      
 	
 
         // TABELA DE RECEBIMENTO
@@ -94,7 +75,7 @@ function  ClientesPDF(
 					[
 						'FISCAL DO CONTRATO : ',
 
-						'USUÁRIO: \n \n Declaro pelo presente documento, que ficam sob minha responsabilidade os bens acima relacionados.\n\nDATA:          /         /   \n\nNOME:          \n\n ASSINATURA: ____________________________ \n'
+						'USUÁRIO: \n \n Declaro pelo presente documento, que ficam sob minha responsabilidade os bens acima relacionados.\n\nDATA:          /         /   \n\nNOME:          \n\n ASSINATURA: __________________________________ \n'
 						
 					]
 				]

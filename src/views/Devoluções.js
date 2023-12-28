@@ -42,6 +42,9 @@ import {
   Row,
   Col,
   Spinner,
+  Pagination,
+  PaginationItem,
+  PaginationLink,
 } from "reactstrap";
 
 import { ToastContainer } from "react-toastify";
@@ -102,6 +105,15 @@ const DevolucoesAparelho = (props) => {
   const DecoluCollectionsRef = collection(db, "Devolucoes_aparelhos")
   const [devolucoes, setDevolucoes] = useState([]);
 
+
+  const [itensPerPage, setItensPerPage] = useState(5)
+  const [currentPage, setCurrentPage] = useState(0)
+
+  const pages = Math.ceil(devolucoes.length / itensPerPage)
+  const startIndex= currentPage * itensPerPage
+  const endIndex = startIndex + itensPerPage
+  const currentItens = devolucoes.slice(startIndex, endIndex)
+
   useEffect(() =>{
 
   async function loadDevolucoes(){
@@ -122,7 +134,30 @@ const DevolucoesAparelho = (props) => {
 
   loadDevolucoes()
 },[])
-  console.log(devolucoes)
+ 
+
+
+///////////////////////////////////// FUNÇÃO PESQUISA  ////////////////////////////////////////////////
+const [filter, setFilter] = useState([]);
+
+function Pesquisa(e){
+ 
+ 
+ const filteredmilitar = devolucoes.filter(devolucoes =>
+  devolucoes.rg.toLowerCase().includes(e.toLowerCase())
+ );
+ console.log(filteredmilitar,"APARELJP")
+ if (filteredmilitar.length === 0) {
+   toast.error("Nenhum militar foi encontrado");
+   
+ } else {
+   setFilter(filteredmilitar);
+ }
+}
+// ____________________________________________________________________________________________________________
+
+
+
 
 
   /* useEffect(() => {
@@ -207,7 +242,7 @@ const DevolucoesAparelho = (props) => {
   }, [cautelas]); */
   
 
-  console.log(cautInf);
+
 
 
 
@@ -263,10 +298,13 @@ const DevolucoesAparelho = (props) => {
             <Card className="shadow">
               <CardHeader className="border-0">
                 <Row className="align-items-center">
-                  <div className="col">
-                    <h3 className="mb-0">Devoluções de Aparelhos</h3>
+                <div className="conteinerSearch">
+                    <div className="col divADICIONAR">
+                      <h3 className="mb-0">Devoluções de Aparelhos</h3>
+                      <input type="search" placeholder='Pesquisa por rg' onChange={(e) => Pesquisa(e.target.value)} />
+                     </div>
+    
                   </div>
-                  <div></div>
                 </Row>
               </CardHeader>
               <Table className="align-items-center table-flush" responsive>
@@ -294,17 +332,80 @@ const DevolucoesAparelho = (props) => {
                     </th>
                   </tr>
                 </thead>
+
+                {filter.length > 0 ? 
                 <tbody>
-                  
-                    {devolucoes.map((infcauts) =>{
+                   
+                   {filter.map((infcauts) =>{
                           /* setMarca(aparelhos.modelo) */
+                      
                     return(
                       <tr key={infcauts.id}>
-                        {console.log(infcauts.id)}
-                        {console.log(infcauts.nome)}
+                        
+                      <th scope="row">{infcauts.nome}</th>
+                      <th scope="row">{infcauts.rg}</th>
+                      <th scope="row">{infcauts.post}</th>
+                      <th scope="row">{infcauts.imei1}</th>
+                      <th scope="row">{infcauts.numero}</th>
+                      <th scope="row">{infcauts.date_caut}</th>
+                      <th scope="row">{infcauts.date_devolu}</th>
+                      <td>
+                        
+                        <div>
+                          <div className="OrganizarBotoes">
+                            <Button
+                              size="sm"
+                              className="btn_gerarPdf_Descaut"
+                              color="danger"
+                              onClick={(e) =>
+
+                                ClientesPDF({
+                                  idClicked: infcauts.id,
+
+                                  name: infcauts.nome,
+                                  rg: infcauts.rg,
+                                  modelo: infcauts.modelo,
+                                  imei1: infcauts.imei1,
+                                  imei2: infcauts.imei2,
+                                  numero: infcauts.numero,
+                                  data: infcauts.date_caut,
+                                  data_des: infcauts.date_devolu,
+                                  marca: infcauts.marca
+
+                                  ,
+                                  funcao: infcauts.funcao,
+
+
+                                  unidade: infcauts.unidade,
+                                  fiscal: infcauts.fiscal_devolu,
+                                  postgrad: infcauts.postgrad
+
+                                })
+                              }
+                            >
+                              <i className="far fa-file-pdf"></i> Gerar PDF
+                            </Button>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                    )
+                   })}
+
+
+                </tbody>
+                :
+                <tbody>
+                   
+                   {currentItens.map((infcauts) =>{
+                          /* setMarca(aparelhos.modelo) */
+
+                    return(
+                      <tr key={infcauts.id}>
+                        
                         <th scope="row">{infcauts.nome}</th>
                         <th scope="row">{infcauts.rg}</th>
-                        <th scope="row">{infcauts.modelo}</th>
+                        <th scope="row">{infcauts.post}</th>
                         <th scope="row">{infcauts.imei1}</th>
                         <th scope="row">{infcauts.numero}</th>
                         <th scope="row">{infcauts.date_caut}</th>
@@ -336,7 +437,9 @@ const DevolucoesAparelho = (props) => {
                                     funcao: infcauts.funcao,
 
 
-                                    unidade: infcauts.unidade
+                                    unidade: infcauts.unidade,
+                                    fiscal: infcauts.fiscal_devolu,
+                                    postgrad: infcauts.postgrad
 
                                   })
                                 }
@@ -349,7 +452,17 @@ const DevolucoesAparelho = (props) => {
                       </tr>
                     );
                   })}
+
                 </tbody>
+
+}
+
+
+
+
+
+
+               
               </Table>
               {loading ? (
                 <div className="centralizar_load">
@@ -366,6 +479,78 @@ const DevolucoesAparelho = (props) => {
               ) : (
                 ""
               )}
+
+<nav aria-label="Page navigation example">
+            <Pagination className="pagination justify-content-center bordaPagination"
+            listClassName="justify-content-center"  >
+
+            <PaginationItem>
+    <PaginationLink
+      first
+      
+      href="#page1"
+
+      onClick={() => setCurrentPage(0)}
+    >
+      
+    </PaginationLink>
+  </PaginationItem>
+
+
+            <PaginationItem>
+                <PaginationLink
+                  href={`#page${currentPage + 1}`}
+                  previous
+                  onClick={() => {
+                    if (currentPage > 0) {
+                      setCurrentPage(currentPage - 1);
+                    }
+                  }}
+                />
+              </PaginationItem>
+
+              {Array.from(Array(pages), (item, index) => {
+                const pageToShow = 5; // Número de páginas a serem exibidas
+                const firstPage = Math.max(0, currentPage - Math.floor(pageToShow / 2));
+                const lastPage = Math.min(pages - 1, firstPage + pageToShow - 1);
+
+                if (index >= firstPage && index <= lastPage) {
+                  return (
+                    <PaginationItem key={index} active={index === currentPage}>
+                      <PaginationLink
+                        href={`#page${currentPage + 1}`}
+                        onClick={() => setCurrentPage(index)}
+                      >
+                        {index + 1}
+                      </PaginationLink>
+                    </PaginationItem>
+                  );
+                }
+              })}
+
+
+              <PaginationItem>
+                <PaginationLink
+                  href={`#page${currentPage + 1}`}
+                  next
+                  onClick={() => {
+                    if (currentPage < pages - 1) {
+                      setCurrentPage(currentPage + 1);
+                    }
+                  }}
+                />
+              </PaginationItem>
+              <PaginationItem>
+    <PaginationLink
+      last
+      href={`#page${pages }`}
+      onClick={() => setCurrentPage(pages - 1)}
+    >
+      
+    </PaginationLink>
+  </PaginationItem>
+            </Pagination>
+            </nav>
             </Card>
           </Col>
         </Row>

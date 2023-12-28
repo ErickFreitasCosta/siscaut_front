@@ -23,19 +23,27 @@ function Modall(props) {
     const [emptyevalue, setEmptyevalue] = useState(false)
     const [loadCautelar, setLoadCautelar]= useState(false)
 
-   
+    const [imei2, setImei2] = useState('')
+    const [marca, setMarca] = useState('')
+    const [modelo, setModelo] = useState('')
 
+
+    
    
 
 
     
     const [militares, setMilitares] = useState ([]);
+    const [fiscais, setFiscais] = useState ([]);
     const [chip, setChip] = useState ([]);
 
 
     const [idChip, setIdChip] = useState ('')
     const [idMilitar, setIdMilitar] = useState ('')
-   
+
+    const [nomeFiscal, setNomeFiscal] = useState ('')
+    const [nomeMilitar, setNomeMilitar] = useState ('')
+
 
     
 
@@ -75,7 +83,11 @@ function Modall(props) {
   ///////////////////////////////////////////////////////////////
 
 
-  /////////////////////////////////Chips/////////////////////////////////////
+
+  
+
+
+  /////////////////////////////////Chips//////////////////////////////////////
   useEffect(()=>{
 
     function loadChips(snapshot) {
@@ -104,7 +116,36 @@ function Modall(props) {
 
     return () => unsub();
   },[])
-  ///////////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////////
+
+
+
+   ///////////////////////////////// -Fiscais- /////////////////////////////////////
+   useEffect(()=>{
+    async function loadFiscais(){
+      try {
+        const querySnapshot = await getDocs(collection(db, 'fiscais_contrato'));
+  
+        let listaFiscais = [];
+        querySnapshot.forEach((doc) => {
+          listaFiscais.push({
+            id: doc.id,
+            nome: doc.data().nome,
+          });
+        });
+  
+        setFiscais(listaFiscais);
+      } catch (error) {
+        // Trate erros aqui
+        console.error("Ocorreu um erro:", error);
+      }
+    }
+    loadFiscais();
+  
+  },[])
+
+  
+  ///////////////////////////////////////////////////////////////
 
 
 
@@ -119,8 +160,8 @@ function Modall(props) {
     /* const dataFormatada = `${dia}/${mes}/${ano}`; */
 
     try {
-      if(idChip===""||idMilitar===""){
-        console.log("ui")
+      if(idChip===""||idMilitar===""|| nomeFiscal===""){
+        
         setEmptyevalue(true)
         
       }else{
@@ -128,6 +169,7 @@ function Modall(props) {
         aparelho: listaAparelhos.id,
         chip: idChip,
         militar: idMilitar,
+        fiscal_caut: nomeFiscal,
         date_caut:  dataAtual.toISOString(),
   
       });
@@ -223,14 +265,31 @@ function Modall(props) {
                           {emptyevalue && idChip ==='' ? <Alert color='danger'>Coloque número.</Alert> :''}
                         </FormGroup>
                       </Col>
+
+
+                      <Col lg="10">
+                        <FormGroup>
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-last-name"
+                          >
+                            Fiscal do contrato
+                          </label>
+                          <Input type="select" id="SelectResponsavel" 
+                          value={nomeFiscal} onChange={(e)=>setNomeFiscal(e.target.value)}>
+                            <option value=''>Escolha</option>
+                            {fiscais.map((fiscal)=>{
+                              return(
+                                <option key={fiscal.id} value={fiscal.nome}>{fiscal.nome}</option>
+                              )
+                            })}
+                          </Input>
+                          {emptyevalue && nomeFiscal ==='' ? <Alert color='danger'>Coloque o fiscal do contrato.</Alert> :''}
+                          
+                        </FormGroup>
+                      </Col>
                       
-
-                            
-
-        
-
-                   
-
+                               
 
                     <Col lg="6">
                         <FormGroup>

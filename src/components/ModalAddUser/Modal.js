@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Button,
   Modal,
@@ -49,6 +49,34 @@ function ModalAddMilitar(args) {
     setRg("");
   };
 
+  //para exibir as unidades
+  const [unidades, setUnidades] = useState([])
+
+
+  ///////////////////////////////////////////////Função de exibição das unidades/////////////////////
+
+  useEffect(() => {
+    async function loadUnidades() {
+      try {
+        const querySnapshot = await getDocs(collection(db, 'Unidades'));
+  
+        const listaUnidades = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          unidade: doc.data().unidade,
+        }));
+  
+        setUnidades(listaUnidades);
+      } catch (error) {
+        // Trate erros aqui
+        console.error("Ocorreu um erro:", error);
+      }
+    }
+    loadUnidades();
+  }, []);
+  
+
+  ////////////////////////////////////////////////////////////////////////////////
+
   ////////////////////////////////////////////////função handleAdd/////////////////////////////////////
 
   async function handleAdd() {
@@ -67,14 +95,14 @@ function ModalAddMilitar(args) {
       if (!nome || !funcao || !rg || !unidade || !postgrad) {
         setEmptyevalue(true);
       } else {
-        if (rg.length < 5) {
+        if (rg.length < 3) {
           setValidRg(true);
         } else {
           if (resultado.length > 0) {
             toast.error("Este militar com este Rg já foi adicionado", {
               position: "bottom-center",
             });
-            console.log("aqui");
+            
           } else {
             await addDoc(collection(db, "Militares"), {
               nome: nome,
@@ -153,7 +181,7 @@ function ModalAddMilitar(args) {
                       onInput={(e) => {
                         e.target.value = e.target.value
                           .replace(/[^0-9]/g, "")
-                          .slice(0, 5);
+                          .slice(0, 10);
                         setRg(e.target.value);
                       }}
                       type="text"
@@ -163,7 +191,7 @@ function ModalAddMilitar(args) {
 
                     {emptyevalue && rg === "" ? (<Alert color="danger">Coloque o rg</Alert>) : ("")}
 
-                    {validRg && rg.length < 5 && rg.length > 0 ? (<Alert color="danger"> RG inválido, são necessários 5 digitos!</Alert>) : ("")}
+                    {validRg && rg.length < 3 && rg.length > 0 ? (<Alert color="danger"> RG inválido, números insuficientes.</Alert>) : ("")}
 
                   </FormGroup>
                 </Col>
@@ -184,6 +212,7 @@ function ModalAddMilitar(args) {
                       onChange={(e) => setPostgrad(e.target.value)}
                     >
                       <option value="">Escolha</option>
+                      <option value="Volutário Civil">Volutário Civil</option>
                       <option value="Soldado">Soldado</option>
                       <option value="Cabo">Cabo</option>
                       <option value="3º Sargento">3ª Sargento</option>
@@ -219,10 +248,19 @@ function ModalAddMilitar(args) {
                       className="form-control-alternative"
                       id="input-last-name"
                       placeholder="Unidade"
-                      type="text"
+                      type="select"
                       value={unidade}
                       onChange={(e) => setUnidade(e.target.value)}
-                    />
+                    >
+                      <option  value="" disabled  >
+                                                    escolha
+                                                </option>
+                                                {unidades.map((unidade)=>{
+                              return(
+                                <option key={unidade.id} value={unidade.unidade}>{unidade.unidade}</option>
+                              )
+                            })}
+                    </Input>
 
                     {emptyevalue && unidade === "" ? (
                       <Alert color="danger">Coloque a unidade</Alert>

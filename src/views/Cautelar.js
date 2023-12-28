@@ -34,6 +34,9 @@ import {
   Container,
   Row,
   Col,
+  Pagination,
+  PaginationItem,
+  PaginationLink,
 } from "reactstrap";
 
 import { ToastContainer } from 'react-toastify';
@@ -74,6 +77,15 @@ const Aparelho = (props) => {
   const [aparelhos,setAparelhos] = useState([])
   // const [renderizar ,setRenderizar] = useState(false)
 
+  const [itensPerPage, setItensPerPage] = useState(5)
+  const [currentPage, setCurrentPage] = useState(0)
+
+  const pages = Math.ceil(aparelhos.length / itensPerPage)
+  const startIndex= currentPage * itensPerPage
+  const endIndex = startIndex + itensPerPage
+  const currentItens = aparelhos.slice(startIndex, endIndex)
+
+
  /*  const cautelados = query(collection(db,"Aparelhos", where ("cautelado", "==", "false") )) */
 
   /////////////////////////////////////////função de exibição///////////////////////////// 
@@ -110,6 +122,25 @@ const Aparelho = (props) => {
     //  função de limpeza para interromper a observação quando o componente for desmontado
     return () => unsub();
   }, []); // 
+
+  ///////////////////////////////////// FUNÇÃO PESQUISA  ////////////////////////////////////////////////
+  const [filter, setFilter] = useState([]);
+
+  function Pesquisa(e){
+   
+   
+   const filteredAparelhos = aparelhos.filter(aparelho =>
+     aparelho.imei1.toLowerCase().includes(e.toLowerCase())
+   );
+   console.log(filteredAparelhos,"APARELJP")
+   if (filteredAparelhos.length === 0) {
+     toast.error("Nenhum Aparelho foi encontrado");
+     
+   } else {
+     setFilter(filteredAparelhos);
+   }
+ }
+ // ____________________________________________________________________________________________________________
   
   
   
@@ -117,6 +148,9 @@ const Aparelho = (props) => {
     <>
     <ToastContainer/>
       <Header />
+
+      
+
       {/* Page content */}
       <Container className="mt--7" fluid>
         <Row>
@@ -202,13 +236,15 @@ const Aparelho = (props) => {
             <Card className="shadow">
               <CardHeader className="border-0">
                 <Row className="align-items-center">
-                  <div className="col">
-                    <h3 className="mb-0">Aparelhos</h3>
-                  </div>
-                  <div> 
-      
 
-                   
+
+                   <div className="conteinerSearch">
+                    <div className="col divADICIONAR">
+                      <h3 className="mb-0">Aparelhos</h3>
+                      <input type="search" placeholder='Pesquisa por Imei' onChange={(e) => Pesquisa(e.target.value)} />
+                     </div>
+                    
+                    
                   </div>
                   {/* <div className="col text-right">
                     <Button
@@ -232,19 +268,12 @@ const Aparelho = (props) => {
                     <th scope="col">Ações</th>
                   </tr>
                 </thead>
-                <tbody>
-                  {/* {<tr>
-                    <th scope="row">S20</th>
-                    <td>Samsung</td>
-                    <td>340 123 432 234 785</td>
-                    
-                    <td>
-                        ////SO É O BUTTON DE CAUTELAR DE APARELHOS
-                        <Modall/>
-                    </td>
-                  </tr>} */}
 
-{aparelhos.map((aparelhos) =>{
+
+                {filter.length > 0 ? 
+                <tbody>
+                   
+                   {filter.map((aparelhos) =>{
                           /* setMarca(aparelhos.modelo) */
                       
                     return(
@@ -254,29 +283,139 @@ const Aparelho = (props) => {
                         <th>{aparelhos.imei1}</th>
                         <th>{aparelhos.imei2}</th>
                         <td>
-                      <div> 
-
-                    
-         
-                        <div className="OrganizarBotoes">
-
-                        <Modall data={aparelhos}/>
-                          
-
-                        </div>
+                          <div>
 
 
-                        </div>
-                    </td>
+
+                            <div className="OrganizarBotoes">
+
+                              <Modall data={aparelhos} />
+
+
+                            </div>
+
+
+                          </div>
+                        </td>
                       </tr>
                     )
                    })}
-              
-               
-                
-                 
+
+
                 </tbody>
+                :
+                <tbody>
+                   
+                   {currentItens.map((aparelhos) =>{
+                          /* setMarca(aparelhos.modelo) */
+                      
+                    return(
+                      <tr key={aparelhos.id}>
+                        <th scope="row">{aparelhos.modelo}</th>
+                        <th>{aparelhos.marca}</th>
+                        <th>{aparelhos.imei1}</th>
+                        <th>{aparelhos.imei2}</th>
+                        <td>
+                          <div>
+
+
+
+                            <div className="OrganizarBotoes">
+
+                              <Modall data={aparelhos} />
+
+
+                            </div>
+
+
+                          </div>
+                        </td>
+                      </tr>
+                    )
+                   })}
+
+
+                </tbody>
+
+}
+
+
+
+
               </Table>
+
+              <nav aria-label="Page navigation example">
+            <Pagination className="pagination justify-content-center bordaPagination"
+            listClassName="justify-content-center"  >
+
+            <PaginationItem>
+    <PaginationLink
+      first
+      
+      href="#page1"
+
+      onClick={() => setCurrentPage(0)}
+    >
+      
+    </PaginationLink>
+  </PaginationItem>
+
+
+            <PaginationItem>
+                <PaginationLink
+                  href={`#page${currentPage + 1}`}
+                  previous
+                  onClick={() => {
+                    if (currentPage > 0) {
+                      setCurrentPage(currentPage - 1);
+                    }
+                  }}
+                />
+              </PaginationItem>
+
+              {Array.from(Array(pages), (item, index) => {
+                const pageToShow = 5; // Número de páginas a serem exibidas
+                const firstPage = Math.max(0, currentPage - Math.floor(pageToShow / 2));
+                const lastPage = Math.min(pages - 1, firstPage + pageToShow - 1);
+
+                if (index >= firstPage && index <= lastPage) {
+                  return (
+                    <PaginationItem key={index} active={index === currentPage}>
+                      <PaginationLink
+                        href={`#page${currentPage + 1}`}
+                        onClick={() => setCurrentPage(index)}
+                      >
+                        {index + 1}
+                      </PaginationLink>
+                    </PaginationItem>
+                  );
+                }
+              })}
+
+
+              <PaginationItem>
+                <PaginationLink
+                  href={`#page${currentPage + 1}`}
+                  next
+                  onClick={() => {
+                    if (currentPage < pages - 1) {
+                      setCurrentPage(currentPage + 1);
+                    }
+                  }}
+                />
+              </PaginationItem>
+              <PaginationItem>
+    <PaginationLink
+      last
+      href={`#page${pages }`}
+      onClick={() => setCurrentPage(pages - 1)}
+    >
+      
+    </PaginationLink>
+  </PaginationItem>
+            </Pagination>
+            </nav>
+              
             </Card>
           </Col>
           {/* <Col xl="4">

@@ -44,11 +44,11 @@ function ModalEditCHip(props) {
       
       if ( !listaChip.nserie|| !listaChip.linha || !listaChip.numero ){
         setEmptyevalue(true)
-        console.log("parou aqui")
+       
       }else{
         if(listaChip.nserie.length<20 || listaChip.numero.length<11){
           setValidChip(true)
-          console.log("parou aqui 2")
+          
         }else{
         await updateDoc(docRef,{
             linha: listaChip.linha,
@@ -181,7 +181,7 @@ function ModalEditCHip(props) {
         
         <Input type="select" name="linha" id="SelectMarca" value={listaChip.linha} onChange={e =>handleSobreescrever(e)}>
                             <option value=''>Escolha</option>
-                            <option value='Vivo'>Vivo </option>
+                            <option value='Claro'>Claro </option>
                           </Input>
                           {emptyevalue && listaChip.linha ==='' ? <Alert color='danger'>Coloque a linha</Alert> :''}
 

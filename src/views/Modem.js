@@ -308,6 +308,9 @@ import {
   Container,
   Row,
   Col,
+  Pagination,
+  PaginationItem,
+  PaginationLink,
 } from "reactstrap";
 import { db } from "../firebase";
 import {
@@ -342,6 +345,14 @@ const Modem = (props) => {
   const [modens, setModens] = useState([]);
   const [renderizar, setRenderizar] = useState(false);
   const [filter, setFilter] = useState([]);
+
+  const [itensPerPage, setItensPerPage] = useState(5)
+  const [currentPage, setCurrentPage] = useState(0)
+
+  const pages = Math.ceil(modens.length / itensPerPage)
+  const startIndex= currentPage * itensPerPage
+  const endIndex = startIndex + itensPerPage
+  const currentItens = modens.slice(startIndex, endIndex)
   
 
   if (window.Chart) {
@@ -428,7 +439,7 @@ const Modem = (props) => {
                       <Modall />
 
   {/* ////////////////////////////////////////////////////GERAR PDF */}
-                      <Button color="danger" onClick={(e) => ClientesPDF(modens)}><i className="far fa-file-pdf"></i> Gerar PDF</Button>{' '}
+                      {/* <Button color="danger" onClick={(e) => ClientesPDF(modens)}><i className="far fa-file-pdf"></i> Gerar PDF</Button>{' '} */}
                     </div>
 
                 </div>
@@ -461,7 +472,7 @@ const Modem = (props) => {
                         </tr>
                       );
                     }) :
-                    modens.map((modem) => {
+                    currentItens.map((modem) => {
                       return (
                         <tr key={modem.id}>
                           <th>{modem.modelo}</th>
@@ -479,6 +490,79 @@ const Modem = (props) => {
                   }
                 </tbody>
               </Table>
+
+              <nav aria-label="Page navigation example">
+            <Pagination className="pagination justify-content-center bordaPagination"
+            listClassName="justify-content-center"  >
+
+            <PaginationItem>
+    <PaginationLink
+      first
+      
+      href="#page1"
+
+      onClick={() => setCurrentPage(0)}
+    >
+      
+    </PaginationLink>
+  </PaginationItem>
+
+
+            <PaginationItem>
+                <PaginationLink
+                  href={`#page${currentPage + 1}`}
+                  previous
+                  onClick={() => {
+                    if (currentPage > 0) {
+                      setCurrentPage(currentPage - 1);
+                    }
+                  }}
+                />
+              </PaginationItem>
+
+              {Array.from(Array(pages), (item, index) => {
+                const pageToShow = 5; // Número de páginas a serem exibidas
+                const firstPage = Math.max(0, currentPage - Math.floor(pageToShow / 2));
+                const lastPage = Math.min(pages - 1, firstPage + pageToShow - 1);
+
+                if (index >= firstPage && index <= lastPage) {
+                  return (
+                    <PaginationItem key={index} active={index === currentPage}>
+                      <PaginationLink
+                        href={`#page${currentPage + 1}`}
+                        onClick={() => setCurrentPage(index)}
+                      >
+                        {index + 1}
+                      </PaginationLink>
+                    </PaginationItem>
+                  );
+                }
+              })}
+
+
+              <PaginationItem>
+                <PaginationLink
+                  href={`#page${currentPage + 1}`}
+                  next
+                  onClick={() => {
+                    if (currentPage < pages - 1) {
+                      setCurrentPage(currentPage + 1);
+                    }
+                  }}
+                />
+              </PaginationItem>
+              <PaginationItem>
+    <PaginationLink
+      last
+      href={`#page${pages }`}
+      onClick={() => setCurrentPage(pages - 1)}
+    >
+      
+    </PaginationLink>
+  </PaginationItem>
+            </Pagination>
+            </nav>
+
             </Card>
           </Col>
         </Row>

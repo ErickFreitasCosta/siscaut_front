@@ -1,37 +1,40 @@
-/* eslint-disable no-unused-vars */
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
+import user from "components/ModalInfDescaut/ModalInDescaut"
 
 
+/////////////APARELHOS CAUTELADOS
 
-function ClientesPDF({ infcauts, idClicked, name, rg, unidade, modelo, imei1, imei2, numero, data, data_des, marca,funcao, fiscal, postgrad}) {
+function UsuarioPDF({ modelo, marca, numero,  nome, rg, unidade, imei1, imei2, data,fiscal, funcao,quantidade,props,postgrad}) {
   pdfMake.vfs = pdfFonts.pdfMake.vfs;
   
 
-  /////////// DEVOLUÇÕES
-
   const dados = 
+  
     
       [
        
-          {text :  modelo, fontSize :10 ,margin : [0, 2,0 ,2]},
-          {text :   imei1, fontSize :10 ,margin : [0, 2,0 ,2]},
-          {text :  numero, fontSize :10 ,margin : [0, 2,0 ,2]},
           {text :  marca, fontSize :10 ,margin : [0, 2,0 ,2]},
-          {text :  data_des, fontSize :10 ,margin : [0, 2,0 ,2]}
+          {text :   modelo, fontSize :10 ,margin : [0, 2,0 ,2]},
+          {text :  imei1, fontSize :10 ,margin : [0, 2,0 ,2]},
+          {text :  numero, fontSize :10 ,margin : [0, 2,0 ,2]},
+          
+          
       ];
-
+       
   
 
 
 
   // ISSO É
   const details = [
-    // texto fixo aBaixo do cabeçalho esquerda ,cima ,direita ,baixo
-    {text: [" TERMO DE DEVOLUÇÃO DE USUÁRIO DE TELEFONIA MÓVEL"],  fontSize: 17,
-    margin: [20, 10, 0, 20],
-    bold: true,
-  },
+    // texto fixo aBaixo do cabeçalho
+
+    {
+      text : ["TERMO DE RESPONSABILIDADE DE USUÁRIO DE TELEFONIA MÓVEL"],fontSize: 14,
+      margin: [25, 10, 0, 20],
+      bold: true,
+    },
     {
       ul: ["  ÓRGÃO: POLÍCIA MILITAR DO ESTADO DO PARÁ"],
       margin: [60, 2, 0, 2],
@@ -50,7 +53,7 @@ function ClientesPDF({ infcauts, idClicked, name, rg, unidade, modelo, imei1, im
 
     {
       text: [
-        `Eu,${postgrad} ${name} ,RG  ${rg}, declaro ter devolvido o material abaixo descrito:`,
+        `Eu, ${postgrad} ${nome} ,RG  ${rg}, declaro ter recebido o material abaixo descrito:`,
       ],
       margin: [53, 2, 0, 25],
     },
@@ -58,14 +61,21 @@ function ClientesPDF({ infcauts, idClicked, name, rg, unidade, modelo, imei1, im
     {
       table: {
         headerRows: 1,
-        widths: [85, 95, 110, 50,70],
+        widths: [85, 95, 110, 85],
         
         // cabeçalho da tabela fixa
         body: [
           [
      
             {
-              text: "APARELHO",
+              text: "MARCA",
+              style: "tableHeader",
+              fontSize: 10,
+              margin: [0, 0, 0, 0],
+              bold: true,
+            },
+            {
+              text: "MODELO",
               style: "tableHeader",
               fontSize: 10,
               margin: [0, 0, 0, 0],
@@ -85,20 +95,11 @@ function ClientesPDF({ infcauts, idClicked, name, rg, unidade, modelo, imei1, im
               margin: [0, 0, 0, 0],
               bold: true,
             },
-            {
-              text: "MODELO",
-              style: "tableHeader",
-              fontSize: 10,
-              margin: [0, 0, 0, 0],
-              bold: true,
-            },
-            {
-              text: "DATA DEVOLUÇÃO",
-              style: "tableHeader",
-              fontSize: 10,
-              margin: [0, 0, 0, 0],
-              bold: true,
-            },
+
+           
+
+          
+     
           ],
           // pega tudo que tinha dentro do array e adiciona mais tabela dinamica
           dados
@@ -108,38 +109,54 @@ function ClientesPDF({ infcauts, idClicked, name, rg, unidade, modelo, imei1, im
       margin: [40, 2, 10,20], //esquerda ,cima ,direita ,baixo
       alignment: "center",
     },
-    /// texto estático
-    //INDENTAÇÃO CRIADA POR ERICK 29/09/2023
 
-    // DEVOLUÇÕES
+   
+    [{text: 'Pelo presente termo assumo total e inteira responsabilidade pelo equipamento acima ',margin : [60, 0,0 ,0]}, {text: '' ,margin : [194, 0,0 ,0]}],
+        /////////
+
+        
+        {
+            text : ['recebido bem como, responsabilidade pelo equipamento acima recebido, bem como, a de mantê-lo a salvo de perda, furto ou dano por má utilização, excetuado o desgaste natural de tempo e uso obrigando-me, por fim, a devolvê-lo em perfeito estado de uso e conservação ao Departamento Geral de Administração da Polícia Militar do Pará.'],margin : [30, 0,0 ,5] ,alignment: 'justify'
+        },
+  
+        [{text: 'A Polícia Militar do Estado do Pará através do Departamento Geral de Administração',margin : [60, 0,0 ,0]}, {text: '' ,margin : [194, 0,0 ,0]}],
+        {
+            text : ['da  PMPA e pelo Gestor do Contrato de Telefonia poderá, sob qualquer circunstância e em qualquer momento, solicitar informações de seu usuário, via esta linha telefônica, tendo o mesmo a obrigação de responder.'],margin : [30, 0,0 ,5],alignment: 'justify'
+        },
+        [{text: 'Reconheço que o aparelho e a linha telefônica são de exclusividade da função de ',margin : [60, 0,0 ,0]}, {text: '' ,margin : [194, 0,0 ,0]}],
+        {
+            text : [` CHEFE DA  ${funcao} devendo ser repassado ao meu substituto no ato de sua nomeação e informado a Departamento Geral de Administração (DGA) para que seja elaborado novo Termo de Responsabilidade de Usuário de Telefonia.`],margin : [30, 0,0 ,10],alignment: 'justify', textIndent : 1
+        },
 
 
-    // TABELA DE RECEBIMENTO
+
+        {text: '' ,alignment: 'justify'},
+
+
+
+
+
     {
-      style: "tableExample",
-      table: {
-        headerRows: 1,
-        widths: [250, 250],
+        style: 'tableExample',
+        table: {
+            headerRows: 1,
+            widths : [250 , 250] ,
+        
+            body: [
+                [{text: 'RECEBIMENTO', style: 'tableHeader',colSpan:2,alignment: 'center' ,bold :true}, {text: '', style: 'tableHeader'}],
+                [
+                    `                   \n\nDATA:  ${data}   \n\nNOME: ${fiscal}            \n\n ASSINATURA: ____________________________ \n` ,
 
-        body: [
-          [
-            {
-              text: "RECEBIMENTO",
-              style: "tableHeader",
-              colSpan: 2,
-              alignment: "center",
-              bold: true,
-            },
-            { text: "", style: "tableHeader" },
-          ],
-          [
-            `FISCAL DO CONTRATO : ${fiscal} `,
+                    `\n \n Declaro pelo presente documento, que ficam sob minha responsabilidade os bens acima relacionados.\n\nDATA:        ${data}   \n\nNOME:  ${nome}        \n\n ASSINATURA: ____________________________ \n`
+                    
+                ]
+            ]
+        }
+    
 
-            `\n\nDATA:    ${data}  \n\nNOME:  ${name}        \n\n ASSINATURA: ____________________________ \n`,
-          ],
-        ],
-      },
     },
+ 
+    
   ];
 
   function Rodape(currentPage, pageCounf) {
@@ -223,4 +240,4 @@ function ClientesPDF({ infcauts, idClicked, name, rg, unidade, modelo, imei1, im
   return pdfMake.createPdf(pageDefinition).open();
 }
 
-export default ClientesPDF;
+export default UsuarioPDF;
